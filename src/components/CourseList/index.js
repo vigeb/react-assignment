@@ -1,50 +1,47 @@
-import { Container, Grid } from '@material-ui/core'
-import React, { useEffect } from 'react'
-import CourseListItem from './../CourseListItem/index'
-import Axios from 'axios'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import CourseListItem from './../CourseListItem'
 import { connect } from 'react-redux'
-function CourseList() {
-    useEffect(() => {
-        Axios({
-            method: 'GET',
-            url: 'https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01',
-        }).then((res) => {
-            console.log(res.data)
-            this.props.dispatch({
-                type: "FETCH_COURSES",
-                payload: res.data
-            })
-        }).catch((err) => {
-            console.log(err)
-        })
-    }, [])
 
-    return (
-        <Container fixed>
-            <h1>Danh sách khóa học</h1>
-            <Grid container spacing={3}>
-                <Grid item xs={6} sm={3}>
-                    <CourseListItem />
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+
+}));
+
+function CourseList(props) {
+    const classes = useStyles();
+    console.log(props.data)
+    if (!props.loading && props.data) {
+        return (
+            <div div className={classes.root} >
+                Danh sách khóa học
+
+                <Grid container spacing={3}>
+                    {props.data.map((item, index) => (
+                        <Grid item xs={3}>
+                            <CourseListItem item={item} index={index} />
+                        </Grid>
+                    ))}
+
                 </Grid>
-                <Grid item xs={6} sm={3}>
-                    <CourseListItem />
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <CourseListItem />
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <CourseListItem />
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <CourseListItem />
-                </Grid>
-            </Grid>
-        </Container>
-    )
+            </div >
+        );
+    } else return (<div class="loader"></div>)
 
 }
-
-// const mapStateToProps = (state) => {
-//     const courseList: state.courses.courses
-// }
-export default connect()(CourseList)
+const mapStateToProps = (state) => {
+    return {
+        loading: state.courseListReducer.loading,
+        data: state.courseListReducer.data
+    }
+}
+export default connect(mapStateToProps, '')(CourseList)

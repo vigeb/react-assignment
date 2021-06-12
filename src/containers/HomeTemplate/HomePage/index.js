@@ -2,15 +2,21 @@ import React, { useEffect } from "react";
 // import CourseList from "../../../components/CourseList"
 import { actFetchCourseList } from "./modules/action";
 import { connect } from "react-redux";
+import CourseList from "../../../components/CourseList";
+import { Container } from "@material-ui/core";
 
 const HomePage = (props) => {
   useEffect(() => {
     props.fetchCourseList()
     console.log('p', props)
   }, [])
+  console.log(props.data)
   return (<div>
-    homepage
-    {/* <CourseList /> */}
+    <Container>
+
+      <CourseList></CourseList>
+    </Container>
+
   </div>);
 }
 
