@@ -4,7 +4,7 @@ import CourseHero from "../../../components/CourseHero"
 const useStyles = makeStyles({
   p: {
     padding: '2rem',
-  }
+  },
 })
 
 const CoursePage = () => {
