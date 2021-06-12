@@ -39,11 +39,9 @@ export default function CourseListItem(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
-                    Share
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
+
+                <Button size="small" color="#8bc34a">
+                    Chi tiết khóa học
                 </Button>
             </CardActions>
         </Card>
