@@ -14,7 +14,7 @@ const HomePage = (props) => {
   return (<div>
     <Container>
 
-      <CourseList></CourseList>
+      <CourseList data={props.data} />
     </Container>
 
   </div>);
