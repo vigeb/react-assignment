@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import CourseListItem from './../CourseListItem'
-import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,10 +37,5 @@ function CourseList(props) {
     } else return (<div class="loader"></div>)
 
 }
-const mapStateToProps = (state) => {
-    return {
-        loading: state.courseListReducer.loading,
-        data: state.courseListReducer.data
-    }
-}
-export default connect(mapStateToProps, '')(CourseList)
+
+export default CourseList
