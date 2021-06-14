@@ -1,6 +1,8 @@
 import CoursePage from "../containers/HomeTemplate/CoursePage";
 import HomePage from "../containers/HomeTemplate/HomePage";
 import TestPage from "../containers/HomeTemplate/TestPage";
+import LoginForm from "../containers/LoginForm";
+import SignUpForm from "../containers/SignUpForm";
 
 const routesHome = [
   {
@@ -18,6 +20,17 @@ const routesHome = [
     path: '/course/:id',
     component: CoursePage,
   },
+  {
+    exact: true,
+    path: '/login',
+    component: LoginForm
+  },
+  {
+    exact: true,
+    path: '/signup',
+    component: SignUpForm
+  }
+
 ]
 
 export { routesHome }
