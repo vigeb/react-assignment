@@ -40,7 +40,7 @@ export default function CourseListItem(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Link to="/detail">
+                <Link to={`/detail/${props.item.maKhoaHoc}`}>
                     <Button size="small" color="primary">
                         Learn more
                     </Button>

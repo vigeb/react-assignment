@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 
 function CourseDetailPage(props) {
     useEffect(() => {
-        props.fetchCourseDetail()
+        props.fetchCourseDetail(props.match.params.courseId)
         console.log('course detail: ', props)
     }, [])
     return (
@@ -50,8 +50,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchCourseDetail: () => {
-            dispatch(actFetchCourseDetail())
+        fetchCourseDetail: (id) => {
+            dispatch(actFetchCourseDetail(id))
         }
     }
 }
