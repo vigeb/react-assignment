@@ -1,3 +1,4 @@
+import CourseDetailPage from "../containers/CourseDetail";
 import CoursePage from "../containers/HomeTemplate/CoursePage";
 import HomePage from "../containers/HomeTemplate/HomePage";
 import TestPage from "../containers/HomeTemplate/TestPage";
@@ -29,8 +30,12 @@ const routesHome = [
     exact: true,
     path: '/signup',
     component: SignUpForm
+  },
+  {
+    exact: true,
+    path: '/detail',
+    component: CourseDetailPage
   }
-
 ]
 
 export { routesHome }
