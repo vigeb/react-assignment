@@ -195,20 +195,21 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to='signup'><MyHeaderItem variant="contained" color="primary">
-              Đăng ký
-            </MyHeaderItem></Link>
+            <>
+              <Link to='signup'><MyHeaderItem variant="contained" color="primary">
+                Đăng ký
+              </MyHeaderItem></Link>
 
-            <Link to="/login">
-              <MyHeaderItem variant="contained" color="primary">
-                Đăng nhập
-              </MyHeaderItem>
-            </Link>
-
+              <Link to="/login">
+                <MyHeaderItem variant="contained" color="primary">
+                  Đăng nhập
+                </MyHeaderItem>
+              </Link>
+            </>
 
 
           </div>
-          <div className={classes.sectionMobile}>
+          {/* <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}
@@ -218,7 +219,7 @@ export default function PrimarySearchAppBar() {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
       <AppBar position="static">
@@ -249,26 +250,27 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <>
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+              <IconButton aria-label="show 17 new notifications" color="inherit">
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton></>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -285,6 +287,6 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </div>
+    </div >
   );
 }
