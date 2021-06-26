@@ -1,29 +1,28 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-// import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
+import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import GroupIcon from '@material-ui/icons/Group';
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
     padding: '0.5rem',
   },
-  // ratioMedia: {
-  //   width: '100%',
-  //   paddingBottom: '56.25%',
-  //   position: 'relative',
-  //   background: '#000',
+  // cardLayout: {
+  //   alignItems: 'center',
   // },
-  // media: {
-  //   width: '100%',
-  //   height: '100%',
-  //   objectFit: 'cover',
-  //   position: 'absolute',
-  //   top: 0,
-  //   left: 0,
-  //   opacity: '0.1',
-  // },
+  cardMedia: {
+    width: '100%',
+    height: '150px',
+    background: 'red',
+  },
+  cardHeading: {
+    fontSize: '1.5rem',
+    fontWeight: '600',
+  },
 })
 
 const CourseHero = (props) => {
@@ -31,14 +30,22 @@ const CourseHero = (props) => {
   return (
     <>
       <Card className={classes.root}>
-        {/* <div className={classes.ratioMedia}>
-          <CardMedia
-            className={classes.media}
-            image={props.img}
-            title={props.title}
-          />
-        </div> */}
-        <Typography></Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={3}>
+            <CardMedia
+              className={classes.cardMedia}
+              image={props.data.hinhAnh}
+              title={props.data.tenKhoaHoc}
+            />
+          </Grid>
+          <Grid item xs={12} md={9}>
+            <Typography component="h1" align="left" className={classes.cardHeading}>{props.data.tenKhoaHoc}</Typography>
+            <Typography component="p" align="left">{props.data.danhMucKhoaHoc.tenDanhMucKhoaHoc}</Typography>
+            <Typography component="p">
+              <GroupIcon /> {props.data.soLuongHocVien} students
+            </Typography>
+          </Grid>
+        </Grid>
       </Card>
     </>  
   )
