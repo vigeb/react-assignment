@@ -14,10 +14,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Formik, Form, Field } from 'formik'
+import { useState } from 'react'
 
 function Copyright() {
   return (
@@ -51,9 +50,30 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
+const maNhomArr = [
+  'GP01', 'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
+];
 export default function SignUpForm() {
+  const [taiKhoan, setTaiKhoan] = useState({
+    "taiKhoan": "",
+    "matKhau": "",
+    "hoTen": "",
+    "soDT": "",
+    "maNhom": "",
+    "email": "",
+  })
+
+
   const classes = useStyles();
+  const handleOnChange = (e) => {
+
+    setTaiKhoan({
+      ...taiKhoan, [e.target.name]: e.target.value
+    })
+
+
+  }
+  console.log(taiKhoan)
 
   return (
     <Container component="main" maxWidth="xs">
@@ -65,24 +85,7 @@ export default function SignUpForm() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Formik
-          initialValues={{
-            "taiKhoan": "",
-            "matKhau": "",
-            "hoTen": "",
-            "soDT": "",
-            "maNhom": "",
-            "email": ""
-          }
-          }
-          onSubmit={() => {
 
-          }}
-          render={(formikProps) => {
-
-          }}>
-
-        </Formik>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
@@ -94,7 +97,7 @@ export default function SignUpForm() {
                 label="Tài khoản"
                 name="taiKhoan"
                 autoComplete="lname"
-              // onChange={formikProps.handleChange}
+                onChange={handleOnChange}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -107,6 +110,7 @@ export default function SignUpForm() {
                 id="hoTen"
                 label="Họ tên"
                 autoFocus
+                onChange={handleOnChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -118,6 +122,7 @@ export default function SignUpForm() {
                 label="Địa chỉ email"
                 name="email"
                 autoComplete="email"
+                onChange={handleOnChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -128,7 +133,7 @@ export default function SignUpForm() {
                 id="soDT"
                 label="Số điện thoại"
                 name="soDT"
-
+                onChange={handleOnChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -136,38 +141,32 @@ export default function SignUpForm() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
+                name="matKhau"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleOnChange}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth="true" className={classes.formControl}>
-
-                <InputLabel id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
+              <FormControl variant="outlined" fullWidth className={classes.formControl}>
+                <InputLabel fullWidth id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  // value={age}
-                  // onChange={handleChange}
+
                   label="Age"
-                  name="maKhoaHoc"
+                  onChange={handleOnChange}
+                  name="maNhom"
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem >GP01</MenuItem>
-                  <MenuItem >GP02</MenuItem>
-                  <MenuItem >GP03</MenuItem>
-                  <MenuItem >GP04</MenuItem>
-                  <MenuItem >GP05</MenuItem>
-                  <MenuItem >GP06</MenuItem>
-                  <MenuItem >GP07</MenuItem>
-                  <MenuItem >GP08</MenuItem>
-                  <MenuItem >GP09</MenuItem>
-                  <MenuItem >GP10</MenuItem>
+                  {maNhomArr.map((maNhom) => (
+                    <MenuItem key={maNhom}
+                      value={maNhom}
+                      onChange={handleOnChange}
+                    >{maNhom}</MenuItem>
+                  ))}
+
                 </Select>
               </FormControl>
             </Grid>
@@ -189,13 +188,8 @@ export default function SignUpForm() {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
+
+
         </form>
       </div>
       <Box mt={5}>
