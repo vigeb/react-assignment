@@ -12,6 +12,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import { Formik, Form, Field } from 'formik'
 
 function Copyright() {
   return (
@@ -59,29 +65,48 @@ export default function SignUpForm() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <Formik
+          initialValues={{
+            "taiKhoan": "",
+            "matKhau": "",
+            "hoTen": "",
+            "soDT": "",
+            "maNhom": "",
+            "email": ""
+          }
+          }
+          onSubmit={() => {
+
+          }}
+          render={(formikProps) => {
+
+          }}>
+
+        </Formik>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
+                id="taiKhoan"
+                label="Tài khoản"
+                name="taiKhoan"
+                autoComplete="lname"
+              // onChange={formikProps.handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
+                autoComplete="fname"
+                name="hoTen"
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                id="hoTen"
+                label="Họ tên"
+                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
@@ -90,9 +115,20 @@ export default function SignUpForm() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Địa chỉ email"
                 name="email"
                 autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="soDT"
+                label="Số điện thoại"
+                name="soDT"
+
               />
             </Grid>
             <Grid item xs={12}>
@@ -107,6 +143,36 @@ export default function SignUpForm() {
                 autoComplete="current-password"
               />
             </Grid>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth="true" className={classes.formControl}>
+
+                <InputLabel id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  // value={age}
+                  // onChange={handleChange}
+                  label="Age"
+                  name="maKhoaHoc"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem >GP01</MenuItem>
+                  <MenuItem >GP02</MenuItem>
+                  <MenuItem >GP03</MenuItem>
+                  <MenuItem >GP04</MenuItem>
+                  <MenuItem >GP05</MenuItem>
+                  <MenuItem >GP06</MenuItem>
+                  <MenuItem >GP07</MenuItem>
+                  <MenuItem >GP08</MenuItem>
+                  <MenuItem >GP09</MenuItem>
+                  <MenuItem >GP10</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -135,6 +201,6 @@ export default function SignUpForm() {
       <Box mt={5}>
         <Copyright />
       </Box>
-    </Container>
+    </Container >
   );
 }
