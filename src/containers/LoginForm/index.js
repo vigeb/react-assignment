@@ -1,30 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import { connect } from 'react-redux'
+import { actLogIn } from './modules/action';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -46,9 +32,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Login() {
-    const classes = useStyles();
 
+function Login(props) {
+    const [userLogin, setUserLogin] = useState({})
+    const classes = useStyles();
+    const handleOnChange = (e) => {
+        setUserLogin({
+            ...userLogin, [e.target.name]: e.target.value
+        })
+
+    }
+    console.log(userLogin)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(5)
+        props.logInUser(userLogin)
+
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -59,59 +59,59 @@ export default function Login() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form onSubmit={handleSubmit} className={classes.form} noValidate>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
+                        id="taiKhoan"
+                        label="Tài khoản"
+                        name="taiKhoan"
+                        autoComplete="taiKhoan"
                         autoFocus
+                        onChange={handleOnChange}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
+                        name="matKhau"
+                        label="Mật khẩu"
+                        type="matKhau"
+                        id="matKhau"
                         autoComplete="current-password"
+                        onChange={handleOnChange}
                     />
-                    <FormControlLabel
+                    {/* <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
-                    />
+                    /> */}
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+
                     >
                         Sign In
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="/signup" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
+
                 </form>
             </div>
-            <Box mt={8}>
-                <Copyright />
-            </Box>
+
         </Container>
     );
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logInUser: (userLogIn) => {
+            dispatch(actLogIn(userLogIn))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login)

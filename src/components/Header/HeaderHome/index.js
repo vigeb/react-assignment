@@ -199,7 +199,7 @@ export default function PrimarySearchAppBar() {
             <>
               {isLogin === false ?
                 <>
-                  <Link to='signup'><MyHeaderItem variant="contained" color="primary">
+                  <Link to='/signup'><MyHeaderItem variant="contained" color="primary">
                     Đăng ký
                   </MyHeaderItem></Link>
 
