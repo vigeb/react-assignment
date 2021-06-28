@@ -11,6 +11,7 @@ export const actLogIn = (userLogIn) => {
         }).then((res) => {
             console.log(res)
             dispatch(actLogInSuccess(res.data))
+            localStorage.setItem('credentials', JSON.stringify(res.data))
         }).catch((err) => {
             dispatch(actLogInFailed(err))
         })

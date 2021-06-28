@@ -2,8 +2,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import HomeTemplate from './containers/HomeTemplate';
 import PageNotFound from './containers/PageNotFound';
 import { routesHome } from './routes'
-
-function App() {
+import { connect } from 'react-redux'
+import { actLogIn } from './containers/LoginForm/modules/action';
+import { useEffect } from 'react'
+function App(props) {
   const renderRoutesHome = (routes) => {
     return routes.map((item, index) => {
       return (
@@ -16,14 +18,33 @@ function App() {
       )
     })
   }
+  const _getCredentialFromLocal = () => {
+    const credentialsStr = localStorage.getItem("credentials")
+    if (credentialsStr) {
+      props.logInUser(JSON.parse(credentialsStr))
+    }
+  }
+  useEffect(() => {
+    _getCredentialFromLocal()
+  }, [])
   return (
     <BrowserRouter>
       <Switch>
         {renderRoutesHome(routesHome)}
         <Route path="" component={PageNotFound} />
       </Switch>
+
     </BrowserRouter>
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logInUser: (userLogIn) => {
+      dispatch(actLogIn(userLogIn))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)
+
