@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import CourseListItem from './../CourseListItem'
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
 function CourseList(props) {
     const classes = useStyles();
     console.log(props.data)
+
     if (!props.loading && props.data) {
         return (
             <div div className={classes.root} >
-                Danh sách khóa học
+                <Box p={3}><Typography align="center" variant="h2" display="block" >Danh sách khóa học</Typography></Box>
 
                 <Grid container spacing={3}>
                     {props.data.map((item, index) => (
