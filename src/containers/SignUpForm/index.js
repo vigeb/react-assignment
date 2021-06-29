@@ -14,23 +14,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Formik, Form, Field } from 'formik'
+import { useState } from 'react'
+import { connect } from 'react-redux'
+import { actSignUp } from './modules/action';
+import validation from './validation';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,10 +41,47 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+const maNhomArr = [
+  'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
+];
+function SignUpForm(props) {
 
-export default function SignUpForm() {
+  const [errors, setErrors] = useState({
+
+  })
+
+  const [taiKhoan, setTaiKhoan] = useState({
+    "taiKhoan": "",
+    "matKhau": "",
+    "hoTen": "",
+    "soDT": "",
+    "maNhom": "GP01",
+    "email": "",
+  })
+
+
   const classes = useStyles();
+  const handleOnChange = (e) => {
 
+    setTaiKhoan({
+      ...taiKhoan, [e.target.name]: e.target.value
+    })
+
+
+  }
+  const handleOnSubmit = (e) => {
+    e.preventDefault()
+    setErrors(validation(taiKhoan))
+    if (Object.values(errors).length === 0) {
+      props.signUp(taiKhoan)
+    }
+
+  }
+
+  const errorTextStyle = {
+    color: '#f44336',
+    paddingLeft: '2px'
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -65,25 +92,8 @@ export default function SignUpForm() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Formik
-          initialValues={{
-            "taiKhoan": "",
-            "matKhau": "",
-            "hoTen": "",
-            "soDT": "",
-            "maNhom": "",
-            "email": ""
-          }
-          }
-          onSubmit={() => {
 
-          }}
-          render={(formikProps) => {
-
-          }}>
-
-        </Formik>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -94,8 +104,11 @@ export default function SignUpForm() {
                 label="Tài khoản"
                 name="taiKhoan"
                 autoComplete="lname"
-              // onChange={formikProps.handleChange}
+                onChange={handleOnChange}
+
+                value={taiKhoan.taiKhoan}
               />
+              {errors.taiKhoan && <Typography style={errorTextStyle} > {errors.taiKhoan}</Typography>}
             </Grid>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -107,7 +120,9 @@ export default function SignUpForm() {
                 id="hoTen"
                 label="Họ tên"
                 autoFocus
-              />
+                onChange={handleOnChange}
+                value={taiKhoan.hoTen}
+              />{errors.hoTen && <Typography style={errorTextStyle}>{errors.hoTen}</Typography>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -118,7 +133,9 @@ export default function SignUpForm() {
                 label="Địa chỉ email"
                 name="email"
                 autoComplete="email"
-              />
+                onChange={handleOnChange}
+                value={taiKhoan.email}
+              />{errors.email && <Typography style={errorTextStyle}>{errors.email}</Typography>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -128,57 +145,54 @@ export default function SignUpForm() {
                 id="soDT"
                 label="Số điện thoại"
                 name="soDT"
-
-              />
+                onChange={handleOnChange}
+                value={taiKhoan.soDT}
+              />{errors.soDT && <Typography style={errorTextStyle}>{errors.soDT}</Typography>}
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
+                name="matKhau"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
+                onChange={handleOnChange}
+                value={taiKhoan.matKhau}
+              />{errors.matKhau && <Typography style={errorTextStyle}>{errors.matKhau}</Typography>}
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth="true" className={classes.formControl}>
-
-                <InputLabel id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
+              <FormControl variant="outlined" fullWidth className={classes.formControl}>
+                <InputLabel fullWidth id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  // value={age}
-                  // onChange={handleChange}
+
                   label="Age"
-                  name="maKhoaHoc"
+                  onChange={handleOnChange}
+                  name="maNhom"
+                  defaultValue="GP01"
+                  value={taiKhoan.maNhom}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem >GP01</MenuItem>
-                  <MenuItem >GP02</MenuItem>
-                  <MenuItem >GP03</MenuItem>
-                  <MenuItem >GP04</MenuItem>
-                  <MenuItem >GP05</MenuItem>
-                  <MenuItem >GP06</MenuItem>
-                  <MenuItem >GP07</MenuItem>
-                  <MenuItem >GP08</MenuItem>
-                  <MenuItem >GP09</MenuItem>
-                  <MenuItem >GP10</MenuItem>
+                  <MenuItem key="GP01"
+                    value="GP01"
+                    onChange={handleOnChange}
+                  >GP01</MenuItem>
+                  {maNhomArr.map((maNhom) => (
+                    <MenuItem key={maNhom}
+                      value={maNhom}
+                      onChange={handleOnChange}
+                    >{maNhom}</MenuItem>
+                  ))}
+
                 </Select>
               </FormControl>
             </Grid>
 
 
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
+
           </Grid>
           <Button
             type="submit"
@@ -189,18 +203,20 @@ export default function SignUpForm() {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
+
+
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+
     </Container >
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (newUser) => {
+      dispatch(actSignUp(newUser))
+    }
+  }
+}
+export default connect(null, mapDispatchToProps)(SignUpForm)

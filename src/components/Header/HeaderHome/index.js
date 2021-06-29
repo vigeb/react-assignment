@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 // import { Link } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -89,7 +90,7 @@ const MyHeaderItem = styled(Button)({
   height: 60,
 })
 
-export default function PrimarySearchAppBar() {
+function Header(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -164,8 +165,7 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
     </Menu>
   );
-  let isLogin = false
-
+  console.log('5', props.credentials)
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -197,9 +197,9 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <>
-              {isLogin === false ?
+              {!props.credentials ?
                 <>
-                  <Link to='signup'><MyHeaderItem variant="contained" color="primary">
+                  <Link to='/signup'><MyHeaderItem variant="contained" color="primary">
                     Đăng ký
                   </MyHeaderItem></Link>
 
@@ -210,16 +210,7 @@ export default function PrimarySearchAppBar() {
                   </Link>
                 </> :
                 <>
-                  <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                      <MailIcon />
-                    </Badge>
-                  </IconButton>
-                  <IconButton aria-label="show 17 new notifications" color="inherit">
-                    <Badge badgeContent={17} color="secondary">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
+                  <MyHeaderItem variant="contained" color="primary">Xin chào {props.credentials.hoTen}</MyHeaderItem>
                   <IconButton
                     edge="end"
                     aria-label="account of current user"
@@ -255,3 +246,13 @@ export default function PrimarySearchAppBar() {
     </div >
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    credentials: state.logInReducer.data,
+
+
+  }
+}
+
+export default connect(mapStateToProps, null)(Header)

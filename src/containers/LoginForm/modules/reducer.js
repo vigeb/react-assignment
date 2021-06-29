@@ -6,19 +6,19 @@ let initialState = {
     error: null
 }
 
-const signUpReducer = (state = initialState, action) => {
+const logInReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ActionType.SIGN_UP_REQUEST:
+        case ActionType.LOG_IN_REQUEST:
             state.loading = true
             state.data = null
             state.error = null
             return { ...state }
-        case ActionType.SIGN_UP_SUCCESS:
+        case ActionType.LOG_IN_SUCCESS:
             state.loading = false
             state.data = action.payload
             state.error = null
             return { ...state }
-        case ActionType.SIGN_UP_FAILED:
+        case ActionType.LOG_IN_FAILED:
             state.loading = false
             state.data = null
             state.error = action.payload
@@ -27,4 +27,4 @@ const signUpReducer = (state = initialState, action) => {
             return { ...state }
     }
 }
-export default signUpReducer
+export default logInReducer
