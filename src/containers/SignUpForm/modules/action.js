@@ -1,4 +1,4 @@
-import axios from "Axios";
+import axios from "axios";
 import * as ActionType from "./constants";
 
 export const actSignUp = (newUser) => {
