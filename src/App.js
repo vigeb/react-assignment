@@ -6,6 +6,7 @@ import { routesHome, routesAdmin } from './routes'
 import { connect } from 'react-redux'
 import { actLogIn } from './containers/LoginForm/modules/action';
 import { useEffect } from 'react'
+
 function App(props) {
   const renderRoutesHome = (routes) => {
     return routes.map((item, index) => {
