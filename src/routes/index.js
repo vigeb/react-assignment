@@ -1,3 +1,5 @@
+import AddNewCoursePage from "../containers/AdminTemplate/AddNewCoursePage";
+import DashboardAdminPage from "../containers/AdminTemplate/DashboardAdminPage";
 import CourseDetailPage from "../containers/CourseDetail";
 import CoursePage from "../containers/HomeTemplate/CoursePage";
 import HomePage from "../containers/HomeTemplate/HomePage";
@@ -38,4 +40,17 @@ const routesHome = [
   }
 ]
 
-export { routesHome }
+const routesAdmin = [
+  {
+    exact: true,
+    path: '/dashboard',
+    component: DashboardAdminPage,
+  },
+  {
+    exact: true,
+    path: '/new-course',
+    component: AddNewCoursePage,
+  },
+]
+
+export { routesHome, routesAdmin }

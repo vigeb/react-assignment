@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-// import CourseReducer from './course'
 import courseListReducer from '../../containers/HomeTemplate/HomePage/modules/reducer'
 import courseDetailReducer from '../../containers/CourseDetail/modules/reducer'
 import signUpReducer from '../../containers/SignUpForm/modules/reducer'

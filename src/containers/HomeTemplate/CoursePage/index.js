@@ -1,21 +1,46 @@
-import { makeStyles } from "@material-ui/core"
+import React, { useEffect } from "react";
+import { actFetchCourseDetail } from "./modules/action"
+import { connect } from "react-redux";
 import CourseHero from "../../../components/CourseHero"
 
-const useStyles = makeStyles({
-  p: {
-    padding: '2rem',
-  },
-})
+const CoursePage = (props) => {
+  useEffect(() => {
+    const { id } = props.match.params
+    props.fetchCourseDetail(id)
+  }, [])
 
-const CoursePage = () => {
-  const classes = useStyles()
+  const renderCourseHero = () => {
+    if (props.data) {
+      return (
+        <CourseHero
+          data={props.data}
+        />
+      )
+    } else {
+      return 'loading ...'
+    }
+  }
+
   return (
     <>
-      <div className={classes.p}>
-        <CourseHero img="https://elearning0706.cybersoft.edu.vn/hinhanh/bootcamp-react-0112.png" />
-      </div>
+      {renderCourseHero()}
     </>
   )
 }
 
-export default CoursePage
+const mapStateToProps = (state) => {
+  return {
+    loading: state.courseDetailReducer.loading,
+    data: state.courseDetailReducer.data,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCourseDetail: (id) => {
+      dispatch(actFetchCourseDetail(id));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoursePage)

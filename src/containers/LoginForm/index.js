@@ -45,7 +45,8 @@ function Login(props) {
     console.log(userLogin)
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(5)
+        // console.log(5)
+        console.log('userlogin', userLogin)
         props.logInUser(userLogin)
 
     }
