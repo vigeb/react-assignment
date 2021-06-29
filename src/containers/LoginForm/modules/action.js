@@ -9,7 +9,7 @@ export const actLogIn = (userLogIn) => {
             method: "POST",
             data: userLogIn
         }).then((res) => {
-            console.log(res)
+
             dispatch(actLogInSuccess(res.data))
             localStorage.setItem('credentials', JSON.stringify(res.data))
         }).catch((err) => {
@@ -26,13 +26,13 @@ const actLogInSuccess = (data) => {
 }
 const actLogInFailed = (error) => {
     return {
-        type: ActionType.LOG_IN_SUCCESS,
+        type: ActionType.LOG_IN_FAILED,
         payload: error
     }
 }
 const actLogInRequest = () => {
     return {
-        type: ActionType.LOG_IN_SUCCESS,
+        type: ActionType.LOG_IN_REQUEST,
 
     }
 }

@@ -42,10 +42,11 @@ function Login(props) {
         })
 
     }
-    console.log(userLogin)
+
+    console.log(props)
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(5)
+
         props.logInUser(userLogin)
 
     }
@@ -79,7 +80,7 @@ function Login(props) {
                         fullWidth
                         name="matKhau"
                         label="Mật khẩu"
-                        type="matKhau"
+                        type="password"
                         id="matKhau"
                         autoComplete="current-password"
                         onChange={handleOnChange}
@@ -98,7 +99,10 @@ function Login(props) {
                     >
                         Sign In
                     </Button>
-
+                    {props.credentialsErr !== null ?
+                        <Typography style={{ color: 'red' }}>Đăng nhập thất bại, hãy nhập lại tài khoản hoặc mật khẩu</Typography>
+                        : null
+                    }
                 </form>
             </div>
 
@@ -113,5 +117,9 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-
-export default connect(null, mapDispatchToProps)(Login)
+const mapStateToProps = (state) => {
+    return {
+        credentialsErr: state.logInReducer.error
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

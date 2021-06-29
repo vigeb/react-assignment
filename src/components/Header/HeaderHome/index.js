@@ -27,13 +27,15 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    display: 'none',
+    display: 'block',
+
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
   },
   search: {
     position: 'relative',
+
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -42,9 +44,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
+    display: 'none',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
       width: 'auto',
+      display: 'block',
     },
   },
   searchIcon: {
@@ -106,6 +110,13 @@ function Header(props) {
     setMobileMoreAnchorEl(null);
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -116,71 +127,26 @@ function Header(props) {
   };
 
   const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Hồ sơ</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Tài khoản của tôi</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Đăng xuất</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <h1>Đăng nhập</h1>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+
   console.log('5', props.credentials)
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          </IconButton> */}
+          <Typography edge="start" className={classes.title} variant="h6" >
             <Link to="/">Trang chủ</Link>
           </Typography>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -197,18 +163,7 @@ function Header(props) {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <>
-              {!props.credentials ?
-                <>
-                  <Link to='/signup'><MyHeaderItem variant="contained" color="primary">
-                    Đăng ký
-                  </MyHeaderItem></Link>
-
-                  <Link to="/login">
-                    <MyHeaderItem variant="contained" color="primary">
-                      Đăng nhập
-                    </MyHeaderItem>
-                  </Link>
-                </> :
+              {props.credentials ?
                 <>
                   <MyHeaderItem variant="contained" color="primary">Xin chào {props.credentials.hoTen}</MyHeaderItem>
                   <IconButton
@@ -221,28 +176,74 @@ function Header(props) {
                   >
                     <AccountCircle />
                   </IconButton>
+
+                </>
+                :
+
+                <>
+                  <Link to='/signup'><MyHeaderItem variant="contained" color="primary">
+                    Đăng ký
+                  </MyHeaderItem></Link>
+
+                  <Link to="/login">
+                    <MyHeaderItem variant="contained" color="primary">
+                      Đăng nhập
+                    </MyHeaderItem>
+                  </Link>
                 </>
               }
 
             </>
 
           </div>
+
           <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
+
+            <Button style={{ color: 'white' }} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+              <MenuIcon />
+            </Button>
+
+
           </div>
+
+
+
         </Toolbar>
       </AppBar>
 
-      {renderMobileMenu}
-      {renderMenu}
+      {props.credentials ?
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+          <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{props.credentials.hoTen} </Typography>
+          <MenuItem onClick={handleMenuClose}>Hồ sơ</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Tài khoản của tôi</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Đăng xuất</MenuItem>
+        </Menu>
+        : <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+          <Link to='/signup'><MenuItem style={{ color: 'black' }}>
+            Đăng ký
+          </MenuItem></Link>
+          <Link to='/login'><MenuItem style={{ color: 'black' }}>
+            Đăng nhập
+          </MenuItem></Link>
+        </Menu>
+      }
+
     </div >
   );
 }
