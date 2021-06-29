@@ -10,11 +10,7 @@ export const actLogIn = (userLogIn) => {
             method: "POST",
             data: userLogIn
         }).then((res) => {
-<<<<<<< HEAD
-
-=======
             console.log('res act', res)
->>>>>>> 5efd76541e94ac6d3751cb9b29e06fc5c3c61370
             dispatch(actLogInSuccess(res.data))
             localStorage.setItem('credentials', JSON.stringify(res.data))
         }).catch((err) => {
