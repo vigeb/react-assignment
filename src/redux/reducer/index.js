@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
     courseListReducer,
     courseDetailReducer,
     signUpReducer,
-    logInReducer
+    logInReducer,
 })
 
 export default rootReducer

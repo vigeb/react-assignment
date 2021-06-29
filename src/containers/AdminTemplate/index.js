@@ -21,7 +21,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../../components/ListItemAdmin';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
 function Copyright() {
   return (
@@ -210,11 +210,19 @@ const AdminTemplate = ({ Component, ...props }) => {
   return (
     <Route
       {...props}
-      render={(propsComponent) => (
-        <AdminLayout>
-          <Component {...propsComponent} />
-        </AdminLayout>
-      )}
+      render={(propsComponent) => {
+        const userCredentials = JSON.parse(localStorage.getItem('credentials'))
+
+        if (userCredentials.maLoaiNguoiDung === 'GV') {
+          return (
+            <AdminLayout>
+              <Component {...propsComponent} />
+            </AdminLayout>
+          )
+        }
+
+        return <Redirect to="/login" />
+      }}
     />
   );
 }
