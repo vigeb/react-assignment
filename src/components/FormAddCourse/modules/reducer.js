@@ -6,19 +6,19 @@ const initialState = {
     error: null
 }
 
-const newCourseReducer = (state = initialState, action) => {
+const submitCourseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ActionType.NEW_COURSE_REQUEST:
+        case ActionType.SUBMIT_COURSE_REQUEST:
             state.loading = true
             state.data = null
             state.error = null
             return { ...state };
-        case ActionType.NEW_COURSE_SUCCESS:
+        case ActionType.SUBMIT_COURSE_SUCCESS:
             state.loading = true
             state.data = action.payload
             state.error = null
             return { ...state };
-        case ActionType.NEW_COURSE_FAILED:
+        case ActionType.SUBMIT_COURSE_FAILED:
             state.loading = true
             state.data = null
             state.error = action.payload
@@ -27,4 +27,4 @@ const newCourseReducer = (state = initialState, action) => {
             break;
     }
 }
-export default newCourseReducer
+export default submitCourseReducer
