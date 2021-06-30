@@ -17,7 +17,7 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems } from '../../components/ListItemAdmin';
+import { AdminListItem } from '../../components/ListItemAdmin';
 import { Route, Redirect } from 'react-router-dom'
 
 function Copyright() {
@@ -161,7 +161,7 @@ const AdminLayout = (props) => {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List><AdminListItem /></List>
         <Divider />
         {/* <List>{secondaryListItems}</List> */}
       </Drawer>

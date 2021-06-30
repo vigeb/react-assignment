@@ -1,9 +1,6 @@
 import * as ActionType from './constants'
 import axios from 'axios'
 
-
-
-
 export const actSubmitCourse = (submitCourse) => {
     let accessToken = ''
     if (localStorage.getItem("credentials")) {
@@ -62,7 +59,8 @@ const actSubmitCourseSuccess = (data) => {
     }
 }
 const actSubmitCourseFailed = (err) => {
-    return {
-        type: ActionType.NEW_COURSE_FAILED,
-        payload: err
-    }
+  return {
+      type: ActionType.NEW_COURSE_FAILED,
+      payload: err
+  }
+}

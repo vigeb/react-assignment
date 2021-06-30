@@ -97,7 +97,6 @@ const AddNewCoursePage = (props) => {
           name="biDanh"
           value={course.biDanh}
           autoComplete="biDanh"
-          autoFocus
           onChange={handleCourseInfo}
         />
         <TextField
@@ -110,7 +109,6 @@ const AddNewCoursePage = (props) => {
           name="maKhoaHoc"
           value={course.maKhoaHoc}
           autoComplete="maKhoaHoc"
-          autoFocus
           onChange={handleCourseInfo}
         />
         <TextField
@@ -122,7 +120,6 @@ const AddNewCoursePage = (props) => {
           label="Mô Tả"
           name="moTa"
           autoComplete="moTa"
-          autoFocus
           value={course.moTa}
           multiline
           rows={6}
