@@ -4,13 +4,14 @@ import axios from 'axios'
 
 
 
-export const actSubmitCourse = (submitCourse) => {
+export const actSubmitCourse = (submitCourse, updateMode) => {
     let accessToken = ''
     if (localStorage.getItem("credentials")) {
         accessToken = JSON.parse(localStorage.getItem("credentials")).accessToken
     }
+    console.log('accessToken: ', accessToken)
     return (dispatch) => {
-        // ...
+
         if (updateMode) {
             dispatch(actSubmitCourseRequest())
             axios({
@@ -18,7 +19,7 @@ export const actSubmitCourse = (submitCourse) => {
                 method: "PUT",
                 data: submitCourse,
                 // header: {
-                //     Authorization: 'Bearer' + accessToken
+                //     Authorization: 'Bearer' + accessTokenAA
                 // }
             })
                 .then((res) => {
@@ -35,8 +36,8 @@ export const actSubmitCourse = (submitCourse) => {
                 url: 'https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHoc',
                 method: "POST",
                 data: submitCourse,
-                header: {
-                    Authorization: 'Bearer' + accessToken
+                headers: {
+                    Authorization: 'Bearer ' + accessToken
                 }
             })
                 .then((res) => {
@@ -44,7 +45,7 @@ export const actSubmitCourse = (submitCourse) => {
                     dispatch(actSubmitCourseSuccess(res.data))
                 })
                 .catch((err) => {
-
+                    console.log('accessToken là: ' + accessToken + 'lỗi là: ' + err)
                     dispatch(actSubmitCourseFailed(err))
                 })
         }
@@ -52,17 +53,18 @@ export const actSubmitCourse = (submitCourse) => {
 }
 const actSubmitCourseRequest = () => {
     return {
-        type: ActionType.NEW_COURSE_REQUEST
+        type: ActionType.SUBMIT_COURSE_REQUEST
     }
 }
 const actSubmitCourseSuccess = (data) => {
     return {
-        type: ActionType.NEW_COURSE_SUCCESS,
+        type: ActionType.SUBMIT_COURSE_SUCCESS,
         payload: data
     }
 }
 const actSubmitCourseFailed = (err) => {
     return {
-        type: ActionType.NEW_COURSE_FAILED,
+        type: ActionType.SUBMIT_COURSE_FAILED,
         payload: err
     }
+}

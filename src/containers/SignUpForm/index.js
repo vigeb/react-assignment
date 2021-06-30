@@ -170,7 +170,7 @@ function SignUpForm(props) {
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
 
-                  label="Age"
+                  label="Mã nhóm"
                   onChange={handleOnChange}
                   name="maNhom"
                   defaultValue="GP01"
