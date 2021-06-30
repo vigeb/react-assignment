@@ -14,17 +14,17 @@ const submitCourseReducer = (state = initialState, action) => {
             state.error = null
             return { ...state };
         case ActionType.SUBMIT_COURSE_SUCCESS:
-            state.loading = true
+            state.loading = false
             state.data = action.payload
             state.error = null
             return { ...state };
         case ActionType.SUBMIT_COURSE_FAILED:
-            state.loading = true
+            state.loading = false
             state.data = null
             state.error = action.payload
             return { ...state };
         default:
-            break;
+            return { ...state };
     }
 }
 export default submitCourseReducer
