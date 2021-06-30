@@ -30,12 +30,12 @@ const DashboardAdminPage = () => {
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
           <Link to="/admin/new-course" className={classes.fastLink}>
-            <Typography variant="div" component="h2" className={classes.fastButton}>NEW COURSE</Typography>
+            <Typography variant="p" component="h2" className={classes.fastButton}>NEW COURSE</Typography>
           </Link>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Link to="/admin/new-user" className={classes.fastLink}>
-            <Typography variant="div" component="h2" className={classes.fastButton}>NEW USER</Typography>
+            <Typography variant="p" component="h2" className={classes.fastButton}>NEW USER</Typography>
           </Link>
         </Grid>
       </Grid>
