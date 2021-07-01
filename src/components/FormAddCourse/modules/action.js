@@ -41,7 +41,7 @@ export const actSubmitCourse = (submitCourse, updateMode) => {
                 }
             })
                 .then((res) => {
-                    console.log(res.data)
+                    console.log('dispatch đc data: ' + res.data)
                     dispatch(actSubmitCourseSuccess(res.data))
                 })
                 .catch((err) => {
