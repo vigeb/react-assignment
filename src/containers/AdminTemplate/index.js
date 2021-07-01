@@ -191,7 +191,7 @@ const AdminTemplate = ({ Component, ...props }) => {
       render={(propsComponent) => {
         const userCredentials = JSON.parse(localStorage.getItem('credentials'))
 
-        if (userCredentials.maLoaiNguoiDung === 'GV') {
+        if (userCredentials && (userCredentials.maLoaiNguoiDung === 'GV')) {
           return (
             <AdminLayout>
               <Component {...propsComponent} />
