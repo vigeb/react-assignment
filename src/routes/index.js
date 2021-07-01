@@ -1,4 +1,5 @@
 import AddNewCoursePage from "../containers/AdminTemplate/AddNewCoursePage";
+import CourseManagePage from "../containers/AdminTemplate/CourseManagePage";
 import DashboardAdminPage from "../containers/AdminTemplate/DashboardAdminPage";
 import UpdateCoursePage from "../containers/AdminTemplate/UpdateCoursePage";
 import CourseDetailPage from "../containers/CourseDetail";
@@ -56,6 +57,11 @@ const routesAdmin = [
     exact: true,
     path: '/update-course/:id',
     component: UpdateCoursePage,
+  },
+  {
+    exact: true,
+    path: '/course-management',
+    component: CourseManagePage,
   },
 ]
 
