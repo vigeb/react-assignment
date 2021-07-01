@@ -1,18 +1,20 @@
 import * as ActionType from "./constants";
 import axios from "axios";
 
-export const actFetchCourseList = () => {
+export const actFetchCourseList = (maNhom) => {
   return (dispatch) => {
     dispatch(actCourseListRequest());
     axios({
-      url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01`,
+      url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=` + maNhom,
       method: "GET",
     })
       .then((result) => {
         dispatch(actCourseListSuccess(result.data));
+        console.log(maNhom)
       })
       .catch((error) => {
         dispatch(actCourseListFailed(error));
+        console.log(maNhom)
       });
   };
 };
