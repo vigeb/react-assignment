@@ -15,7 +15,7 @@ const courseListReducer = (state = initialState, action) => {
       return { ...state };
 
     case ActionType.COURSE_LIST_SUCCESS:
-      console.log(action.payload)
+      // console.log(action.payload)
       state.loading = false;
       state.data = action.payload;
       state.error = null;

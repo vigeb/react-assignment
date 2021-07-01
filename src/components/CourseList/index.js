@@ -79,7 +79,7 @@ function CourseList(props) {
                 </Grid>
             </div >
         );
-    } else return (<div class="loader"></div>)
+    } else return (<div className="loader"></div>)
 
 }
 
