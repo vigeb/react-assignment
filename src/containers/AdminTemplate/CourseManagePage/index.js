@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CourseManagePage = (props) => {
   const classes = useStyles()
-  const [courseList, setCourseList] = useState([])
+  // const [courseList, setCourseList] = useState([])
   const [maNhom, setMaNhom] = useState('GP01');
 
   const handleChange = (event) => {
@@ -37,30 +37,34 @@ const CourseManagePage = (props) => {
     'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
   ];
 
+  // useEffect(() => {
+  //   props.fetchCourseList(maNhom)
+  //   setCourseList(props.data)
+
+  // }, [])
   useEffect(() => {
     props.fetchCourseList(maNhom)
-    setCourseList(props.data)
-
-  }, [])
-  useEffect(() => {
-    props.fetchCourseList(maNhom)
-    setCourseList(props.data)
-
   }, [maNhom])
+
+
   const renderCourseList = () => {
-    if (courseList) {
+    const courseList = props.data
+    if (courseList && courseList.length) {
       return courseList.map((item) => {
         return (
-          <Grid item xs={12}>
+          <Grid item xs={12} key={item.maKhoaHoc}>
 
             <CourseManageItem course={item} />
           </Grid>
         )
       })
+    } else {
+      return <div>loading...</div>
     }
   }
-  console.log(maNhom)
-  console.log('list' + courseList)
+  // console.log(maNhom)
+  // console.log('list' + courseList)
+
   return (
     <>
       <Typography variant="h4" component="h2" className={classes.title}>Course Management</Typography>
@@ -89,7 +93,7 @@ const CourseManagePage = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.courseListReducer.data)
+  console.log('reducer list' ,state.courseListReducer.data)
   return {
     data: state.courseListReducer.data
   }
