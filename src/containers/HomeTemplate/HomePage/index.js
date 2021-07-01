@@ -17,7 +17,7 @@ const HomePage = (props) => {
   useEffect(() => {
 
     props.fetchCourseList(state)
-    console.log('s', state)
+
   }, [state])
 
 
@@ -32,6 +32,8 @@ const HomePage = (props) => {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.courseListReducer.data)
+
   return {
     loading: state.courseListReducer.loading,
     data: state.courseListReducer.data,

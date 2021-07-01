@@ -10,7 +10,7 @@ export const actFetchCourseList = (maNhom) => {
     })
       .then((result) => {
         dispatch(actCourseListSuccess(result.data));
-        console.log(maNhom)
+        console.log(maNhom, result.data)
       })
       .catch((error) => {
         dispatch(actCourseListFailed(error));
