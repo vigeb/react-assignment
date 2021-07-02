@@ -42,7 +42,7 @@ const CourseManageItem = (props) => {
       })
       .catch((err) => {
         console.log('xoa loi', err)
-        setResponseText(err.message || 'xoa that bai')
+        setResponseText(err.data || 'xoa that bai')
       })
     }
     // return (dispatch) => {
