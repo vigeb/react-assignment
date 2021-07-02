@@ -1,11 +1,14 @@
 import FormAddCourse from '../../../components/FormAddCourse'
+import connect from 'react-redux'
 
-const UpdateCoursePage = () => {
+const UpdateCoursePage = (props) => {
+
   return (
     <>
-      <FormAddCourse updateMode={true} />
+      <FormAddCourse updateMode={true} maKhoaHoc={props.match.params.id} />
     </>
   )
 }
+
 
 export default UpdateCoursePage

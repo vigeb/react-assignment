@@ -42,11 +42,14 @@ const CourseManagePage = (props) => {
   //   setCourseList(props.data)
 
   // }, [])
+  const { fetchCourseList } = props
   useEffect(() => {
-    props.fetchCourseList(maNhom)
-  }, [maNhom])
+    fetchCourseList(maNhom)
+  }, [fetchCourseList, maNhom])
+  let errMessage = ''
 
 
+  console.log('errMessage' + errMessage)
   const renderCourseList = () => {
     const courseList = props.data
     if (courseList && courseList.length) {
@@ -54,7 +57,7 @@ const CourseManagePage = (props) => {
         return (
           <Grid item xs={12} key={item.maKhoaHoc}>
 
-            <CourseManageItem course={item} />
+            <CourseManageItem course={item} courseId={item.maKhoaHoc} />
           </Grid>
         )
       })
@@ -93,7 +96,7 @@ const CourseManagePage = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('reducer list' ,state.courseListReducer.data)
+  console.log('reducer list', state.courseListReducer.data)
   return {
     data: state.courseListReducer.data
   }
