@@ -57,7 +57,7 @@ const CourseManagePage = (props) => {
         return (
           <Grid item xs={12} key={item.maKhoaHoc}>
 
-            <CourseManageItem course={item} courseId={item.maKhoaHoc} />
+            <CourseManageItem course={item} courseId={item.maKhoaHoc} key={item.maKhoaHoc} />
           </Grid>
         )
       })
