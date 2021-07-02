@@ -1,9 +1,9 @@
+import { useState } from 'react'
+import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { actDeleteCourse } from './modules/action';
 import { FormHelperText } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,9 +23,48 @@ const useStyles = makeStyles((theme) => ({
 
 const CourseManageItem = (props) => {
   const classes = useStyles()
-  const { deleteCourse, course, err } = props
-  const handleOnClick = () => {
-    deleteCourse(course.maKhoaHoc)
+  const [responseText, setResponseText] = useState('')
+  const { course } = props
+  const handleDeleteCourse = () => {
+    let credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
+
+    if (credentials && credentials.accessToken && credentials.maLoaiNguoiDung === 'GV') {
+      axios({
+        url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${course.maKhoaHoc}`,
+        method: "DELETE",
+        headers: {
+            Authorization: 'Bearer ' + credentials.accessToken
+        }
+      })
+      .then((res) => {
+        console.log('res', res)
+        setResponseText('Xoa thanh cong')
+      })
+      .catch((err) => {
+        console.log('xoa loi', err)
+        setResponseText(err.message || 'xoa that bai')
+      })
+    }
+    // return (dispatch) => {
+    //     dispatch(actDeleteCourseRequest());
+    //     console.log('pending delete')
+    //     axios({
+    //         url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${}`,
+    //         method: "DELETE",
+    //         headers: {
+    //             Authorization: 'Bearer ' + accessToken
+    //         }
+    //     })
+    //         .then((res) => {
+    //             dispatch(actDeleteCourseSuccess(res.data));
+    //             console.log('delete data success', res.data)
+    //         })
+    //         .catch(({ response } = {}) => {
+
+    //             dispatch(actDeleteCourseFailed(response.data));
+
+    //         });
+    // };
   }
 
   return (
@@ -34,25 +73,12 @@ const CourseManageItem = (props) => {
       <Button component={Link} to={`/admin/update-course/${course.maKhoaHoc}`} variant="contained" color="primary" className={classes.button}>
         Update
       </Button>
-      <Button onClick={handleOnClick} variant="contained" color="secondary" className={classes.button}>
+      <Button onClick={handleDeleteCourse} variant="contained" color="secondary" className={classes.button}>
         Delete
       </Button>
-      <FormHelperText>{err}</FormHelperText>
+      <FormHelperText>{responseText}</FormHelperText>
     </div>
   )
 }
 
-const mapDisPatchToProps = (dispatch) => {
-  return {
-    deleteCourse: (maKhoaHoc) => {
-      dispatch(actDeleteCourse(maKhoaHoc))
-    }
-  }
-}
-const mapStateToProps = (state) => {
-  return {
-    err: state.courseDeleteReducer.error
-  }
-}
-
-export default connect(mapStateToProps, mapDisPatchToProps)(CourseManageItem);
+export default CourseManageItem;
