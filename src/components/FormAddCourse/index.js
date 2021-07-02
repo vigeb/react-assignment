@@ -9,10 +9,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
 import InputLabel from '@material-ui/core/InputLabel';
 import slugify from 'slugify'
-import { connect } from 'react-redux'
-import { actSubmitCourse } from "./modules/action";
-import { actFetchCourseDetail } from "../../containers/CourseDetail/modules/action";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AddNewCoursePage = (props) => {
-  const { updateMode } = props
+  const { courseDetail, updateMode } = props
   const classes = useStyles()
   let today = new Date();
   let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
@@ -98,14 +94,10 @@ const AddNewCoursePage = (props) => {
   const maNhomArr = [
     'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
   ];
-  const { maKhoaHoc, getCourseDetail, courseDetail } = props
-  useEffect(() => {
-    if (updateMode) {
-      getCourseDetail(maKhoaHoc)
-    }
-  }, [getCourseDetail, maKhoaHoc, updateMode])
 
-  console.log(course)
+
+
+
 
 
   return (
@@ -122,7 +114,7 @@ const AddNewCoursePage = (props) => {
             label="Tên Khóa Học"
             name="tenKhoaHoc"
             autoComplete="tenKhoaHoc"
-            value={courseDetail?.tenKhoaHoc}
+            value={courseDetail.tenKhoaHoc}
             autoFocus
             onBlur={handleCourseName}
             onChange={handleCourseInfo}
@@ -135,7 +127,7 @@ const AddNewCoursePage = (props) => {
             id="biDanh"
             label="Bí Danh (slug)"
             name="biDanh"
-            value={courseDetail?.biDanh}
+            value={courseDetail.biDanh}
             autoComplete="biDanh"
             autoFocus
             onChange={handleCourseInfo}
@@ -148,7 +140,7 @@ const AddNewCoursePage = (props) => {
             id="maKhoaHoc"
             label="Mã Khóa Học"
             name="maKhoaHoc"
-            value={courseDetail?.maKhoaHoc}
+            value={courseDetail.maKhoaHoc}
             autoComplete="maKhoaHoc"
             autoFocus
             onChange={handleCourseInfo}
@@ -164,7 +156,7 @@ const AddNewCoursePage = (props) => {
             name="hinhAnh"
             autoComplete="hinhAnh"
             autoFocus
-            value={courseDetail?.hinhAnh}
+            value={courseDetail.hinhAnh}
 
             rows={6}
             onChange={handleCourseInfo}
@@ -176,7 +168,7 @@ const AddNewCoursePage = (props) => {
               name="maDanhMucKhoaHoc"
               onChange={handleCourseInfo}
               label="Mã danh mục khóa học"
-              value={courseDetail?.maDanhMucKhoaHoc}
+              value={courseDetail.maDanhMucKhoaHoc}
             >
               <MenuItem value="FrontEnd">FrontEnd</MenuItem>
               {maDanhMucKhoaHocArr.map((maDanhMucKhoaHoc) => (
@@ -195,7 +187,7 @@ const AddNewCoursePage = (props) => {
             name="moTa"
             autoComplete="moTa"
             autoFocus
-            value={courseDetail?.moTa}
+            value={courseDetail.moTa}
             multiline
             rows={6}
             onChange={handleCourseInfo}
@@ -210,7 +202,7 @@ const AddNewCoursePage = (props) => {
               onChange={handleCourseInfo}
               name="maNhom"
               defaultValue="GP01"
-              value={courseDetail?.maNhom}
+              value={courseDetail.maNhom}
             >
               <MenuItem key="GP01"
                 value="GP01"
@@ -240,21 +232,5 @@ const AddNewCoursePage = (props) => {
   )
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    submitCourse: (course, updateMode) => {
-      dispatch(actSubmitCourse(course, updateMode))
-    },
-    getCourseDetail: (maKhoaHoc, updateMode) => {
-      dispatch(actFetchCourseDetail(maKhoaHoc, updateMode))
-    }
-  }
 
-}
-const mapStateToProps = (state) => {
-  return {
-    data: state.submitCourseReducer.data,
-    courseDetail: state.courseDetailReducer.data
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(AddNewCoursePage);
+export default AddNewCoursePage;

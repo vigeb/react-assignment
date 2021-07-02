@@ -33,17 +33,16 @@ const CourseManageItem = (props) => {
         url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${course.maKhoaHoc}`,
         method: "DELETE",
         headers: {
-            Authorization: 'Bearer ' + credentials.accessToken
+          Authorization: 'Bearer ' + credentials.accessToken
         }
       })
-      .then((res) => {
-        console.log('res', res)
-        setResponseText('Xoa thanh cong')
-      })
-      .catch((err) => {
-        console.log('xoa loi', err)
-        setResponseText(err.message || 'xoa that bai')
-      })
+        .then((res) => {
+          console.log('res', res)
+          setResponseText('Xoa thanh cong')
+        })
+        .catch(({ response }) => {
+          setResponseText(response.data || 'xoa that bai')
+        })
     }
     // return (dispatch) => {
     //     dispatch(actDeleteCourseRequest());
