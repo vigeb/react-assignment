@@ -4,12 +4,14 @@ import courseDetailReducer from '../../containers/CourseDetail/modules/reducer'
 import signUpReducer from '../../containers/SignUpForm/modules/reducer'
 import logInReducer from '../../containers/LoginForm/modules/reducer'
 import submitCourseReducer from '../../components/FormAddCourse/modules/reducer'
+import courseDeleteReducer from '../../components/CourseManageItem/modules/reducer'
 const rootReducer = combineReducers({
     courseListReducer,
     courseDetailReducer,
     signUpReducer,
     logInReducer,
-    submitCourseReducer
+    submitCourseReducer,
+    courseDeleteReducer
 })
 
 export default rootReducer

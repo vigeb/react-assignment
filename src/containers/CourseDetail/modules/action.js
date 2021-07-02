@@ -4,12 +4,14 @@ import * as ActionType from "./constants";
 export const actFetchCourseDetail = (id) => {
     return (dispatch) => {
         dispatch(actCourseDetailRequest());
+        console.log('pending get detail')
         axios({
             url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${id}`,
             method: "GET",
         })
             .then((res) => {
                 dispatch(actCourseDetailSuccess(res.data));
+                console.log('get data success', res.data)
             })
             .catch((err) => {
                 dispatch(actCourseDetailFailed(err));

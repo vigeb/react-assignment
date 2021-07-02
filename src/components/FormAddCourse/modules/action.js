@@ -27,7 +27,7 @@ export const actSubmitCourse = (submitCourse, updateMode) => {
                     dispatch(actSubmitCourseSuccess(res.data))
                 })
                 .catch((err) => {
-
+                    console.log(err)
                     dispatch(actSubmitCourseFailed(err))
                 })
         } else {

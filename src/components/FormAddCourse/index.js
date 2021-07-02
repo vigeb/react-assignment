@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -11,6 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import slugify from 'slugify'
 import { connect } from 'react-redux'
 import { actSubmitCourse } from "./modules/action";
+import { actFetchCourseDetail } from "../../containers/CourseDetail/modules/action";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AddNewCoursePage = (props) => {
+  const { updateMode } = props
   const classes = useStyles()
   let today = new Date();
   let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
@@ -54,7 +57,7 @@ const AddNewCoursePage = (props) => {
   })
 
   const handleCourseName = (e) => {
-    if (props.updateMode) {
+    if (updateMode) {
       setCourse({
         ...course,
         tenKhoaHoc: e.target.value.trim(),
@@ -86,7 +89,7 @@ const AddNewCoursePage = (props) => {
   const handleOnSubmit = (e) => {
     e.preventDefault()
     console.log('submited')
-    props.submitCourse(course, props.updateMode)
+    props.submitCourse(course, updateMode)
   }
   const maDanhMucKhoaHocArr = [
     // FrontEnd,
@@ -95,10 +98,19 @@ const AddNewCoursePage = (props) => {
   const maNhomArr = [
     'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
   ];
+  const { maKhoaHoc, getCourseDetail, courseDetail } = props
+  useEffect(() => {
+    if (updateMode) {
+      getCourseDetail(maKhoaHoc)
+    }
+  }, [getCourseDetail, maKhoaHoc, updateMode])
+
   console.log(course)
+
+
   return (
     <div className={classes.root}>
-      <Typography variant="h1" component="h1" className={classes.title}>{props.updateMode ? 'Update Course' : 'Add New Course'}</Typography>
+      <Typography variant="h1" component="h1" className={classes.title}>{updateMode ? 'Update Course' : 'Add New Course'}</Typography>
       <form onSubmit={handleOnSubmit}>
         <FormControl className={classes.formControl}>
           <TextField
@@ -110,7 +122,7 @@ const AddNewCoursePage = (props) => {
             label="Tên Khóa Học"
             name="tenKhoaHoc"
             autoComplete="tenKhoaHoc"
-            value={course.tenKhoaHoc}
+            value={courseDetail?.tenKhoaHoc}
             autoFocus
             onBlur={handleCourseName}
             onChange={handleCourseInfo}
@@ -123,7 +135,7 @@ const AddNewCoursePage = (props) => {
             id="biDanh"
             label="Bí Danh (slug)"
             name="biDanh"
-            value={course.biDanh}
+            value={courseDetail?.biDanh}
             autoComplete="biDanh"
             autoFocus
             onChange={handleCourseInfo}
@@ -136,7 +148,7 @@ const AddNewCoursePage = (props) => {
             id="maKhoaHoc"
             label="Mã Khóa Học"
             name="maKhoaHoc"
-            value={course.maKhoaHoc}
+            value={courseDetail?.maKhoaHoc}
             autoComplete="maKhoaHoc"
             autoFocus
             onChange={handleCourseInfo}
@@ -152,7 +164,7 @@ const AddNewCoursePage = (props) => {
             name="hinhAnh"
             autoComplete="hinhAnh"
             autoFocus
-            value={course.hinhAnh}
+            value={courseDetail?.hinhAnh}
 
             rows={6}
             onChange={handleCourseInfo}
@@ -164,6 +176,7 @@ const AddNewCoursePage = (props) => {
               name="maDanhMucKhoaHoc"
               onChange={handleCourseInfo}
               label="Mã danh mục khóa học"
+              value={courseDetail?.maDanhMucKhoaHoc}
             >
               <MenuItem value="FrontEnd">FrontEnd</MenuItem>
               {maDanhMucKhoaHocArr.map((maDanhMucKhoaHoc) => (
@@ -182,7 +195,7 @@ const AddNewCoursePage = (props) => {
             name="moTa"
             autoComplete="moTa"
             autoFocus
-            value={course.moTa}
+            value={courseDetail?.moTa}
             multiline
             rows={6}
             onChange={handleCourseInfo}
@@ -197,7 +210,7 @@ const AddNewCoursePage = (props) => {
               onChange={handleCourseInfo}
               name="maNhom"
               defaultValue="GP01"
-            // value={taiKhoan.maNhom}
+              value={courseDetail?.maNhom}
             >
               <MenuItem key="GP01"
                 value="GP01"
@@ -212,10 +225,15 @@ const AddNewCoursePage = (props) => {
 
             </Select>
           </FormControl>
-          <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
-            {props.updateMode ? 'UPDATE' : 'PUBLISH'}
-          </Button>
 
+          {updateMode ?
+            <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
+              UPDATE
+            </Button>
+            : <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
+              PUBLISH
+            </Button>
+          }
         </FormControl>
       </form>
     </div>
@@ -226,8 +244,17 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submitCourse: (course, updateMode) => {
       dispatch(actSubmitCourse(course, updateMode))
+    },
+    getCourseDetail: (maKhoaHoc, updateMode) => {
+      dispatch(actFetchCourseDetail(maKhoaHoc, updateMode))
     }
   }
-}
 
-export default connect(null, mapDispatchToProps)(AddNewCoursePage);
+}
+const mapStateToProps = (state) => {
+  return {
+    data: state.submitCourseReducer.data,
+    courseDetail: state.courseDetailReducer.data
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewCoursePage);
