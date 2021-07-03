@@ -56,7 +56,6 @@ const CourseManagePage = (props) => {
       return courseList.map((item) => {
         return (
           <Grid item xs={12} key={item.maKhoaHoc}>
-
             <CourseManageItem course={item} courseId={item.maKhoaHoc} key={item.maKhoaHoc} />
           </Grid>
         )

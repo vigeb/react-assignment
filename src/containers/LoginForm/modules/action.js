@@ -5,18 +5,39 @@ export const actLogIn = (userLogIn) => {
     return (dispatch) => {
         console.log('pending')
         dispatch(actLogInRequest())
+        const { email, matKhau } = userLogIn
+        let credentials
         axios({
-            url: "https://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/DangNhap",
+            url: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCfvChusc7Nsg3Ba2PeJdl0KJXjTGjihUY",
+
             method: "POST",
-            data: userLogIn
+            data: {
+                email,
+                password: matKhau,
+                returnSecureToken: true,
+            }
         }).then((res) => {
-            console.log('res act', res)
-            dispatch(actLogInSuccess(res.data))
-            localStorage.setItem('credentials', JSON.stringify(res.data))
-        }).catch((err) => {
-            console.log('err', err)
-            dispatch(actLogInFailed(err))
+            console.log('user after log in', res)
+            credentials = { ...res.data }
+            return axios({
+                url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${res.data.localId}.json?auth=${res.data.idToken}`,
+                method: "GET",
+            })
+
         })
+            .then((res) => {
+                console.log('user info', res)
+                credentials.displayName = res.data.displayName
+                credentials.phoneNumber = res.data.phoneNumber
+                credentials.typeOfUser = res.data.typeOfUser
+
+                dispatch(actLogInSuccess(credentials))
+                localStorage.setItem('credentials', JSON.stringify(credentials))
+            })
+            .catch((err) => {
+                console.log('err', err, err.message)
+                dispatch(actLogInFailed(err))
+            })
     }
 }
 

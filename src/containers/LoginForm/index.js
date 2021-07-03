@@ -66,10 +66,10 @@ function Login(props) {
                         margin="normal"
                         required
                         fullWidth
-                        id="taiKhoan"
-                        label="Tài khoản"
-                        name="taiKhoan"
-                        autoComplete="taiKhoan"
+                        id="email"
+                        label="Email"
+                        name="email"
+                        autoComplete="email"
                         autoFocus
                         onChange={handleOnChange}
                     />

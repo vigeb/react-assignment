@@ -11,6 +11,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import CategoryIcon from '@material-ui/icons/Category';
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
@@ -47,12 +48,14 @@ export const AdminListItem = () => {
           <ListItemText primary="Courses" />
         </ListItem>
       </NavLink>
-      <ListItem button>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customers" />
-      </ListItem>
+      <NavLink to="/admin/category-management" className={classes.navLink} activeClassName={classes.navLinkActive}>
+        <ListItem button>
+          <ListItemIcon>
+            <CategoryIcon />
+          </ListItemIcon>
+          <ListItemText primary="Categories" />
+        </ListItem>
+      </NavLink>
       <ListItem button>
         <ListItemIcon>
           <BarChartIcon />

@@ -1,0 +1,3 @@
+export const CATEGORY_LIST_REQUEST = 'newCourseReducer/CATEGORY_LIST_REQUEST'
+export const CATEGORY_LIST_SUCCESS = 'newCourseReducer/CATEGORY_LIST_SUCCESS'
+export const CATEGORY_LIST_FAILED = 'newCourseReducer/CATEGORY_LIST_FAILED'
