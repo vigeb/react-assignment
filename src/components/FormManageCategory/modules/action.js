@@ -43,7 +43,6 @@ export const actSubmitCategory = (submitCategory, updateMode, id) => {
                     },
                 })
     
-                // console.log('course create', createdCategory.data)
                 dispatch(actSubmitCategorySuccess(createdCategory.data))
             }
         } catch (err) {
