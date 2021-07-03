@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux'
+import { actSubmitCourse } from './modules/action'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,10 +11,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
 import InputLabel from '@material-ui/core/InputLabel';
 import slugify from 'slugify'
-import { connect } from 'react-redux'
-import { actSubmitCourse } from "./modules/action";
-import { actFetchCourseDetail } from "../../containers/CourseDetail/modules/action";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,12 +34,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AddNewCoursePage = (props) => {
-  const { updateMode } = props
   const classes = useStyles()
+  const { updateMode, courseDetail } = props
   let today = new Date();
   let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
   const [course, setCourse] = useState({
-    ...props.course || {
+    ...courseDetail || {
       "maKhoaHoc": "",
       "biDanh": "",
       "tenKhoaHoc": "",
@@ -98,15 +96,6 @@ const AddNewCoursePage = (props) => {
   const maNhomArr = [
     'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
   ];
-  const { maKhoaHoc, getCourseDetail, courseDetail } = props
-  useEffect(() => {
-    if (updateMode) {
-      getCourseDetail(maKhoaHoc)
-    }
-  }, [getCourseDetail, maKhoaHoc, updateMode])
-
-  console.log(course)
-
 
   return (
     <div className={classes.root}>
@@ -122,7 +111,7 @@ const AddNewCoursePage = (props) => {
             label="Tên Khóa Học"
             name="tenKhoaHoc"
             autoComplete="tenKhoaHoc"
-            value={courseDetail?.tenKhoaHoc}
+            value={course.tenKhoaHoc}
             autoFocus
             onBlur={handleCourseName}
             onChange={handleCourseInfo}
@@ -135,9 +124,8 @@ const AddNewCoursePage = (props) => {
             id="biDanh"
             label="Bí Danh (slug)"
             name="biDanh"
-            value={courseDetail?.biDanh}
+            value={course.biDanh}
             autoComplete="biDanh"
-            autoFocus
             onChange={handleCourseInfo}
           />
           <TextField
@@ -148,9 +136,8 @@ const AddNewCoursePage = (props) => {
             id="maKhoaHoc"
             label="Mã Khóa Học"
             name="maKhoaHoc"
-            value={courseDetail?.maKhoaHoc}
+            value={course.maKhoaHoc}
             autoComplete="maKhoaHoc"
-            autoFocus
             onChange={handleCourseInfo}
           />
 
@@ -163,9 +150,7 @@ const AddNewCoursePage = (props) => {
             label="Link hình ảnh"
             name="hinhAnh"
             autoComplete="hinhAnh"
-            autoFocus
-            value={courseDetail?.hinhAnh}
-
+            value={course.hinhAnh}
             rows={6}
             onChange={handleCourseInfo}
           />
@@ -176,7 +161,7 @@ const AddNewCoursePage = (props) => {
               name="maDanhMucKhoaHoc"
               onChange={handleCourseInfo}
               label="Mã danh mục khóa học"
-              value={courseDetail?.maDanhMucKhoaHoc}
+              value={course.maDanhMucKhoaHoc}
             >
               <MenuItem value="FrontEnd">FrontEnd</MenuItem>
               {maDanhMucKhoaHocArr.map((maDanhMucKhoaHoc) => (
@@ -194,8 +179,7 @@ const AddNewCoursePage = (props) => {
             label="Mô Tả"
             name="moTa"
             autoComplete="moTa"
-            autoFocus
-            value={courseDetail?.moTa}
+            value={course.moTa}
             multiline
             rows={6}
             onChange={handleCourseInfo}
@@ -210,7 +194,7 @@ const AddNewCoursePage = (props) => {
               onChange={handleCourseInfo}
               name="maNhom"
               defaultValue="GP01"
-              value={courseDetail?.maNhom}
+              value={course.maNhom}
             >
               <MenuItem key="GP01"
                 value="GP01"
@@ -240,21 +224,12 @@ const AddNewCoursePage = (props) => {
   )
 }
 
-const mapDispatchToProps = (dispatch) => {
+const setDispatchToProps = (dispatch) => {
   return {
     submitCourse: (course, updateMode) => {
       dispatch(actSubmitCourse(course, updateMode))
-    },
-    getCourseDetail: (maKhoaHoc, updateMode) => {
-      dispatch(actFetchCourseDetail(maKhoaHoc, updateMode))
     }
   }
+}
 
-}
-const mapStateToProps = (state) => {
-  return {
-    data: state.submitCourseReducer.data,
-    courseDetail: state.courseDetailReducer.data
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(AddNewCoursePage);
+export default connect(null, setDispatchToProps)(AddNewCoursePage);
