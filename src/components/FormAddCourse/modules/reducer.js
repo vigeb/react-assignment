@@ -1,5 +1,5 @@
 import * as ActionType from './constants'
-
+ 
 const initialState = {
     loading: false,
     data: null,
