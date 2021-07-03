@@ -1,6 +1,9 @@
+import AddCategoryPage from "../containers/AdminTemplate/AddCategoryPage";
 import AddNewCoursePage from "../containers/AdminTemplate/AddNewCoursePage";
+import CategoryManagePage from "../containers/AdminTemplate/CategoryManagePage";
 import CourseManagePage from "../containers/AdminTemplate/CourseManagePage";
 import DashboardAdminPage from "../containers/AdminTemplate/DashboardAdminPage";
+import UpdateCategoryPage from "../containers/AdminTemplate/UpdateCategoryPage";
 import UpdateCoursePage from "../containers/AdminTemplate/UpdateCoursePage";
 import CourseDetailPage from "../containers/CourseDetail";
 import CoursePage from "../containers/HomeTemplate/CoursePage";
@@ -62,6 +65,21 @@ const routesAdmin = [
     exact: true,
     path: '/course-management',
     component: CourseManagePage,
+  },
+  {
+    exact: true,
+    path: '/new-category',
+    component: AddCategoryPage,
+  },
+  {
+    exact: true,
+    path: '/category-management',
+    component: CategoryManagePage,
+  },
+  {
+    exact: true,
+    path: '/update-category/:id',
+    component: UpdateCategoryPage,
   },
 ]
 

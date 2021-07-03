@@ -7,6 +7,7 @@ import submitCourseReducer from '../../components/FormAddCourse/modules/reducer'
 import courseDeleteReducer from '../../components/CourseManageItem/modules/reducer'
 import updatedCourseReducer from '../../containers/AdminTemplate/UpdateCoursePage/modules/reducer'
 import authReducer from '../global/authModules/reducer'
+import getCategoryReducer from '../../containers/AdminTemplate/CategoryManagePage/modules/reducer'
 
 const rootReducer = combineReducers({
     courseListReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     courseDeleteReducer,
     updatedCourseReducer,
     authReducer,
+    getCategoryReducer,
 })
 
 export default rootReducer

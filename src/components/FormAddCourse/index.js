@@ -35,22 +35,21 @@ const useStyles = makeStyles((theme) => ({
 
 const AddNewCoursePage = (props) => {
   const classes = useStyles()
-  const { updateMode, courseDetail } = props
+  const { updateMode, courseDetail, courseId } = props
   let today = new Date();
   let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
   const [course, setCourse] = useState({
     ...courseDetail || {
-      "maKhoaHoc": "",
-      "biDanh": "",
-      "tenKhoaHoc": "",
-      "moTa": "",
-      "luotXem": 0,
-      "danhGia": 0,
-      "hinhAnh": "",
-      "maNhom": "",
-      "ngayTao": date,
-      "maDanhMucKhoaHoc": "",
-      "taiKhoanNguoiTao": JSON.parse(localStorage.getItem("credentials")).taiKhoan
+      slug: "",
+      courseName: "",
+      description: "",
+      views: 0,
+      ratings: 0,
+      imageCover: "",
+      createdDate: '',
+      updatedDate: '',
+      category: '',
+      createdBy: ''
     }
   })
 
@@ -58,7 +57,7 @@ const AddNewCoursePage = (props) => {
     if (updateMode) {
       setCourse({
         ...course,
-        tenKhoaHoc: e.target.value.trim(),
+        courseName: e.target.value.trim(),
       })
     } else {
       const slug = slugify(e.target.value, {
@@ -71,8 +70,8 @@ const AddNewCoursePage = (props) => {
 
       setCourse({
         ...course,
-        tenKhoaHoc: e.target.value.trim(),
-        biDanh: slug,
+        courseName: e.target.value.trim(),
+        slug,
       })
     }
   }
@@ -86,8 +85,7 @@ const AddNewCoursePage = (props) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    console.log('submited')
-    props.submitCourse(course, updateMode)
+    props.submitCourse(course, updateMode, courseId)
   }
   const maDanhMucKhoaHocArr = [
     // FrontEnd,
@@ -107,11 +105,11 @@ const AddNewCoursePage = (props) => {
             margin="normal"
             required
             fullWidth
-            id="tenKhoaHoc"
+            id="courseName"
             label="Tên Khóa Học"
-            name="tenKhoaHoc"
-            autoComplete="tenKhoaHoc"
-            value={course.tenKhoaHoc}
+            name="courseName"
+            autoComplete="courseName"
+            value={course.courseName}
             autoFocus
             onBlur={handleCourseName}
             onChange={handleCourseInfo}
@@ -121,11 +119,11 @@ const AddNewCoursePage = (props) => {
             margin="normal"
             required
             fullWidth
-            id="biDanh"
-            label="Bí Danh (slug)"
-            name="biDanh"
-            value={course.biDanh}
-            autoComplete="biDanh"
+            id="slug"
+            label="Slug"
+            name="slug"
+            value={course.slug}
+            autoComplete="slug"
             onChange={handleCourseInfo}
           />
           <TextField
@@ -133,39 +131,26 @@ const AddNewCoursePage = (props) => {
             margin="normal"
             required
             fullWidth
-            id="maKhoaHoc"
-            label="Mã Khóa Học"
-            name="maKhoaHoc"
-            value={course.maKhoaHoc}
-            autoComplete="maKhoaHoc"
-            onChange={handleCourseInfo}
-          />
-
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="hinhAnh"
+            id="imageCover"
             label="Link hình ảnh"
-            name="hinhAnh"
-            autoComplete="hinhAnh"
-            value={course.hinhAnh}
+            name="imageCover"
+            autoComplete="imageCover"
+            value={course.imageCover}
             rows={6}
             onChange={handleCourseInfo}
           />
           <FormControl variant="outlined" fullWidth className={classes.formControl}>
             <InputLabel fullWidth id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> <Select
-              labelId="maDanhMucKhoaHoc"
-              id="maDanhMucKhoaHoc"
-              name="maDanhMucKhoaHoc"
+              labelId="category"
+              id="category"
+              name="category"
               onChange={handleCourseInfo}
               label="Mã danh mục khóa học"
-              value={course.maDanhMucKhoaHoc}
+              value={course.category}
             >
               <MenuItem value="FrontEnd">FrontEnd</MenuItem>
-              {maDanhMucKhoaHocArr.map((maDanhMucKhoaHoc) => (
-                <MenuItem value={maDanhMucKhoaHoc}>{maDanhMucKhoaHoc}</MenuItem>
+              {maDanhMucKhoaHocArr.map((catogory) => (
+                <MenuItem value={catogory}>{catogory}</MenuItem>
               ))}
 
             </Select> </FormControl>
@@ -175,16 +160,16 @@ const AddNewCoursePage = (props) => {
             margin="normal"
             required
             fullWidth
-            id="moTa"
+            id="description"
             label="Mô Tả"
-            name="moTa"
-            autoComplete="moTa"
-            value={course.moTa}
+            name="description"
+            autoComplete="description"
+            value={course.description}
             multiline
             rows={6}
             onChange={handleCourseInfo}
           />
-          <FormControl variant="outlined" fullWidth className={classes.formControl}>
+          {/* <FormControl variant="outlined" fullWidth className={classes.formControl}>
             <InputLabel fullWidth id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
@@ -208,16 +193,11 @@ const AddNewCoursePage = (props) => {
               ))}
 
             </Select>
-          </FormControl>
+          </FormControl> */}
 
-          {updateMode ?
-            <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
-              UPDATE
-            </Button>
-            : <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
-              PUBLISH
-            </Button>
-          }
+          <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
+            { updateMode ? 'UPDATE' : 'PUBLISH' }
+          </Button>
         </FormControl>
       </form>
     </div>
