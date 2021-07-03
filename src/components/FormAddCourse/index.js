@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddNewCoursePage = (props) => {
   const { courseDetail, updateMode } = props
+  console.log(courseDetail)
   const classes = useStyles()
   let today = new Date();
   let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
@@ -95,7 +96,7 @@ const AddNewCoursePage = (props) => {
     'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
   ];
 
-
+  console.log(courseDetail)
 
 
 
@@ -114,7 +115,7 @@ const AddNewCoursePage = (props) => {
             label="Tên Khóa Học"
             name="tenKhoaHoc"
             autoComplete="tenKhoaHoc"
-            value={courseDetail.tenKhoaHoc}
+            value={courseDetail?.tenKhoaHoc}
             autoFocus
             onBlur={handleCourseName}
             onChange={handleCourseInfo}
@@ -127,7 +128,7 @@ const AddNewCoursePage = (props) => {
             id="biDanh"
             label="Bí Danh (slug)"
             name="biDanh"
-            value={courseDetail.biDanh}
+            value={courseDetail?.biDanh}
             autoComplete="biDanh"
             autoFocus
             onChange={handleCourseInfo}
@@ -140,7 +141,7 @@ const AddNewCoursePage = (props) => {
             id="maKhoaHoc"
             label="Mã Khóa Học"
             name="maKhoaHoc"
-            value={courseDetail.maKhoaHoc}
+            value={courseDetail?.maKhoaHoc}
             autoComplete="maKhoaHoc"
             autoFocus
             onChange={handleCourseInfo}
@@ -156,7 +157,7 @@ const AddNewCoursePage = (props) => {
             name="hinhAnh"
             autoComplete="hinhAnh"
             autoFocus
-            value={courseDetail.hinhAnh}
+            value={courseDetail?.hinhAnh}
 
             rows={6}
             onChange={handleCourseInfo}
@@ -168,7 +169,7 @@ const AddNewCoursePage = (props) => {
               name="maDanhMucKhoaHoc"
               onChange={handleCourseInfo}
               label="Mã danh mục khóa học"
-              value={courseDetail.maDanhMucKhoaHoc}
+              value={courseDetail?.maDanhMucKhoaHoc}
             >
               <MenuItem value="FrontEnd">FrontEnd</MenuItem>
               {maDanhMucKhoaHocArr.map((maDanhMucKhoaHoc) => (
@@ -187,7 +188,7 @@ const AddNewCoursePage = (props) => {
             name="moTa"
             autoComplete="moTa"
             autoFocus
-            value={courseDetail.moTa}
+            value={courseDetail?.moTa}
             multiline
             rows={6}
             onChange={handleCourseInfo}
@@ -202,7 +203,7 @@ const AddNewCoursePage = (props) => {
               onChange={handleCourseInfo}
               name="maNhom"
               defaultValue="GP01"
-              value={courseDetail.maNhom}
+              value={courseDetail?.maNhom}
             >
               <MenuItem key="GP01"
                 value="GP01"
