@@ -1,10 +1,21 @@
 import { useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import CategoryManageItem from '../../../components/CategoryManageItem'
 import { actFetchCategoryList } from './modules/action'
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+
+const useStyles = makeStyles((theme) => ({
+  buttonCreate: {
+    marginBottom: theme.spacing(2),
+  },
+}))
 
 const CategoryManagePage = (props) => {
+  const classes = useStyles()
+
   useEffect(() => {
     props.fetchCategoryList()
   }, [])
@@ -33,6 +44,11 @@ const CategoryManagePage = (props) => {
   }
   return (
     <>
+      <div className={classes.buttonCreate}>
+        <Link to="/admin/new-category">
+          <Button variant="contained" color="primary">NEW CATEGORY</Button>
+        </Link>
+      </div>
       <Grid container spacing={2}>
         {renderCategoryList()}
       </Grid>
