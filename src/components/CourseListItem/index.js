@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,44 +7,43 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles({
-    root: {
-        maxWidth: 345,
-    },
-    media: {
-        height: 140,
-
-    },
-});
+const useStyles = makeStyles((theme) => (
+    {
+        root: {
+            width: '100%'
+        },
+        media: {
+            height: 0,
+            paddingTop: '56.25%',
+            backgroundColor: theme.palette.grey[300],
+        },
+        buttonPrice: {
+            display: 'block',
+            width: '100%',
+        },
+    }
+));
 
 export default function CourseListItem(props) {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
-                <CardMedia
-                    className={classes.media}
-                    image={props.item.hinhAnh}
-                    title="Contemplative Reptile"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {props.item.tenKhoaHoc}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Lượt xem: {props.item.luotXem}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
+            <CardMedia
+                className={classes.media}
+                image={props.item.imageCover}
+                title={props.item.courseName}
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {props.item.courseName}
+                </Typography>
+            </CardContent>
             <CardActions>
-                <Link to={`/detail/${props.item.maKhoaHoc}`}>
-                    <Button size="small" color="primary">
-                        Learn more
-                    </Button>
-                </Link>
+                <Button variant="contained" color="primary" className={classes.buttonPrice}>
+                    {props.item.price} VND
+                </Button>
             </CardActions>
         </Card>
     );

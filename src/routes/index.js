@@ -40,7 +40,7 @@ const routesHome = [
   },
   {
     exact: true,
-    path: '/detail/:courseId',
+    path: '/detail/:id',
     component: CourseDetailPage
   }
 ]
