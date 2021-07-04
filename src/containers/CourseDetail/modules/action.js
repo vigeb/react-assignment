@@ -6,7 +6,7 @@ export const actFetchCourseDetail = (id) => {
         dispatch(actCourseDetailRequest());
         console.log('pending get detail')
         axios({
-            url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${id}`,
+            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses/${id}.json`,
             method: "GET",
         })
             .then((res) => {

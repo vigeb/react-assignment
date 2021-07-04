@@ -14,13 +14,13 @@ function CourseDetailPage(props) {
         <Container >
             <Box display="flex" >
                 <div>
-                    <h1>Mã hóa học: {props.data.maKhoaHoc}</h1>
-                    <p>Bí danh: {props.data.biDanh}</p>
-                    <p>Mô tả: {props.data.moTa}</p>
-                    <p>Số lượng học viên: {props.data.soLuongHocVien}</p>
-                    <p>Ngày tạo: {props.data.ngayTao}</p>
+                    <h1>Tên hóa học: {props.data.courseName}</h1>
+                    {/* <p>Bí danh: {props.data.biDanh}</p> */}
+                    <p>Mô tả: {props.data.description}</p>
+                    <p>Số lượng học viên: 0</p>
+                    <p>Ngày tạo: {props.data.createdDate}</p>
                 </div>
-                <img src={props.data.hinhAnh}></img>
+                <img src={props.data.imageCover}></img>
             </Box>
         </Container>
     )
@@ -29,21 +29,20 @@ function CourseDetailPage(props) {
 const mapStateToProps = (state) => {
     return {
         loading: state.courseDetailReducer.loading,
-        data: state.courseDetailReducer.data || {
-            "maKhoaHoc": "",
-            "biDanh": "",
-            "tenKhoaHoc": "",
-            "moTa": "",
-            "luotXem": 0,
-            "hinhAnh": "",
-            "ngayTao": "",
-            "soLuongHocVien": 0,
-            "nguoiTao": {
-                "taiKhoan": "",
-                "hoTen": "",
-                "maLoaiNguoiDung": "",
-                "tenLoaiNguoiDung": ""
-            },
+        data: state.courseDetailReducer.data
+            ||
+        {
+            category: "",
+            courseName: "",
+            createdBy: "",
+            createdDate: "",
+            description: "",
+            imageCover: "",
+            price: "",
+            ratings: 0,
+            slug: "",
+            uid: "",
+            updatedDate: "",
         }
     }
 }

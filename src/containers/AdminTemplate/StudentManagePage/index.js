@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import StudentManageItem from "../../../components/StudentManageItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -21,48 +22,50 @@ const StudentManagePage = () => {
     }
     const handleChange = () => { }
 
-    const studentList = [
-        {
-            "taiKhoan": "123112",
-            "biDanh": null,
-            "hoTen": "124124"
-        },
-        {
-            "taiKhoan": "123132",
-            "biDanh": null,
-            "hoTen": "zero"
-        },
-        {
-            "taiKhoan": "12chamlenluon",
-            "biDanh": null,
-            "hoTen": "123"
-        },
-        {
-            "taiKhoan": "7chamlalenduong",
-            "biDanh": null,
-            "hoTen": "chamlalenduong"
-        },
-        {
-            "taiKhoan": "aaa1",
-            "biDanh": null,
-            "hoTen": "admin1"
-        },
-        {
-            "taiKhoan": "aasd",
-            "biDanh": null,
-            "hoTen": "asdsa"
-        }
-    ]
+
+    const [userList, setUserList] = useState([
+
+        // {
+        //     "taiKhoan": "aasd",
+        //     "biDanh": null,
+        //     "hoTen": "asdsa"
+        // }
+    ])
+
+    const idToken = JSON.parse(localStorage.getItem("credentials")).idToken
+
+    useEffect(() => {
+        axios({
+            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users.json?auth=${idToken}`,
+            method: "GET",
+        }).then((res) => {
+            // console.log(res.data)
+            let allUserData = res.data
+            let allUser = []
+            for (let key in allUserData) {
+                allUser.unshift({
+                    ...allUserData[key],
+                    id: key,
+                })
+            }
+            setUserList(allUser)
+            console.log(userList, allUser)
+
+        })
+            .catch((err) => { console.log(err) })
+    }, [])
+    console.log(userList)
     const renderStudentList = () => {
         // const studentList = props.data
-        if (studentList && studentList.length) {
-            return studentList.map((item, index) => {
-                return (
-                    <Grid item xs={12} key={item.maKhoaHoc}>
+        if (userList && userList.length) {
+            return userList.map((item, index) => {
+                if (item.typeOfUser === "HV")
+                    return (
+                        <Grid item xs={12} key={item.maKhoaHoc}>
 
-                        <StudentManageItem student={item} key={index} />
-                    </Grid>
-                )
+                            <StudentManageItem student={item} key={index} />
+                        </Grid>
+                    )
             })
         } else {
             return <div>loading...</div>
@@ -89,31 +92,31 @@ const StudentManagePage = () => {
                 </NativeSelect>
             </FormControl>
             {listSortType === 'displayAll' ?
-                'display all'
+                <>
+                    <FormControl variant="filled" className={classes.formControl}>
+                        <InputLabel htmlFor="filled-age-native-simple">Age</InputLabel>
+                        <NativeSelect
+
+                            // value={maNhom}
+                            onChange={handleChange}
+                            defaultValue="Angular"
+                        >
+                            <option
+                                //  aria-label="None"
+                                value="Angular" onChange={handleChange}>Angular</option>
+                            {/* {maNhomArr.map((maNhom) => (
+                    <option onChange={handleChange} value={maNhom}>{maNhom}</option>
+                ))} */}
+
+                        </NativeSelect>
+                    </FormControl>
+                    <Grid container spacing={2}>
+                        {renderStudentList()}
+                    </Grid>
+                </>
                 :
                 'sort by maKhoaHoc'
-                // <> 
-                // <FormControl variant="filled" className={classes.formControl}>
-                //     <InputLabel htmlFor="filled-age-native-simple">Age</InputLabel>
-                //     <NativeSelect
 
-                //         // value={maNhom}
-                //         onChange={handleChange}
-                //         defaultValue="Angular"
-                //     >
-                //         <option
-                //             //  aria-label="None"
-                //             value="Angular" onChange={handleChange}>Angular</option>
-                //         {/* {maNhomArr.map((maNhom) => (
-                //     <option onChange={handleChange} value={maNhom}>{maNhom}</option>
-                // ))} */}
-
-                //     </NativeSelect>
-                // </FormControl>
-                //     <Grid container spacing={2}>
-                //         {renderStudentList()}
-                //     </Grid>
-                //     </>
             }
 
         </>

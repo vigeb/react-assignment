@@ -5,7 +5,7 @@ export const actFetchCourseList = (maNhom) => {
   return (dispatch) => {
     dispatch(actCourseListRequest());
     axios({
-      url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=` + maNhom,
+      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses.json`,
       method: "GET",
     })
       .then((result) => {

@@ -21,11 +21,22 @@ const HomePage = (props) => {
   }, [state])
 
 
-
+  console.log(props.data)
+  let courseList = props.data
+  let courseArr = []
+  if (courseList) {
+    for (let key in courseList) {
+      courseArr.unshift({
+        ...courseList[key],
+        id: key
+      })
+    }
+  }
+  console.log(courseArr)
   return (<div>
     <Container>
 
-      <CourseList data={props.data} onGetMaNhom={recieveMaNhom} />
+      <CourseList data={courseArr} onGetMaNhom={recieveMaNhom} />
     </Container>
 
   </div>);

@@ -37,7 +37,11 @@ function CourseList(props) {
         )
 
     }
+
     props.onGetMaNhom(state)
+    console.log(props.data)
+    const courseID = props.data
+    console.log(courseID)
 
     if (!props.loading && props.data) {
         return (

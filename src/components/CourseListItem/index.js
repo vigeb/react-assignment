@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles({
     root: {
@@ -21,31 +22,42 @@ const useStyles = makeStyles({
 
 export default function CourseListItem(props) {
     const classes = useStyles();
+    console.log(props.item)
+
+
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image={props.item.hinhAnh}
+                    image={props.item.imageCover}
                     title="Contemplative Reptile"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        {props.item.tenKhoaHoc}
+                        {props.item.courseName}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        Lượt xem: {props.item.luotXem}
+                        giá: {props.item.price}
                     </Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Link to={`/detail/${props.item.maKhoaHoc}`}>
+                <Link to={`/detail/${props.item.id}`}>
                     <Button size="small" color="primary">
-                        Learn more
+                        Know more
+                    </Button>
+                </Link>
+                <Link
+                // to={`/detail/${props.item.id}`}
+                >
+                    <Button size="small" color="primary">
+                        Buy Course
                     </Button>
                 </Link>
             </CardActions>
+
         </Card>
     );
 }
