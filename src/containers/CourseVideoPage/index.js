@@ -96,27 +96,27 @@ const VideoCoursePage = () => {
                             <Box borderBottom={1} borderColor="grey.300"><Grid align="left" style={{ margin: 16 }} >
 
                                 <Typography style={{ fontWeight: 'bold' }}>Section 1: HTML & CSS</Typography>
-                                <Link className={classes.courseItem}><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 1: What is Front-end ?</Typography></Link>
-                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 2: What is HTML and CSS ?</Typography></Link>
+                                <Link className={classes.courseItem}><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 1. What is Front-end ?</Typography></Link>
+                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 2. What is HTML and CSS ?</Typography></Link>
                             </Grid></Box>
 
                             <Box borderBottom={1} borderColor="grey.300"><Grid align="left" style={{ margin: 16 }} >
 
                                 <Typography style={{ fontWeight: 'bold' }}>Section 1: HTML & CSS</Typography>
-                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 1: What is Front-end ?</Typography></Link>
-                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 2: What is HTML and CSS ?</Typography></Link>
+                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 1. What is Front-end ?</Typography></Link>
+                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 2. What is HTML and CSS ?</Typography></Link>
                             </Grid></Box>
                             <Box borderBottom={1} borderColor="grey.300"><Grid align="left" style={{ margin: 16 }} >
 
                                 <Typography style={{ fontWeight: 'bold' }}>Section 1: HTML & CSS</Typography>
-                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 1: What is Front-end ?</Typography></Link>
-                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 2: What is HTML and CSS ?</Typography></Link>
+                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 1. What is Front-end ?</Typography></Link>
+                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 2. What is HTML and CSS ?</Typography></Link>
                             </Grid></Box>
                             <Box borderBottom={1} borderColor="grey.300"><Grid align="left" style={{ margin: 16 }} >
 
                                 <Typography style={{ fontWeight: 'bold' }}>Section 1: HTML & CSS</Typography>
-                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 1: What is Front-end ?</Typography></Link>
-                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}>Bài 2: What is HTML and CSS ?</Typography></Link>
+                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 1. What is Front-end ?</Typography></Link>
+                                <Link><Typography style={{ paddingTop: 8 }} className={classes.inforText}> 2. What is HTML and CSS ?</Typography></Link>
                             </Grid></Box>
 
                         </Grid>
