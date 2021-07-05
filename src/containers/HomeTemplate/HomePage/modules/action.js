@@ -1,7 +1,7 @@
 import * as ActionType from "./constants";
 import axios from "axios";
 
-export const actFetchCourseList = (maNhom) => {
+export const actFetchCourseList = () => {
   return (dispatch) => {
     dispatch(actCourseListRequest());
     axios({
@@ -10,11 +10,9 @@ export const actFetchCourseList = (maNhom) => {
     })
       .then((result) => {
         dispatch(actCourseListSuccess(result.data));
-        // console.log(maNhom, result.data)
       })
       .catch((error) => {
         dispatch(actCourseListFailed(error));
-        // console.log(maNhom)
       });
   };
 };

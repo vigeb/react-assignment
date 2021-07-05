@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { connect } from 'react-redux'
-import { actSubmitCategory } from './modules/action'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
 import slugify from 'slugify'
+import axios from "axios";
+import { exchangeRefreshToken } from '../../global/authModule'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
 const FormManageCategory = (props) => {
   const classes = useStyles()
   const { updateMode, categoryDetail, categoryId } = props
+
+  const history = useHistory()
+
   const [category, setCategory] = useState({
     ...categoryDetail || {
       name: '',
@@ -42,6 +46,8 @@ const FormManageCategory = (props) => {
       description: '',
     }
   })
+
+  const [loading, setLoading] = useState(false)
 
   const handleCategoryName = (e) => {
     if (updateMode) {
@@ -74,8 +80,63 @@ const FormManageCategory = (props) => {
   }
 
   const handleOnSubmit = (e) => {
+    setLoading(true)
     e.preventDefault()
-    props.submitCategory(category, updateMode, categoryId)
+
+    const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
+
+    if (!credentials.refreshToken) return
+
+    let today = new Date();
+    let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+
+    exchangeRefreshToken(credentials.refreshToken)
+      .then((tokenData) => {
+        if (updateMode) {
+          return axios({
+            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories/${categoryId}.json?auth=${tokenData.data.id_token}`,
+            method: 'PUT',
+            data: {
+              ...category,
+              updatedDate: date,
+              uid: tokenData.data.user_id,
+            },
+          })
+        } else {
+          return axios({
+            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories.json?auth=${tokenData.data.id_token}`,
+            method: 'POST',
+            data: {
+              ...category,
+              createdDate: date,
+              uid: tokenData.data.user_id,
+            },
+          })
+        }
+      })
+      .then((res) => {
+        console.log('categ data', res.data)
+        history.push('/admin/category-management')
+      })
+      .catch((err) => {
+        setLoading(false)
+        console.log('err', err)
+      })
+  }
+
+  const renderSubmitButton = (isLoading) => {
+    if (isLoading) {
+      return (
+        <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit" disabled>
+          { updateMode ? 'Updating...' : 'Publishing...' }
+        </Button>
+      )
+    }
+    return (
+      <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
+        { updateMode ? 'UPDATE' : 'PUBLISH' }
+      </Button>
+    )
   }
 
   return (
@@ -89,7 +150,7 @@ const FormManageCategory = (props) => {
             required
             fullWidth
             id="name"
-            label="Tên Khóa Học"
+            label="Tên Danh Mục"
             name="name"
             autoComplete="name"
             value={category.name}
@@ -125,21 +186,11 @@ const FormManageCategory = (props) => {
             onChange={handleCategoryInfo}
           />
 
-          <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
-            { updateMode ? 'UPDATE' : 'PUBLISH' }
-          </Button>
+          {renderSubmitButton(loading)}
         </FormControl>
       </form>
     </div>
   )
 }
 
-const setDispatchToProps = (dispatch) => {
-  return {
-    submitCategory: (category, updateMode, id) => {
-      dispatch(actSubmitCategory(category, updateMode, id))
-    }
-  }
-}
-
-export default connect(null, setDispatchToProps)(FormManageCategory);
+export default FormManageCategory;

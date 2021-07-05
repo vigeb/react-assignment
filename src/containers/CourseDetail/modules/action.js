@@ -1,23 +1,22 @@
 import axios from "axios";
-import * as ActionType from "./constants";
+import * as ActionType from "./constants"
 
 export const actFetchCourseDetail = (id) => {
     return (dispatch) => {
-        dispatch(actCourseDetailRequest());
+        dispatch(actCourseDetailRequest())
         console.log('pending get detail')
         axios({
             url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses/${id}.json`,
             method: "GET",
         })
-            .then((res) => {
-                dispatch(actCourseDetailSuccess(res.data));
-                console.log('get data success', res.data)
-            })
-            .catch((err) => {
-                dispatch(actCourseDetailFailed(err));
-            });
-    };
-};
+        .then((res) => {
+            dispatch(actCourseDetailSuccess(res.data))
+        })
+        .catch((err) => {
+            dispatch(actCourseDetailFailed(err))
+        })
+    }
+}
 
 const actCourseDetailRequest = () => {
     return {

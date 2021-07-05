@@ -68,8 +68,8 @@ const CourseManageItem = (props) => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" className={classes.title}>{course.tenKhoaHoc}</Typography>
-      <Button component={Link} to={`/admin/update-course/${course.maKhoaHoc}`} variant="contained" color="primary" className={classes.button}>
+      <Typography variant="h5" className={classes.title}>{course.courseName}</Typography>
+      <Button component={Link} to={`/admin/update-course/${course.id}`} variant="contained" color="primary" className={classes.button}>
         Update
       </Button>
       <Button onClick={handleDeleteCourse} variant="contained" color="secondary" className={classes.button}>
