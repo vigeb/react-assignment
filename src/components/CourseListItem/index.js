@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Alert from '@material-ui/lab/Alert';
+// import Alert from '@material-ui/lab/Alert';
 import { useHistory } from 'react-router-dom';
 const useStyles = makeStyles((theme) => (
     {
@@ -31,10 +31,11 @@ export default function CourseListItem(props) {
     console.log(props.item)
 
     const history = useHistory()
-    const handleOnClick = () => {
+    const handleOnClick = (e) => {
+        e.preventDefault()
         if (!localStorage.getItem("credentials")) {
             alert("Please sign in in order to buy courses!")
-            history.push("/signup")
+            history.push(`/login?slug=${props.item.slug}.${props.item.id}`)
         }
 
     }
