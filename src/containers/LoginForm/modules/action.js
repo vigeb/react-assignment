@@ -1,9 +1,7 @@
 import axios from 'axios'
 import * as ActionType from './constants'
 
-
-
-export const actLogIn = (userLogIn) => {
+export const actLogIn = (userLogIn, history, service) => {
     return (dispatch) => {
         console.log('pending')
         dispatch(actLogInRequest())
@@ -26,7 +24,26 @@ export const actLogIn = (userLogIn) => {
                 url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${res.data.localId}.json?auth=${res.data.idToken}`,
                 method: "GET",
             })
+            
+        })
+        .then((res) => {
+            console.log('user info', res)
+            credentials.displayName = res.data.displayName
+            credentials.phoneNumber = res.data.phoneNumber
+            credentials.typeOfUser = res.data.typeOfUser
 
+            dispatch(actLogInSuccess(credentials))
+            localStorage.setItem('credentials', JSON.stringify(credentials))
+            console.log('his', history)
+            if (service) {
+                history.push(`/${service}`)
+            } else {
+                history.push('/')
+            }
+        })
+        .catch((err) => {
+            console.log('err', err, err.message)
+            dispatch(actLogInFailed(err))
         })
             .then((res) => {
                 credentials.displayName = res.data.displayName
@@ -37,9 +54,9 @@ export const actLogIn = (userLogIn) => {
                 dispatch(actLogInSuccess(credentials))
                 localStorage.setItem('credentials', JSON.stringify(credentials))
             })
-            .catch(({ response }) => {
-                console.log('response', response, response.data.error.message)
-                dispatch(actLogInFailed(response.data.error.message))
+            .catch((err) => {
+                console.log('response', err.data)
+                dispatch(actLogInFailed(err.data))
             })
     }
 }
