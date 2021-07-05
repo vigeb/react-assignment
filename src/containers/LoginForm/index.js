@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
+    linkSignUp: {
+        color: theme.palette.primary.dark,
+    },
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
@@ -51,7 +54,7 @@ function Login(props) {
                 const sv = item.split('=')
                 service[sv[0]] = sv[1]
             })
-            return service
+            return service && service.slug && `detail/${service.slug}`
         }
         return null
     }
@@ -60,9 +63,7 @@ function Login(props) {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log('userlogin', userLogin)
-        const serviceObj = parseService(props.location.search)
-        const service = serviceObj && serviceObj.slug && `detail/${serviceObj.slug}`
-        console.log('his index', props.history)
+        const service = parseService(props.location.search)
         props.logInUser(userLogin, props.history, service)
 
     }
@@ -105,10 +106,7 @@ function Login(props) {
                         autoComplete="current-password"
                         onChange={handleOnChange}
                     />
-                    {/* <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    /> */}
+                    <p>Chưa có tài khoản? <Link to={`/signup${props.location.search}`} className={classes.linkSignUp}>Đăng ký ngay</Link></p>
                     <Button
                         type="submit"
                         fullWidth
