@@ -44,7 +44,7 @@ function CourseDetailPage(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={3} md={4}>
-                        <CourseListItem item={props.data} />
+                        <CourseListItem item={props.data} inDetailPage={true} />
                     </Grid>
                 </Grid>
             )

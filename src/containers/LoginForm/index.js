@@ -60,6 +60,7 @@ function Login(props) {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log('userlogin', userLogin)
+        console.log('props.location.search', parseService(props.location.search))
         const serviceObj = parseService(props.location.search)
         const service = serviceObj && serviceObj.slug && `detail/${serviceObj.slug}`
         console.log('his index', props.history)

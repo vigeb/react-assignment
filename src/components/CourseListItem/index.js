@@ -32,12 +32,13 @@ export default function CourseListItem(props) {
 
     const history = useHistory()
     const handleOnClick = () => {
-        if (!localStorage.getItem("credentials")) {
+        if (!localStorage.getItem("credentials") && props.inDetailPage === true) {
             alert("Please sign in in order to buy courses!")
             history.push("/signup")
         }
 
     }
+    console.log(props.inDetailPage)
     return (
         <Card className={classes.root}>
 
