@@ -7,7 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import Alert from '@material-ui/lab/Alert';
+import { useHistory } from 'react-router-dom';
 const useStyles = makeStyles((theme) => (
     {
         root: {
@@ -29,10 +30,17 @@ export default function CourseListItem(props) {
     const classes = useStyles();
     console.log(props.item)
 
+    const history = useHistory()
+    const handleOnClick = () => {
+        if (!localStorage.getItem("credentials")) {
+            alert("Please sign in in order to buy courses!")
+            history.push("/signup")
+        }
 
-
+    }
     return (
         <Card className={classes.root}>
+
             <CardMedia
                 className={classes.media}
                 image={props.item.imageCover}
@@ -44,7 +52,7 @@ export default function CourseListItem(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button variant="contained" color="primary" className={classes.buttonPrice}>
+                <Button onClick={handleOnClick} variant="contained" color="primary" className={classes.buttonPrice}>
                     {props.item.price} VND
                 </Button>
             </CardActions>
