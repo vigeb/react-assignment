@@ -9,6 +9,7 @@ export const actLogIn = (userLogIn, history, service) => {
         let credentials
         axios({
             url: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCfvChusc7Nsg3Ba2PeJdl0KJXjTGjihUY",
+
             method: "POST",
             data: {
                 email,
@@ -18,6 +19,7 @@ export const actLogIn = (userLogIn, history, service) => {
         }).then((res) => {
             console.log('user after log in', res)
             credentials = { ...res.data }
+
             return axios({
                 url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${res.data.localId}.json?auth=${res.data.idToken}`,
                 method: "GET",
@@ -43,6 +45,19 @@ export const actLogIn = (userLogIn, history, service) => {
             console.log('err', err, err.message)
             dispatch(actLogInFailed(err))
         })
+            .then((res) => {
+                credentials.displayName = res.data.displayName
+                credentials.phoneNumber = res.data.phoneNumber
+                credentials.typeOfUser = res.data.typeOfUser
+
+                console.log('credentials', credentials)
+                dispatch(actLogInSuccess(credentials))
+                localStorage.setItem('credentials', JSON.stringify(credentials))
+            })
+            .catch((err) => {
+                console.log('response', err.data)
+                dispatch(actLogInFailed(err.data))
+            })
     }
 }
 

@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => (
 
 export default function CourseListItem(props) {
     const classes = useStyles();
+    console.log(props.item)
+
+
 
     return (
         <Card className={classes.root}>
@@ -45,6 +48,7 @@ export default function CourseListItem(props) {
                     {props.item.price} VND
                 </Button>
             </CardActions>
+
         </Card>
     );
 }

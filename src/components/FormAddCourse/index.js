@@ -68,19 +68,19 @@ const AddNewCoursePage = (props) => {
       url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories.json`,
       method: 'GET',
     })
-    .then((res) => {
-      let categoryList = []
-      for (let key in res.data) {
-        categoryList.push({
-          ...res.data[key],
-          id: key,
-        })
-      }
-      return setCategList(categoryList)
-    })
-    .catch((err) => {
-      console.log('err', err)
-    })
+      .then((res) => {
+        let categoryList = []
+        for (let key in res.data) {
+          categoryList.push({
+            ...res.data[key],
+            id: key,
+          })
+        }
+        return setCategList(categoryList)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
   }, [])
 
   const handleCourseName = (e) => {
@@ -144,7 +144,7 @@ const AddNewCoursePage = (props) => {
     const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
 
     if (!credentials.refreshToken) return
-    
+
     exchangeRefreshToken(credentials.refreshToken)
       .then((tokenData) => {
         const idToken = tokenData.data.id_token
@@ -224,8 +224,8 @@ const AddNewCoursePage = (props) => {
             rows={6}
             onChange={handleCourseInfo}
           />
-          <FormControl variant="outlined"  className={classes.formControl}>
-            <InputLabel  id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> <Select
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> <Select
               labelId="category"
               id="category"
               name="category"
@@ -240,7 +240,7 @@ const AddNewCoursePage = (props) => {
                 </MenuItem>
               ))}
 
-            </Select> 
+            </Select>
           </FormControl>
 
           <TextField
@@ -258,7 +258,7 @@ const AddNewCoursePage = (props) => {
           />
 
           <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit" disabled={loading}>
-            { updateMode ? 'UPDATE' : 'PUBLISH' }
+            {updateMode ? 'UPDATE' : 'PUBLISH'}
           </Button>
         </FormControl>
       </form>

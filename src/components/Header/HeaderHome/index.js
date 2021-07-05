@@ -12,11 +12,10 @@ import FaceIcon from '@material-ui/icons/Face'
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  // grow: {
-  //   flexGrow: 1,
-  // },
+
   toolBar: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -72,17 +71,17 @@ const useStyles = makeStyles((theme) => ({
   //   },
   // },
   sectionDesktop: {
-    display: 'none',
+    display: 'block',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
   },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
+  // sectionMobile: {
+  //   display: 'flex',
+  //   [theme.breakpoints.down('md')]: {
+  //     display: 'flex',
+  //   },
+  // },
 
 }));
 
@@ -97,9 +96,15 @@ function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const history = useHistory()
 
+  const handleLogOut = () => {
+    setAnchorEl(null);
+    localStorage.clear()
+    history.push('/login')
+  }
   const renderCredentials = () => {
-    if (props.credentials) {
+    if (props.credentials && localStorage.getItem("credentials")) {
       return (
         <Menu
           anchorEl={anchorEl}
@@ -112,7 +117,7 @@ function Header(props) {
           <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{props.credentials.displayName} </Typography>
           <MenuItem onClick={handleClose}>Hồ sơ</MenuItem>
           <MenuItem onClick={handleClose}>Tài khoản của tôi</MenuItem>
-          <MenuItem onClick={handleClose}>Đăng xuất</MenuItem>
+          <MenuItem onClick={handleClose} onClick={handleLogOut}>Đăng xuất</MenuItem>
         </Menu>
       )
     }
@@ -131,7 +136,7 @@ function Header(props) {
           <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{localCredentials.displayName} </Typography>
           <MenuItem onClick={handleClose}>Hồ sơ</MenuItem>
           <MenuItem onClick={handleClose}>Tài khoản của tôi</MenuItem>
-          <MenuItem onClick={handleClose}>Đăng xuất</MenuItem>
+          <MenuItem onClick={handleLogOut}>Đăng xuất</MenuItem>
         </Menu>
       )
     }
@@ -154,7 +159,7 @@ function Header(props) {
       </Menu>
     )
   }
-  
+
   return (
     <div className={classes.grow}>
       <AppBar position="static">

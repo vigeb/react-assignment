@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, forceUpdate } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
 import { actLogIn } from './modules/action';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Login(props) {
     const [userLogin, setUserLogin] = useState({})
+
     const classes = useStyles();
     const handleOnChange = (e) => {
         setUserLogin({
@@ -63,6 +66,10 @@ function Login(props) {
         props.logInUser(userLogin, props.history, service)
 
     }
+    if (localStorage.getItem("credentials")) {
+        props.history.push('/')
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -112,10 +119,24 @@ function Login(props) {
                     >
                         Sign In
                     </Button>
-                    {props.credentialsErr !== null ?
+                    {props.credentialsErr ?
                         <Typography style={{ color: 'red' }}>Đăng nhập thất bại, hãy nhập lại tài khoản hoặc mật khẩu</Typography>
                         : null
+
                     }
+                    <Link to="/">
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+
+                        >
+                            Back to Homepage
+                        </Button>
+                    </Link>
+
                 </form>
             </div>
 
@@ -132,7 +153,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
     return {
-        credentialsErr: state.logInReducer.error
+        credentialsErr: state.logInReducer.error,
+        credentials: state.logInReducer.data
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
