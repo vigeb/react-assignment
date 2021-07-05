@@ -38,14 +38,29 @@ function Login(props) {
         setUserLogin({
             ...userLogin, [e.target.name]: e.target.value
         })
-
     }
 
-    console.log(props)
+    const parseService = (search) => {
+        if (search) {
+            const serviceArr = search.split('?')[1].split('&')
+            const service = {}
+            serviceArr.forEach((item) => {
+                const sv = item.split('=')
+                service[sv[0]] = sv[1]
+            })
+            return service
+        }
+        return null
+    }
+
+    // console.log(props)
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log('userlogin', userLogin)
-        props.logInUser(userLogin)
+        const serviceObj = parseService(props.location.search)
+        const service = serviceObj && serviceObj.slug && `detail/${serviceObj.slug}`
+        console.log('his index', props.history)
+        props.logInUser(userLogin, props.history, service)
 
     }
     return (
@@ -110,8 +125,8 @@ function Login(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logInUser: (userLogIn) => {
-            dispatch(actLogIn(userLogIn))
+        logInUser: (userLogIn, history, service) => {
+            dispatch(actLogIn(userLogIn, history, service))
         }
     }
 }

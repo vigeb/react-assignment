@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect } from 'react'
 
-const TestPage = () => {
+const TestPage = (props) => {
   useEffect(() => {
+    console.log('props', props)
     axios({
       url: 'https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users.json',
       method: 'GET',

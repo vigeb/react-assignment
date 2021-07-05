@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as ActionType from './constants'
 
-export const actLogIn = (userLogIn) => {
+export const actLogIn = (userLogIn, history, service) => {
     return (dispatch) => {
         console.log('pending')
         dispatch(actLogInRequest())
@@ -32,6 +32,12 @@ export const actLogIn = (userLogIn) => {
 
             dispatch(actLogInSuccess(credentials))
             localStorage.setItem('credentials', JSON.stringify(credentials))
+            console.log('his', history)
+            if (service) {
+                history.push(`/${service}`)
+            } else {
+                history.push('/')
+            }
         })
         .catch((err) => {
             console.log('err', err, err.message)
