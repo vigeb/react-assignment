@@ -11,6 +11,7 @@ import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
+import StorefrontIcon from '@material-ui/icons/Storefront';
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
@@ -63,12 +64,14 @@ export const AdminListItem = () => {
           <ListItemText primary="Users" />
         </ListItem>
       </NavLink>
-      <ListItem button>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Integrations" />
-      </ListItem>
+      <NavLink to="/admin/enrollment" className={classes.navLink} activeClassName={classes.navLinkActive}>
+        <ListItem button>
+          <ListItemIcon>
+            <StorefrontIcon />
+          </ListItemIcon>
+          <ListItemText primary="Enrollment" />
+        </ListItem>
+      </NavLink>
     </div>
   )
 };

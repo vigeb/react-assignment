@@ -3,7 +3,7 @@ import * as ActionType from './constants'
 
 export const actLogIn = (userLogIn, history, service) => {
     return (dispatch) => {
-        console.log('pending')
+
         dispatch(actLogInRequest())
         const { email, matKhau } = userLogIn
         let credentials
@@ -34,7 +34,7 @@ export const actLogIn = (userLogIn, history, service) => {
 
             dispatch(actLogInSuccess(credentials))
             localStorage.setItem('credentials', JSON.stringify(credentials))
-            console.log('his', history)
+
             if (service) {
                 history.push(`/${service}`)
             } else {

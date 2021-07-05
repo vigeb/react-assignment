@@ -3,6 +3,7 @@ import AddNewCoursePage from "../containers/AdminTemplate/AddNewCoursePage";
 import CategoryManagePage from "../containers/AdminTemplate/CategoryManagePage";
 import CourseManagePage from "../containers/AdminTemplate/CourseManagePage";
 import DashboardAdminPage from "../containers/AdminTemplate/DashboardAdminPage";
+import EnrollmentPage from "../containers/AdminTemplate/EnrollmentPage";
 import StudentManagePage from "../containers/AdminTemplate/StudentManagePage";
 import UpdateCategoryPage from "../containers/AdminTemplate/UpdateCategoryPage";
 import UpdateCoursePage from "../containers/AdminTemplate/UpdateCoursePage";
@@ -93,6 +94,11 @@ const routesAdmin = [
     exact: true,
     path: '/student-management',
     component: StudentManagePage,
+  },
+  {
+    exact: true,
+    path: '/enrollment',
+    component: EnrollmentPage,
   },
 ]
 

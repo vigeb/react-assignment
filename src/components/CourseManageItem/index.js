@@ -44,26 +44,6 @@ const CourseManageItem = (props) => {
           setResponseText(response.data || 'xoa that bai')
         })
     }
-    // return (dispatch) => {
-    //     dispatch(actDeleteCourseRequest());
-    //     console.log('pending delete')
-    //     axios({
-    //         url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${}`,
-    //         method: "DELETE",
-    //         headers: {
-    //             Authorization: 'Bearer ' + accessToken
-    //         }
-    //     })
-    //         .then((res) => {
-    //             dispatch(actDeleteCourseSuccess(res.data));
-    //             console.log('delete data success', res.data)
-    //         })
-    //         .catch(({ response } = {}) => {
-
-    //             dispatch(actDeleteCourseFailed(response.data));
-
-    //         });
-    // };
   }
 
   return (
