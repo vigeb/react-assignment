@@ -7,11 +7,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CategoryIcon from '@material-ui/icons/Category';
+import PeopleIcon from '@material-ui/icons/People';
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
@@ -56,12 +55,14 @@ export const AdminListItem = () => {
           <ListItemText primary="Categories" />
         </ListItem>
       </NavLink>
-      <ListItem button>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reports" />
-      </ListItem>
+      <NavLink to="/admin/student-management" className={classes.navLink} activeClassName={classes.navLinkActive}>
+        <ListItem button>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Users" />
+        </ListItem>
+      </NavLink>
       <ListItem button>
         <ListItemIcon>
           <LayersIcon />

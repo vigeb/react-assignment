@@ -11,6 +11,7 @@ export const actSignUp = (newUser) => {
             data: {
                 password: matKhau,
                 email,
+                returnSecureToken: true,
             }
         })
             .then((res) => {
@@ -24,6 +25,7 @@ export const actSignUp = (newUser) => {
                         displayName: hoTen,
                         phoneNumber: soDT,
                         typeOfUser: 'HV',
+                        email,
                     },
                 })
             })
