@@ -87,6 +87,7 @@ export default function CourseListItem(props) {
         }
 
     }
+    console.log(props.inDetailPage)
     return (
         <Card className={classes.root}>
 
