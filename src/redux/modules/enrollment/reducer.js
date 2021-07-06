@@ -6,19 +6,19 @@ let initialState = {
     error: null
 }
 
-const authReducer = (state = initialState, action) => {
+const enrollReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ActionType.AUTH_REQUEST:
+        case ActionType.ENROLL_REQUEST:
             state.loading = true
             state.data = null
             state.error = null
             return { ...state }
-        case ActionType.AUTH_SUCCESS:
+        case ActionType.ENROLL_SUCCESS:
             state.loading = false
             state.data = action.payload
             state.error = null
             return { ...state }
-        case ActionType.AUTH_FAILED:
+        case ActionType.ENROLL_FAILED:
             state.loading = false
             state.data = null
             state.error = action.payload
@@ -27,4 +27,4 @@ const authReducer = (state = initialState, action) => {
             return { ...state }
     }
 }
-export default authReducer
+export default enrollReducer

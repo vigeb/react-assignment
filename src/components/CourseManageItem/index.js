@@ -52,6 +52,9 @@ const CourseManageItem = (props) => {
       <Button component={Link} to={`/admin/update-course/${course.id}`} variant="contained" color="primary" className={classes.button}>
         Update
       </Button>
+      <Button component={Link} to={`/admin/course/${course.id}`} variant="contained" color="primary" className={classes.button}>
+        View Student List
+      </Button>
       <Button onClick={handleDeleteCourse} variant="contained" color="secondary" className={classes.button}>
         Delete
       </Button>

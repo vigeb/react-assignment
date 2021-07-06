@@ -6,6 +6,7 @@ import logInReducer from '../../containers/LoginForm/modules/reducer'
 import courseDeleteReducer from '../../components/CourseManageItem/modules/reducer'
 // import authReducer from '../global/authModules/reducer'
 import getCategoryReducer from '../../containers/AdminTemplate/CategoryManagePage/modules/reducer'
+import enrollReducer from '../modules/enrollment/reducer'
 
 const rootReducer = combineReducers({
     courseListReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     logInReducer,
     courseDeleteReducer,
     getCategoryReducer,
+    enrollReducer,
 })
 
 export default rootReducer
