@@ -64,7 +64,7 @@ export const AdminListItem = () => {
           <ListItemText primary="Users" />
         </ListItem>
       </NavLink>
-      <NavLink to="/admin/enrollment" className={classes.navLink} activeClassName={classes.navLinkActive}>
+      <NavLink to="/admin/enrollment/pending" className={classes.navLink} activeClassName={classes.navLinkActive}>
         <ListItem button>
           <ListItemIcon>
             <StorefrontIcon />

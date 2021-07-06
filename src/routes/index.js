@@ -97,7 +97,7 @@ const routesAdmin = [
   },
   {
     exact: true,
-    path: '/enrollment',
+    path: '/enrollment/:status',
     component: EnrollmentPage,
   },
 ]

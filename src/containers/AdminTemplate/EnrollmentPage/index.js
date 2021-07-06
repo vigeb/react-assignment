@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
-import UserManageItem from "../../../components/UserManageItem";
-import { Grid } from '@material-ui/core';
 import axios from 'axios';
 import { exchangeRefreshToken } from '../../../global/authModule'
+import EnrollmentList from '../../../components/EnrollmentList';
 
 const EnrollmentPage = (props) => {
   const [enrolls, setEnrolls] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    console.log('fetch', props.match.params.status)
+    setLoading(true)
     const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
 
     if (!credentials || !credentials.refreshToken) return
@@ -16,7 +18,7 @@ const EnrollmentPage = (props) => {
       .then((token) => {
         const { id_token } = token.data
         return axios({
-          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment.json?auth=${id_token}`,
+          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment.json?auth=${id_token}&orderBy="status"&equalTo="${props.match.params.status}"&print=pretty`,
           method: 'GET',
         })
       })
@@ -30,29 +32,18 @@ const EnrollmentPage = (props) => {
           })
         }
         setEnrolls(enrollList)
+        setLoading(false)
       })
       .catch((err) => {
+        setLoading(true)
         console.log('ee', err)
       })
-  },[])
-
-  const renderEnrollList = (lst) => {
-    if (lst.length) {
-      return lst.map((enroll) => (
-          <Grid item key={enroll.id} xs={12}>
-            <UserManageItem enrollment={enroll} />
-          </Grid>
-        )
-      )
-    } else {
-      return <div>loading...</div>
-    }
-  }
+  },[props.match.params.status])
 
   return (
-    <Grid container spacing={3}>
-      {renderEnrollList(enrolls)}
-    </Grid>
+    <>
+      <EnrollmentList enrollList={enrolls} loading={loading} />
+    </>
   )
 }
 
