@@ -1,5 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography, Button } from '@material-ui/core'
+import axios from 'axios'
+import { exchangeRefreshToken } from '../../global/authModule'
+import { useState } from 'react'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,28 +22,53 @@ const useStyles = makeStyles((theme) => ({
 
 const UserManageItem = (props) => {
   const classes = useStyles()
-  const { enrollment } = props
-  console.log(enrollment)
-  const handleApprove = () => {
-    enrollment.status = "approved"
-    console.log(enrollment.status)
+  const { enrollment, setLoading } = props
+  console.log(enrollment.id)
+  console.log(setLoading)
 
+  const handleChangeStatus = (status) => {
+
+    const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
+
+    if (!credentials.refreshToken) return
+
+    exchangeRefreshToken(credentials.refreshToken)
+
+      .then((tokenData) => {
+        const idToken = tokenData.data.id_token
+        return axios({
+          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment/${enrollment.id}.json?auth=${idToken}`,
+          method: 'PATCH',
+          data: {
+            status,
+          }
+        })
+      })
+      .then((res) => {
+        console.log('res', res)
+
+
+      })
+      .catch((err) => {
+
+        console.log('test err', err)
+      })
   }
   return (
     <div className={classes.root}>
       <Typography className={classes.title} component="h2" variant="h5">{`${enrollment.displayName} - ${enrollment.uid}`}</Typography>
       <Typography className={classes.title} component="h3" variant="h6">{enrollment.price} - {enrollment.courseName}</Typography>
       <Typography className={classes.title} component="p" variant="h6">Status: {enrollment.status}</Typography>
-      <Button variant="contained" color="primary" className={classes.button} onClick={handleApprove}>
+      <Button variant="contained" color="primary" className={classes.button} onClick={() => handleChangeStatus("approved")}>
         Approve
       </Button>
-      <Button variant="contained" color="primary" className={classes.button}>
+      <Button variant="contained" color="primary" className={classes.button} onClick={() => handleChangeStatus("pending")}>
         Pending
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button}>
+      <Button variant="contained" color="secondary" className={classes.button} onClick={() => handleChangeStatus("canceled")}>
         Cancel
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button}>
+      <Button variant="contained" color="secondary" className={classes.button} onClick={() => handleChangeStatus("declined")}>
         Decline
       </Button>
     </div>

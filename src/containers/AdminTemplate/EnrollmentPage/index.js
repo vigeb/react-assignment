@@ -38,12 +38,12 @@ const EnrollmentPage = (props) => {
         setLoading(true)
         console.log('ee', err)
       })
-  },[props.match.params.status])
+  }, [props.match.params.status])
 
   return (
-    <>
-      <EnrollmentList enrollList={enrolls} loading={loading} />
-    </>
+
+    <EnrollmentList enrollList={enrolls} loading={loading} setLoading={setLoading} />
+
   )
 }
 
