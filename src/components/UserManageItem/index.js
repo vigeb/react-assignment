@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
 
 const UserManageItem = (props) => {
   const classes = useStyles()
-  const { enrollment, setLoading } = props
+  const { enrollment, setData } = props
   console.log(enrollment.id)
-  console.log(setLoading)
+  console.log(setData)
 
   const handleChangeStatus = (status) => {
 
@@ -44,9 +44,11 @@ const UserManageItem = (props) => {
           }
         })
       })
+      // .then(() => {
+      //   setLoading(true)
+      // })
       .then((res) => {
-        console.log('res', res)
-
+        setData(res)
 
       })
       .catch((err) => {

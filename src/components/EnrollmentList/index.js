@@ -2,8 +2,8 @@ import UserManageItem from '../UserManageItem';
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Button } from '@material-ui/core';
 import { NavLink } from 'react-router-dom'
-import { exchangeRefreshToken } from '../../global/authModule';
-import axios from 'axios'
+import { useState } from 'react';
+
 
 const useStyles = makeStyles((theme) => ({
   spacingBottom: {
@@ -27,13 +27,13 @@ const EnrollmentList = (props) => {
   const classes = useStyles()
   const { enrollList, loading, setLoading } = props
   console.log(setLoading)
-
+  const [data, setData] = useState('')
   const renderEnrollList = (lst) => {
     if (loading) return <div>loading...</div>
     if (lst && lst.length) {
       return lst.map((enroll) => (
         <Grid item key={enroll.id} xs={12}>
-          <UserManageItem enrollment={enroll} setLoading={setLoading} />
+          <UserManageItem enrollment={enroll} setData={setData} />
         </Grid>
       )
       )
