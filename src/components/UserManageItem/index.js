@@ -19,13 +19,18 @@ const useStyles = makeStyles((theme) => ({
 const UserManageItem = (props) => {
   const classes = useStyles()
   const { enrollment } = props
+  console.log(enrollment)
+  const handleApprove = () => {
+    enrollment.status = "approved"
+    console.log(enrollment.status)
 
+  }
   return (
     <div className={classes.root}>
       <Typography className={classes.title} component="h2" variant="h5">{`${enrollment.displayName} - ${enrollment.uid}`}</Typography>
       <Typography className={classes.title} component="h3" variant="h6">{enrollment.price} - {enrollment.courseName}</Typography>
       <Typography className={classes.title} component="p" variant="h6">Status: {enrollment.status}</Typography>
-      <Button variant="contained" color="primary" className={classes.button}>
+      <Button variant="contained" color="primary" className={classes.button} onClick={handleApprove}>
         Approve
       </Button>
       <Button variant="contained" color="primary" className={classes.button}>
