@@ -51,6 +51,16 @@ const EnrollmentList = (props) => {
             Approved
           </Button>
         </NavLink>
+        <NavLink to="/admin/enrollment/cancelled" activeClassName={classes.navLinkActive}>
+          <Button variant="contained" className={classes.spacingRight}>
+            Cancelled
+          </Button>
+        </NavLink>
+        <NavLink to="/admin/enrollment/declined" activeClassName={classes.navLinkActive}>
+          <Button variant="contained" className={classes.spacingRight}>
+            Declined
+          </Button>
+        </NavLink>
       </div>
       <Grid container spacing={3}>
         {renderEnrollList(enrollList)}
