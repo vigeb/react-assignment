@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const EnrollmentList = (props) => {
   const classes = useStyles()
   const { enrollList, loading, setLoading } = props
-  console.log(setLoading)
+  console.log(enrollList)
   const [data, setData] = useState('')
   const renderEnrollList = (lst) => {
     if (loading) return <div>loading...</div>

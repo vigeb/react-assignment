@@ -22,9 +22,11 @@ const useStyles = makeStyles((theme) => ({
 
 const UserManageItem = (props) => {
   const classes = useStyles()
-  const { enrollment, setData } = props
-  console.log(enrollment.id)
-  console.log(setData)
+  const { enrollment } = props
+  const [activeStatus, setActiveStatus] = useState(enrollment.status)
+
+  console.log(enrollment)
+  // console.log(setLoading)
 
   const handleChangeStatus = (status) => {
 
@@ -44,12 +46,10 @@ const UserManageItem = (props) => {
           }
         })
       })
-      // .then(() => {
-      //   setLoading(true)
-      // })
-      .then((res) => {
-        setData(res)
 
+      .then((res) => {
+        console.log('res', res)
+        setActiveStatus(status)
       })
       .catch((err) => {
 
@@ -60,14 +60,14 @@ const UserManageItem = (props) => {
     <div className={classes.root}>
       <Typography className={classes.title} component="h2" variant="h5">{`${enrollment.displayName} - ${enrollment.uid}`}</Typography>
       <Typography className={classes.title} component="h3" variant="h6">{enrollment.price} - {enrollment.courseName}</Typography>
-      <Typography className={classes.title} component="p" variant="h6">Status: {enrollment.status}</Typography>
+      <Typography className={classes.title} component="p" variant="h6">Status: {activeStatus}</Typography>
       <Button variant="contained" color="primary" className={classes.button} onClick={() => handleChangeStatus("approved")}>
         Approve
       </Button>
       <Button variant="contained" color="primary" className={classes.button} onClick={() => handleChangeStatus("pending")}>
         Pending
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button} onClick={() => handleChangeStatus("canceled")}>
+      <Button variant="contained" color="secondary" className={classes.button} onClick={() => handleChangeStatus("cancelled")}>
         Cancel
       </Button>
       <Button variant="contained" color="secondary" className={classes.button} onClick={() => handleChangeStatus("declined")}>

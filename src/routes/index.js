@@ -11,6 +11,7 @@ import CourseDetailPage from "../containers/CourseDetail";
 import VideoCoursePage from "../containers/CourseVideoPage";
 import CoursePage from "../containers/HomeTemplate/CoursePage";
 import HomePage from "../containers/HomeTemplate/HomePage";
+import ProfilePage from "../containers/HomeTemplate/ProfilePage";
 import TestPage from "../containers/HomeTemplate/TestPage";
 import LoginForm from "../containers/LoginForm";
 import SignUpForm from "../containers/SignUpForm";
@@ -50,6 +51,11 @@ const routesHome = [
     exact: true,
     path: '/video',
     component: VideoCoursePage
+  },
+  {
+    exact: true,
+    path: '/profile',
+    component: ProfilePage,
   }
 ]
 

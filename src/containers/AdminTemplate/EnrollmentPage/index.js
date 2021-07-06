@@ -18,7 +18,7 @@ const EnrollmentPage = (props) => {
       .then((token) => {
         const { id_token } = token.data
         return axios({
-          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment.json?auth=${id_token}&orderBy="status"&equalTo="${props.match.params.status}"&print=pretty`,
+          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment.json?auth=${id_token}&orderBy="status"&equalTo="${props.match.params.status}"&orderBy="uid"&equalTo="${props.match.params.status}"&print=pretty`,
           method: 'GET',
         })
       })
