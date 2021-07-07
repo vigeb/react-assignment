@@ -35,11 +35,8 @@ export const actLogIn = (userLogIn, history, service) => {
             dispatch(actLogInSuccess(credentials))
             localStorage.setItem('credentials', JSON.stringify(credentials))
 
-            if (service) {
-                history.push(`/${service}`)
-            } else {
-                history.push('/')
-            }
+            history.push(`/${service ? service : ''}`)
+
         })
         .catch((err) => {
             console.log('err', err, err.message)

@@ -60,6 +60,7 @@ function Header(props) {
   }
 
   const handleToProfile = (uid) => {
+    console.log('uid', uid)
     if (uid) {
       history.push(`/profile/${uid}/pending`)
     } else {
