@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import ProfileList from '../../../components/ProfileList';
 import { actEnroll } from '../../../redux/modules/enrollment/action';
 import { connect } from 'react-redux'
@@ -9,7 +9,9 @@ const ProfilePage = (props) => {
     }, [props.match.params.status, props.match.params.uid])
 
     return (
-        <ProfileList data={props.data} loading={props.loading} status={props.match.params.status} uid={props.match.params.uid} />
+        <>
+            <ProfileList data={props.data} loading={props.loading} status={props.match.params.status} uid={props.match.params.uid} />
+        </>
     )
 }
 

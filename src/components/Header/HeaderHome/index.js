@@ -30,58 +30,12 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
-  // search: {
-  //   position: 'relative',
-
-  //   borderRadius: theme.shape.borderRadius,
-  //   backgroundColor: fade(theme.palette.common.white, 0.15),
-  //   '&:hover': {
-  //     backgroundColor: fade(theme.palette.common.white, 0.25),
-  //   },
-  //   marginRight: theme.spacing(2),
-  //   marginLeft: 0,
-  //   width: '100%',
-  //   display: 'none',
-  //   [theme.breakpoints.up('sm')]: {
-  //     marginLeft: theme.spacing(3),
-  //     width: 'auto',
-  //     display: 'block',
-  //   },
-  // },
-  // searchIcon: {
-  //   padding: theme.spacing(0, 2),
-  //   height: '100%',
-  //   position: 'absolute',
-  //   pointerEvents: 'none',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // inputRoot: {
-  //   color: 'inherit',
-  // },
-  // inputInput: {
-  //   padding: theme.spacing(1, 1, 1, 0),
-  //   // vertical padding + font size from searchIcon
-  //   paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-  //   transition: theme.transitions.create('width'),
-  //   width: '100%',
-  //   [theme.breakpoints.up('md')]: {
-  //     width: '20ch',
-  //   },
-  // },
   sectionDesktop: {
     display: 'block',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
   },
-  // sectionMobile: {
-  //   display: 'flex',
-  //   [theme.breakpoints.down('md')]: {
-  //     display: 'flex',
-  //   },
-  // },
 
 }));
 
@@ -96,10 +50,6 @@ function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleOpenProfile = () => {
-    setAnchorEl(null);
-    history.push('/profile')
-  }
 
   const history = useHistory()
 
@@ -108,6 +58,15 @@ function Header(props) {
     localStorage.clear()
     history.push('/login')
   }
+
+  const handleToProfile = (uid) => {
+    if (uid) {
+      history.push(`/profile/${uid}/pending`)
+    } else {
+      history.push(`/login?slug=profile/${uid}/pending`)
+    }
+  }
+
   const renderCredentials = () => {
     if (props.credentials && localStorage.getItem("credentials")) {
       return (
@@ -121,7 +80,7 @@ function Header(props) {
         >
           <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{props.credentials.displayName} </Typography>
           <MenuItem onClick={handleClose}>Hồ sơ</MenuItem>
-          <MenuItem onClick={handleClose}>Tài khoản của tôi</MenuItem>
+          <MenuItem onClick={() => handleToProfile(props.credentials.localId)}>Profile</MenuItem>
           <MenuItem onClick={handleClose} onClick={handleLogOut}>Đăng xuất</MenuItem>
         </Menu>
       )
@@ -139,8 +98,7 @@ function Header(props) {
           onClose={handleClose}
         >
           <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{localCredentials.displayName} </Typography>
-
-          <MenuItem onClick={handleOpenProfile}>Tài khoản của tôi</MenuItem>
+          <MenuItem onClick={() => handleToProfile(localCredentials.localId)}>Profile</MenuItem>
           <MenuItem onClick={handleLogOut}>Đăng xuất</MenuItem>
         </Menu>
       )

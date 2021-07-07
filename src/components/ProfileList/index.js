@@ -5,7 +5,9 @@ import ProfileCourseItem from '../ProfileCourseItem';
 
 
 const useStyles = makeStyles((theme) => ({
-    spacingContainer: {
+    root: {
+        width: '100%',
+        boxSizing: 'border-box',
         padding: theme.spacing(3),
     },
     spacingRight: {
@@ -47,15 +49,14 @@ function ProfileList(props) {
             }
         )
 
-        console.log('render',coursesToRender)
         if (hasData) return coursesToRender
         return <div>No data</div>
 
     }
 
     return (
-        <>
-            <div className={classes.spacingContainer}>
+        <Grid container spacing={3} className={classes.root}>
+            <Grid item xs={12}>
                 <Typography align="center" variant="h3" className={classes.title}>Các khóa học của tôi</Typography>
                 <NavLink to={`/profile/${uid}/pending`} activeClassName={classes.navLinkActive}>
                     <Button variant="contained" className={classes.spacingRight}>
@@ -72,11 +73,13 @@ function ProfileList(props) {
                         Cancelled orders
                     </Button>
                 </NavLink>
-            </div>
-            <Grid container spacing={3} className={classes.spacingContainer}>
-                {renderCourseList(data)}
             </Grid>
-        </>
+            <Grid item xs={12}>
+                <Grid container spacing={3}>
+                    {renderCourseList(data)}
+                </Grid>
+            </Grid>
+        </Grid>
     )
 }
 export default ProfileList
