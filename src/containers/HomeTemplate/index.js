@@ -1,10 +1,11 @@
 import { Route } from 'react-router-dom'
-import HeaderHome from "../../components/Header/HeaderHome"
+import Header from "../../components/Header"
 
 const HomeLayout = (props) => {
+  console.log(props.children)
   return (
     <>
-      <HeaderHome />
+      <Header />
       {props.children}
     </>
   )
@@ -22,5 +23,5 @@ const HomeTemplate = ({ Component, ...props }) => {
     />
   );
 }
- 
+
 export default HomeTemplate;

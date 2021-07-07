@@ -8,7 +8,7 @@ import EnrollmentPage from "../containers/AdminTemplate/EnrollmentPage";
 import StudentManagePage from "../containers/AdminTemplate/StudentManagePage";
 import UpdateCategoryPage from "../containers/AdminTemplate/UpdateCategoryPage";
 import UpdateCoursePage from "../containers/AdminTemplate/UpdateCoursePage";
-import CourseDetailPage from "../containers/CourseDetail";
+import CourseDetailPage from "../containers/HomeTemplate/CourseDetailPage";
 import VideoCoursePage from "../containers/CourseVideoPage";
 import CoursePage from "../containers/HomeTemplate/CoursePage";
 import HomePage from "../containers/HomeTemplate/HomePage";
