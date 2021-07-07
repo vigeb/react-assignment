@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const StudentManageItem = (props) => {
     const classes = useStyles()
     const { student } = props
+
     const handleDeleteStudent = () => {
         let credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
         if (credentials && credentials.idToken && credentials.typeOfUser === "GV") {

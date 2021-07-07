@@ -96,6 +96,11 @@ function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleOpenProfile = () => {
+    setAnchorEl(null);
+    history.push('/profile')
+  }
+
   const history = useHistory()
 
   const handleLogOut = () => {
@@ -134,8 +139,8 @@ function Header(props) {
           onClose={handleClose}
         >
           <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{localCredentials.displayName} </Typography>
-          <MenuItem onClick={handleClose}>Hồ sơ</MenuItem>
-          <MenuItem onClick={handleClose}>Tài khoản của tôi</MenuItem>
+
+          <MenuItem onClick={handleOpenProfile}>Tài khoản của tôi</MenuItem>
           <MenuItem onClick={handleLogOut}>Đăng xuất</MenuItem>
         </Menu>
       )
@@ -168,20 +173,6 @@ function Header(props) {
             <Link to="/">Trang chủ</Link>
           </Typography>
 
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Tìm kiếm..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div> */}
-          {/* <div className={classes.grow} /> */}
 
           <div className={classes.sectionDesktop}>
             <Button style={{ color: 'white' }} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
