@@ -24,10 +24,6 @@ const ProfileCourseItem = (props) => {
     const classes = useStyles()
     const { course } = props
 
-    console.log('course' + course)
-
-
-
     return (
         <div className={classes.root}>
             <Typography className={classes.title} component="h2" variant="h5">{`${course.courseName} - ${course.courseName}`}</Typography>

@@ -55,7 +55,7 @@ const routesHome = [
   },
   {
     exact: true,
-    path: '/profile',
+    path: '/profile/:uid/:status',
     component: ProfilePage,
   }
 ]

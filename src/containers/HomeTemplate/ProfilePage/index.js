@@ -1,49 +1,33 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios';
-import { exchangeRefreshToken } from '../../../global/authModule'
+import { useEffect } from 'react'
 import ProfileList from '../../../components/ProfileList';
+import { actEnroll } from '../../../redux/modules/enrollment/action';
+import { connect } from 'react-redux'
 
-
-const ProfilePage = () => {
-    const [profile, setProfile] = useState([])
-    const [loading, setLoading] = useState(false)
-
+const ProfilePage = (props) => {
     useEffect(() => {
-        setLoading(true)
-        const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
-
-        if (!credentials || !credentials.refreshToken) return
-
-        exchangeRefreshToken(credentials.refreshToken)
-            .then((token) => {
-                const { id_token, user_id } = token.data
-                return axios({
-                    url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment.json?auth=${id_token}&orderBy="uid"&equalTo="${user_id}"&print=pretty`,
-                    method: 'GET',
-                })
-            })
-            .then((res) => {
-                console.log('data', res.data)
-                const profileList = []
-                for (let key in res.data) {
-                    profileList.push({
-                        ...res.data[key],
-                        id: key,
-                    })
-                }
-                setProfile(profileList)
-
-                setLoading(false)
-            })
-            .catch((err) => {
-                setLoading(false)
-                console.log('ee', err)
-            })
-    }, [])
+        props.fetchEnrollmentByUid('uid', props.match.params.uid)
+    }, [props.match.params.status, props.match.params.uid])
 
     return (
-        <ProfileList profile={profile} loading={loading} setLoading={setLoading} />
+        <>
+            <ProfileList data={props.data} loading={props.loading} status={props.match.params.status} uid={props.match.params.uid} />
+        </>
     )
 }
 
-export default ProfilePage
+const mapDispatchToProps = (dispatch) => {
+    return {
+      fetchEnrollmentByUid: (key, val) => {
+        dispatch(actEnroll(key, val))
+      }
+    }
+  }
+  
+  const mapStateToProps = (state) => {
+    return {
+      loading: state.enrollReducer.loading,
+      data: state.enrollReducer.data
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage)
