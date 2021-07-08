@@ -34,7 +34,7 @@ const TestPage = (props) => {
       .then((tokenData) => {
         const idToken = tokenData.data.id_token
         return axios({
-          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment.json?auth=${idToken}&orderBy="uid"&equalTo="NBxLs5HMkkQ9u5r04OdcD9kcPrs2"&print=pretty`,
+          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/NBxLs5HMkkQ9u5r04OdcD9kcPrs2.json?auth=${idToken}`,
           method: 'GET',
 
         })

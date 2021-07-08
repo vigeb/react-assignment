@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles'
-import { Grid, Button, Typography } from '@material-ui/core';
+import { Grid, Button, Typography, Container } from '@material-ui/core';
 import { NavLink } from 'react-router-dom'
 import ProfileCourseItem from '../ProfileCourseItem';
+import Loading from '../Loading';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,8 +34,8 @@ function ProfileList(props) {
     const { loading, data, status, uid } = props
 
     const renderCourseList = (list) => {
-        if (loading) return <div>loading...</div>
-        if (!list || !list.length) return <div>no data</div>
+        if (loading) return <Container ><Loading /></Container>
+        if (!list || !list.length) return <Typography>There is nothing here...</Typography>
 
         let hasData = false
         const coursesToRender = list.map((course) => {
@@ -50,7 +51,7 @@ function ProfileList(props) {
         )
 
         if (hasData) return coursesToRender
-        return <div>No data</div>
+        return <Typography>There is nothing here...</Typography>
 
     }
 

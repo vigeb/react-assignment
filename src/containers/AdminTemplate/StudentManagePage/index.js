@@ -1,10 +1,11 @@
-import { FormControl, Grid, Typography } from "@material-ui/core"
+import { Container, FormControl, Grid, Typography } from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import StudentManageItem from "../../../components/StudentManageItem";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Loading from "../../../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -68,7 +69,7 @@ const StudentManagePage = () => {
                     )
             })
         } else {
-            return <div>loading...</div>
+            return <Container><Loading /></Container>
         }
     }
     return (

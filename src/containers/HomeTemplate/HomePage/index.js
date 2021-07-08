@@ -3,6 +3,7 @@ import { actFetchCourseList } from "./modules/action";
 import { connect } from "react-redux";
 import CourseList from "../../../components/CourseList";
 import { Container } from "@material-ui/core";
+import Loading from "../../../components/Loading";
 
 const HomePage = (props) => {
   useEffect(() => {
@@ -20,7 +21,7 @@ const HomePage = (props) => {
       }
       return <CourseList data={courseArr} />
     } else {
-      return <div>loading...</div>
+      return <Container><Loading /></Container>
     }
   }
 

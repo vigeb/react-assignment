@@ -1,8 +1,9 @@
 import StudentCourseItem from "../../../components/StudentCourseItem"
-import { Grid, Typography } from "@material-ui/core"
+import { Container, Grid, Typography } from "@material-ui/core"
 import { useEffect } from "react"
 import { connect } from 'react-redux'
 import { actEnroll } from "../../../redux/modules/enrollment/action"
+import Loading from "../../../components/Loading"
 
 const CourseStudentPage = (props) => {
   useEffect(() => {
@@ -18,12 +19,12 @@ const CourseStudentPage = (props) => {
         </Grid>
       ))
     }
-    return <div>{lst ? 'no data' : 'loading...'}</div>
+    return <div>{lst ? <Typography>There is no student enrolled this course...</Typography> : <Container><Loading /></Container>}</div>
   }
 
   return (
     <>
-      <Typography component="h1" variant="h5">{props.data && props.data.length ? props.data[0].courseName : '' }</Typography>
+      <Typography component="h1" variant="h5">{props.data && props.data.length ? props.data[0].courseName : ''}</Typography>
       <Grid container spacing={3}>
         {renderStudentList(props.data)}
       </Grid>

@@ -214,9 +214,7 @@ const AdminLayout = (props) => {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
             {props.children}
-            <Box pt={4}>
-              <Copyright />
-            </Box>
+
           </Container>
         </main>
       </div>

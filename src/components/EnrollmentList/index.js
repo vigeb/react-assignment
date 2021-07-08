@@ -1,8 +1,9 @@
 import UserManageItem from '../UserManageItem';
 import { makeStyles } from '@material-ui/core/styles'
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Container, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom'
 import { useState } from 'react';
+import Loading from '../Loading';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +30,7 @@ const EnrollmentList = (props) => {
   console.log(enrollList)
   const [data, setData] = useState('')
   const renderEnrollList = (lst) => {
-    if (loading) return <div>loading...</div>
+    if (loading) return <Container><Loading /></Container>
     if (lst && lst.length) {
       return lst.map((enroll) => (
         <Grid item key={enroll.id} xs={12}>
@@ -38,7 +39,7 @@ const EnrollmentList = (props) => {
       )
       )
     }
-    return <div>No data</div>
+    return <Typography>There is nothing here...</Typography>
   }
 
   return (

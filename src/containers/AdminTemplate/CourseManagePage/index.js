@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Container } from '@material-ui/core';
+import Loading from '../../../components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -29,19 +31,19 @@ const CourseManagePage = (props) => {
       url: 'https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses.json',
       method: 'GET',
     })
-    .then((res) => {
-      let courses = []
-      for (let key in res.data) {
-        courses.unshift({
-          ...res.data[key],
-          id: key,
-        })
-      }
-      setCourseList(courses)
-    })
-    .catch((err) => {
-      console.log('err', err)
-    })
+      .then((res) => {
+        let courses = []
+        for (let key in res.data) {
+          courses.unshift({
+            ...res.data[key],
+            id: key,
+          })
+        }
+        setCourseList(courses)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
   }, [])
 
   const renderCourseList = (courses) => {
@@ -54,7 +56,7 @@ const CourseManagePage = (props) => {
         )
       })
     } else {
-      return <div>loading...</div>
+      return <Container><Loading /></Container>
     }
   }
 

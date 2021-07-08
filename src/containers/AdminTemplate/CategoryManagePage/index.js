@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Container } from '@material-ui/core'
+import Loading from '../../../components/Loading'
 
 const useStyles = makeStyles((theme) => ({
   buttonCreate: {
@@ -39,7 +41,7 @@ const CategoryManagePage = (props) => {
         )
       })
     } else {
-      return <div>loading...</div>
+      return <Container><Loading /></Container>
     }
   }
   return (
