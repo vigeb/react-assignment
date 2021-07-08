@@ -23,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-// const ListItemLink = (props) => {
-//   return <ListItem component="a" {...props} />
-// }
-
 export const AdminListItem = () => {
   const classes = useStyles()
 

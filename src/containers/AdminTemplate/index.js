@@ -55,6 +55,14 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    [theme.breakpoints.down('sm')]: {
+      // marginLeft: drawerWidth,
+      width: `0`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -63,18 +71,29 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    [theme.breakpoints.down('md')]: {
-      marginLeft: '100vw',
-      width: `calc(100% - 100vw)`,
-
+    [theme.breakpoints.down('sm')]: {
+      // marginLeft: '100vw',
+      // width: `calc(100% - 100vw)`,
+      width: '100vw',
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
     },
-
   },
   menuButton: {
     marginRight: 36,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   menuButtonHidden: {
     display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 36,
+      display: 'inline-block',
+    },
   },
   title: {
     flexGrow: 1,
@@ -87,8 +106,14 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    [theme.breakpoints.down('md')]: {
-      width: '100vw'
+    [theme.breakpoints.down('sm')]: {
+      // width: '100vw'
+      overflowX: 'hidden',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      width: theme.spacing(7),
     },
   },
   drawerPaperClose: {
@@ -98,8 +123,17 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
+    // [theme.breakpoints.up('sm')]: {
+    // },
+    [theme.breakpoints.down('sm')]: {
       width: theme.spacing(9),
+      position: 'relative',
+      whiteSpace: 'nowrap',
+      width: '100vw',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -128,20 +162,18 @@ const AdminLayout = (props) => {
   const [open, setOpen] = React.useState(true)
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen(!open);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen(!open);
   }
 
   const localCredentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
 
   return (
     <>
-      {/* <Header /> */}
       <div className={classes.root}>
-
         <CssBaseline />
         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
           <Toolbar className={classes.toolbar}>
@@ -177,7 +209,6 @@ const AdminLayout = (props) => {
           <Divider />
           <List><AdminListItem /></List>
           <Divider />
-          {/* <List>{secondaryListItems}</List> */}
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />

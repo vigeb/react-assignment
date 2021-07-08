@@ -10,6 +10,7 @@ const CourseStudentPage = (props) => {
   }, [])
 
   const renderStudentList = (lst) => {
+    console.log('lst', lst)
     if (lst && lst.length) {
       return lst.map((item) => (
         <Grid item xs={12} key={item.id}>
@@ -17,7 +18,7 @@ const CourseStudentPage = (props) => {
         </Grid>
       ))
     }
-    return <div>loading...</div>
+    return <div>{lst ? 'no data' : 'loading...'}</div>
   }
 
   return (

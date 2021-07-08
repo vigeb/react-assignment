@@ -92,7 +92,7 @@ const AddNewCoursePage = (props) => {
     } else {
       const slug = slugify(e.target.value, {
         replacement: '-',
-        remove: /[*+~.()'"!:@?=/]/g,
+        remove: /[*+~.()'"!:@?=/;]/g,
         lower: true,
         strict: false,
         locale: 'vi'
