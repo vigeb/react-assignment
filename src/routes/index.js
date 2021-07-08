@@ -9,7 +9,7 @@ import StudentManagePage from "../containers/AdminTemplate/StudentManagePage";
 import UpdateCategoryPage from "../containers/AdminTemplate/UpdateCategoryPage";
 import UpdateCoursePage from "../containers/AdminTemplate/UpdateCoursePage";
 import CourseDetailPage from "../containers/HomeTemplate/CourseDetailPage";
-import VideoCoursePage from "../containers/CourseVideoPage";
+import VideoCoursePage from "../containers/HomeTemplate/CourseVideoPage";
 import CoursePage from "../containers/HomeTemplate/CoursePage";
 import HomePage from "../containers/HomeTemplate/HomePage";
 import LoginForm from "../containers/HomeTemplate/LoginForm";

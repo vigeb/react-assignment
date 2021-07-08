@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => (
             width: '100%',
             padding: theme.spacing(3),
         },
+        courseNameItem: {
+            height: '6rem'
+        }
     }
 ));
 
@@ -44,7 +47,7 @@ export default function CourseListItem(props) {
 
         if (credentials && credentials.refreshToken) {
             const { email, displayName, refreshToken } = credentials
-            
+
             exchangeRefreshToken(refreshToken)
                 .then((token) => {
                     const { id_token, user_id } = token.data
@@ -97,7 +100,8 @@ export default function CourseListItem(props) {
                 title={props.item.courseName}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
+
+                <Typography className={classes.courseNameItem} gutterBottom variant="h5" component="h2">
                     {props.item.courseName}
                 </Typography>
             </CardContent>

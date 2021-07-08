@@ -35,18 +35,18 @@ function ProfileList(props) {
     const renderCourseList = (list) => {
         if (loading) return <div>loading...</div>
         if (!list || !list.length) return <div>no data</div>
-        
+
         let hasData = false
         const coursesToRender = list.map((course) => {
-                if (course.status === status) {
-                    hasData = true
-                    return (
-                        <Grid item key={course.id} xs={12}>
-                            <ProfileCourseItem course={course} />
-                        </Grid>                
-                    )
-                }
+            if (course.status === status) {
+                hasData = true
+                return (
+                    <Grid item key={course.id} xs={12}>
+                        <ProfileCourseItem course={course} status={status} />
+                    </Grid>
+                )
             }
+        }
         )
 
         if (hasData) return coursesToRender

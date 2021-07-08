@@ -9,9 +9,19 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    video: {
+    videoBackground: {
         background: 'black',
-        padding: '0'
+        padding: '0',
+
+    },
+    video: {
+        width: "100%",
+        height: '100%',
+
+        [theme.breakpoints.up('md')]: {
+            width: "640px",
+            height: '360px',
+        },
     },
     inforText: {
         color: "#3c3b37",
@@ -30,8 +40,8 @@ const VideoCoursePage = () => {
 
                 <Grid item xs={9}>
 
-                    <Grid item xs={12} className={classes.video}>
-                        <iframe width={640} height={360} src="https://www.youtube.com/embed/GJ8jidDdWVg" title="YouTube video player" frameBorder={0} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                    <Grid item xs={12} className={classes.videoBackground}>
+                        <iframe className={classes.video} src="https://www.youtube.com/embed/GJ8jidDdWVg" title="YouTube video player" frameBorder={0} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
                     </Grid>
 
                     <Container maxWidth="sm" className={classes.inforSession}>

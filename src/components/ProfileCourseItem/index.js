@@ -3,7 +3,7 @@ import { Typography, Button } from '@material-ui/core'
 import axios from 'axios'
 import { exchangeRefreshToken } from '../../global/authModule'
 import { useState } from 'react'
-
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileCourseItem = (props) => {
     const classes = useStyles()
-    const { course } = props
+    const { course, status } = props
 
     return (
         <div className={classes.root}>
@@ -30,7 +30,7 @@ const ProfileCourseItem = (props) => {
             <Typography className={classes.title} component="h3" variant="h6">giá: {course.price} đồng</Typography>
 
             <Typography className={classes.title} component="h3" variant="h6">Status: {course.status}</Typography>
-
+            <Link to="/video"><Button variant="contained" style={{ backgroundColor: '#303f9f', color: 'white' }}>Learn now</Button ></Link>
         </div>
     )
 }
