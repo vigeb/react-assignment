@@ -9,14 +9,13 @@ import StudentManagePage from "../containers/AdminTemplate/StudentManagePage";
 import UpdateCategoryPage from "../containers/AdminTemplate/UpdateCategoryPage";
 import UpdateCoursePage from "../containers/AdminTemplate/UpdateCoursePage";
 import CourseDetailPage from "../containers/HomeTemplate/CourseDetailPage";
-import VideoCoursePage from "../containers/CourseVideoPage";
+import VideoCoursePage from "../containers/HomeTemplate/CourseVideoPage";
 import CoursePage from "../containers/HomeTemplate/CoursePage";
 import HomePage from "../containers/HomeTemplate/HomePage";
+import LoginForm from "../containers/HomeTemplate/LoginForm";
 import ProfilePage from "../containers/HomeTemplate/ProfilePage";
 import TestPage from "../containers/HomeTemplate/TestPage";
-import LoginForm from "../containers/LoginForm";
-import SignUpForm from "../containers/SignUpForm";
-
+import SignUpForm from '../containers/HomeTemplate/SignUpForm'
 const routesHome = [
   {
     exact: true,

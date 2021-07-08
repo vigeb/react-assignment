@@ -4,7 +4,7 @@ import AdminTemplate from './containers/AdminTemplate';
 import PageNotFound from './containers/PageNotFound';
 import { routesHome, routesAdmin } from './routes'
 import { connect } from 'react-redux'
-import { actLogIn } from './containers/LoginForm/modules/action';
+import { actLogIn } from './containers/HomeTemplate/LoginForm/modules/action';
 import { useEffect } from 'react'
 
 function App(props) {

@@ -63,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '100vw',
+      width: `calc(100% - 100vw)`,
+
+    },
+
   },
   menuButton: {
     marginRight: 36,
@@ -81,6 +87,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    [theme.breakpoints.down('md')]: {
+      width: '100vw'
+    },
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -135,24 +144,24 @@ const AdminLayout = (props) => {
 
         <CssBaseline />
         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Link to="/" className={classes.title}>
-            <Typography component="h1" variant="h6" color="inherit" noWrap>
-              Homepage
-            </Typography>
-          </Link>
-          <AccountHeader credentials={localCredentials} />
-        </Toolbar>
-      </AppBar>
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Link to="/" className={classes.title}>
+              <Typography component="h1" variant="h6" color="inherit" noWrap>
+                Homepage
+              </Typography>
+            </Link>
+            <AccountHeader credentials={localCredentials} />
+          </Toolbar>
+        </AppBar>
         <Drawer
           variant="permanent"
           classes={{
