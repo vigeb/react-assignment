@@ -29,10 +29,8 @@ function SimpleDialog(props) {
     const { userInfo, loading, setLoading } = props
 
     return (
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-            <>{!loading && !userInfo && !userInfo.displayName ?
-                <Typography>Không có thông tin về người dùng này}</Typography>
-                : null}</>
+        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open} fullWidth="true">
+
             <> {(loading) ? <Container><Loading /></Container> : <><DialogTitle id="simple-dialog-title">User name: {userInfo.displayName}</DialogTitle>
                 <List>
                     <ListItem>
@@ -51,6 +49,7 @@ function SimpleDialog(props) {
 
 
                 </List></>}</>
+            <Button variant="contained" color="primary" onClick={handleClose}>Close</Button>
 
         </Dialog>
     );
