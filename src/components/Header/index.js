@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
+import AccountHeader from '../AccountHeader';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -45,85 +46,7 @@ function Header(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null)
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const history = useHistory()
-
-    const handleLogOut = () => {
-        setAnchorEl(null);
-        localStorage.clear()
-        history.push('/login')
-    }
-
-    const handleToProfile = (uid) => {
-        if (uid) {
-            history.push(`/profile/${uid}/pending`)
-        } else {
-            history.push(`/login?slug=profile/${uid}/pending`)
-        }
-    }
     const localCredentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
-    const renderCredentials = () => {
-        if (props.credentials && localStorage.getItem("credentials")) {
-            return (
-                <Menu
-                    anchorEl={anchorEl}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    keepMounted
-                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{props.credentials.displayName} </Typography>
-                    <MenuItem onClick={handleClose}>Hồ sơ</MenuItem>
-                    <MenuItem onClick={() => handleToProfile(props.credentials.localId)}>Profile</MenuItem>
-                    <MenuItem onClick={handleLogOut}>Đăng xuất</MenuItem>
-                </Menu>
-            )
-        }
-        // const localCredentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
-
-        if (localCredentials && localCredentials.displayName) {
-            return (
-                <Menu
-                    anchorEl={anchorEl}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    keepMounted
-                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    <Typography style={{ padding: '6px', paddingLeft: '16px', fontSize: '1.5rem' }}>Xin chào,<br></br>{localCredentials.displayName} </Typography>
-                    <MenuItem onClick={() => handleToProfile(localCredentials.localId)}>Profile</MenuItem>
-                    <MenuItem onClick={handleLogOut}>Đăng xuất</MenuItem>
-                </Menu>
-            )
-        }
-
-        return (
-            <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                keepMounted
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <Link to='/signup'><MenuItem style={{ color: 'black' }}>
-                    Đăng ký
-                </MenuItem></Link>
-                <Link to='/login'><MenuItem style={{ color: 'black' }}>
-                    Đăng nhập
-                </MenuItem></Link>
-            </Menu>
-        )
-    }
 
     return (
         <div className={classes.grow}>
@@ -133,20 +56,21 @@ function Header(props) {
                     <Typography edge="start" variant="h6" >
                         <Link to="/">Homepage</Link>
                     </Typography>
-                    {localCredentials && localCredentials.typeOfUser === "GV" ?
+                    {/* {localCredentials && localCredentials.typeOfUser === "GV" ?
                         <Typography edge="start" className={classes.title} variant="h6" >
                             <Link to="/admin/dashboard">Admin page</Link>
                         </Typography>
                         : null
-                    }
+                    } */}
 
                     {/* </Box> */}
 
                     <div className={classes.sectionDesktop}>
-                        <Button style={{ color: 'white' }} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        {/* <Button style={{ color: 'white' }} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                             <AccountCircleIcon />
-                        </Button>
-                        {renderCredentials()}
+                        </Button> */}
+                        <AccountHeader credentials={props.credentials || localCredentials} />
+                        {/* {renderCredentials()} */}
                     </div>
                 </Toolbar>
             </AppBar>

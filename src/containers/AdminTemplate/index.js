@@ -12,19 +12,19 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { AdminListItem } from '../../components/ListItemAdmin';
 import { Route, Redirect } from 'react-router-dom'
-import Header from '../../components/Header';
+import AccountHeader from '../../components/AccountHeader';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="https://material-ui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -116,21 +116,43 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminLayout = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(true)
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
   const handleDrawerClose = () => {
     setOpen(false);
-  };
+  }
+
+  const localCredentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className={classes.root}>
 
         <CssBaseline />
-
+        <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Link to="/" className={classes.title}>
+            <Typography component="h1" variant="h6" color="inherit" noWrap>
+              Homepage
+            </Typography>
+          </Link>
+          <AccountHeader credentials={localCredentials} />
+        </Toolbar>
+      </AppBar>
         <Drawer
           variant="permanent"
           classes={{
@@ -152,9 +174,6 @@ const AdminLayout = (props) => {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
             {props.children}
-            {/* <Grid container spacing={3}>
-            <Grid ite></Grid>
-          </Grid> */}
             <Box pt={4}>
               <Copyright />
             </Box>

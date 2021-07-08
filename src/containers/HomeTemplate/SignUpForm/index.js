@@ -12,14 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import { useState } from 'react'
 import { connect } from 'react-redux'
 import { actSignUp } from './modules/action';
 import validation from './validation';
+import { useHistory } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,9 +38,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-const maNhomArr = [
-  'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
-];
+
 function SignUpForm(props) {
 
   const [errors, setErrors] = useState({
@@ -55,25 +50,35 @@ function SignUpForm(props) {
     "matKhau": "",
     "hoTen": "",
     "soDT": "",
-    "maNhom": "GP01",
     "email": "",
   })
 
-
+  const history = useHistory()
   const classes = useStyles();
   const handleOnChange = (e) => {
-
     setTaiKhoan({
       ...taiKhoan, [e.target.name]: e.target.value
     })
-
-
   }
+
+  const parseService = (search) => {
+    if (search) {
+      const serviceArr = search.split('?')[1].split('&')
+      const service = {}
+      serviceArr.forEach((item) => {
+          const sv = item.split('=')
+          service[sv[0]] = sv[1]
+      })
+      return service && service.slug
+    }
+    return null
+  }
+
   const handleOnSubmit = (e) => {
     e.preventDefault()
     setErrors(validation(taiKhoan))
     if (Object.values(errors).length === 0) {
-      props.signUp(taiKhoan)
+      props.signUp(taiKhoan, history, parseService(props.location.search))
     }
 
   }
@@ -163,7 +168,7 @@ function SignUpForm(props) {
                 value={taiKhoan.matKhau}
               />{errors.matKhau && <Typography style={errorTextStyle}>{errors.matKhau}</Typography>}
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth className={classes.formControl}>
                 <InputLabel fullWidth id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
                 <Select
@@ -189,7 +194,7 @@ function SignUpForm(props) {
 
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
 
 
 
@@ -214,8 +219,8 @@ function SignUpForm(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signUp: (newUser) => {
-      dispatch(actSignUp(newUser))
+    signUp: (u, h, s) => {
+      dispatch(actSignUp(u, h, s))
     }
   }
 }
