@@ -58,8 +58,10 @@ const UserManageItem = (props) => {
   }
   return (
     <div className={classes.root}>
-      <Typography className={classes.title} component="h2" variant="h5">{`${enrollment.displayName} - ${enrollment.uid}`}</Typography>
-      <Typography className={classes.title} component="h3" variant="h6">{enrollment.price} - {enrollment.courseName}</Typography>
+      <Typography className={classes.title} component="h2" variant="h5">Name: {`${enrollment.displayName}`}
+      </Typography>
+      <Typography className={classes.title} component="h3" variant="h6">{enrollment.courseName}</Typography>
+      <Typography className={classes.title} component="h3" variant="h6">Price: {enrollment.price}</Typography>
       <Typography className={classes.title} component="p" variant="h6">Status: {activeStatus}</Typography>
       <Button variant="contained" color="primary" className={classes.button} onClick={() => handleChangeStatus("approved")}>
         Approve

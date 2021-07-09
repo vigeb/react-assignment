@@ -1,10 +1,11 @@
-import { Grid, Typography, Button } from "@material-ui/core"
+import { Grid, Typography, Button, Container } from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import StudentManageItem from "../../../components/StudentManageItem";
 import { useEffect } from "react";
 import { connect } from 'react-redux'
 import { actUsers } from "../../../redux/modules/users/action";
 import { NavLink } from 'react-router-dom'
+import Loading from "../../../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -39,7 +40,7 @@ const StudentManagePage = (props) => {
                 </Grid>
             ))
         } else {
-            return <div>{userList ? 'No data' : 'loading...'}</div>
+            return <Container>{userList ? 'No data' : <Loading />}</Container>
         }
     }
     return (

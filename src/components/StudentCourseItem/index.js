@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button } from "@material-ui/core";
+import StudentInfoDialog from "../StudentInfoDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +24,7 @@ const StudentCourseItem = (props) => {
       <Typography component="p" className={classes.title}>
         UID: {data.uid}
       </Typography>
-      <Button variant="contained" color="primary">View detail</Button>
+      <StudentInfoDialog data={data} />
     </div>
   )
 }
