@@ -73,7 +73,7 @@ export default function CourseListItem(props) {
                         status: 'pending',
                     })
                     return axios({
-                        url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment/${enrollmentId}.json?auth=${id_token}`,
+                        url: `${process.env.REACT_APP_API_URL}/enrollment/${enrollmentId}.json?auth=${id_token}`,
                         method: 'PUT',
                         data: {
                             uid: user_id,

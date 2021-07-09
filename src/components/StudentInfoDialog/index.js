@@ -85,7 +85,7 @@ export default function StudentInfoDialog(props) {
             .then((tokenData) => {
                 const idToken = tokenData.data.id_token
                 return axios({
-                    url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${props.data.uid}.json?auth=${idToken}`,
+                    url: `${process.env.REACT_APP_API_URL}/users/${props.data.uid}.json?auth=${idToken}`,
                     method: 'GET',
 
                 })

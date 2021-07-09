@@ -8,7 +8,7 @@ const UpdateCategoryPage = (props) => {
 
   useEffect(() => {
     axios({
-      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories/${id}.json`,
+      url: `${process.env.REACT_APP_API_URL}/categories/${id}.json`,
       method: 'GET',
     })
     .then((res) => {

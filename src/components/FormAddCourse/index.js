@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     flexWrap: 'wrap',
+    marginTop: '1rem',
+    marginBottom: '0.5rem'
   },
   buttonSubmit: {
     marginTop: '1.5rem',
@@ -51,7 +53,7 @@ const AddNewCoursePage = (props) => {
 
   useEffect(() => {
     axios({
-      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories.json`,
+      url: `${process.env.REACT_APP_API_URL}/categories.json`,
       method: 'GET',
     })
       .then((res) => {
@@ -221,7 +223,7 @@ const AddNewCoursePage = (props) => {
             onChange={handleCourseInfo}
           />
           <FormControl variant="outlined" className={classes.formControl} error={errors.category}>
-            <InputLabel id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> 
+            <InputLabel id="demo-simple-select-outlined-label">Danh mục khóa học</InputLabel>
             <Select
               labelId="category"
               id="category"

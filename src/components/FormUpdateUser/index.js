@@ -39,17 +39,12 @@ const UpdateUserPage = (props) => {
     const { userDetail, userId } = props
     const [detailUser, setDetailUser] = useState({
         ...userDetail || {
-            slug: "",
-            courseName: "",
-            description: "",
-            views: 0,
-            ratings: 0,
-            imageCover: "",
-            createdDate: '',
-            updatedDate: '',
-            category: '',
-            createdBy: '',
-            price: '',
+            account: "",
+            displayName: "",
+            email: "",
+            phoneNumber: "",
+            typeOfUser: "",
+
         }
     })
     console.log(userDetail)
@@ -78,7 +73,7 @@ const UpdateUserPage = (props) => {
 
     const updateUser = (idToken, { date, uid }) => {
         return axios({
-            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}.json?auth=${idToken}`,
+            url: `${process.env.REACT_APP_API_URL}/users/${userId}.json?auth=${idToken}`,
             method: 'PUT',
             data: {
                 ...detailUser,
@@ -109,12 +104,10 @@ const UpdateUserPage = (props) => {
 
             })
             .then((res) => {
-                console.log('success', res.data)
                 history.push('/admin/students/all')
             })
             .catch((err) => {
                 setLoading(false)
-                console.log('form update user err', err)
             })
     }
     console.log(props)
@@ -174,6 +167,7 @@ const UpdateUserPage = (props) => {
                         rows={6}
                         onChange={handleUserInfo}
                     />
+
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel id="typeOfUser">Type of user</InputLabel> 
                         <Select

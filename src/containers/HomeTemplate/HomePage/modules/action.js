@@ -5,7 +5,7 @@ export const actFetchCourseList = () => {
   return (dispatch) => {
     dispatch(actCourseListRequest());
     axios({
-      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses.json`,
+      url: `${process.env.REACT_APP_API_URL}/courses.json`,
       method: "GET",
     })
       .then((result) => {

@@ -5,7 +5,7 @@ export const actFetchCategoryList = () => {
   return (dispatch) => {
     dispatch(actCategoryListRequest());
     axios({
-      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories.json`,
+      url: `${process.env.REACT_APP_API_URL}/categories.json`,
       method: "GET",
     })
       .then((result) => {

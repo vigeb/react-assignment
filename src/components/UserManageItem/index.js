@@ -39,7 +39,7 @@ const UserManageItem = (props) => {
       .then((tokenData) => {
         const idToken = tokenData.data.id_token
         return axios({
-          url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment/${enrollment.id}.json?auth=${idToken}`,
+          url: `${process.env.REACT_APP_API_URL}/enrollment/${enrollment.id}.json?auth=${idToken}`,
           method: 'PATCH',
           data: {
             status,

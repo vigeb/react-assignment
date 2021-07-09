@@ -15,7 +15,7 @@ const UpdateUserPage = (props) => {
             .then((data) => {
                 const uid = data.data.id_token
                 return axios({
-                    url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${props.match.params.uid}.json?auth=${uid}`,
+                    url: `${process.env.REACT_APP_API_URL}/users/${props.match.params.uid}.json?auth=${uid}`,
                     method: 'GET',
                 })
                     .then((res) => {
