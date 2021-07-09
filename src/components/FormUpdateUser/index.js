@@ -130,7 +130,7 @@ const UpdateUserPage = (props) => {
                         label="Account"
                         name="account"
                         autoComplete="account"
-                        value={userDetail.account}
+                        value={detailUser.account}
                         autoFocus
                         onBlur={handleUserName}
                         onChange={handleUserInfo}
@@ -145,7 +145,7 @@ const UpdateUserPage = (props) => {
                         label="Display name"
                         name="displayName"
                         autoComplete="displayName"
-                        value={userDetail.displayName}
+                        value={detailUser.displayName}
                         rows={6}
                         onChange={handleUserInfo}
                     />
@@ -157,7 +157,7 @@ const UpdateUserPage = (props) => {
                         label="Email"
                         name="email"
                         autoComplete="email"
-                        value={userDetail.email}
+                        value={detailUser.email}
                         rows={6}
                         onChange={handleUserInfo}
                     />
@@ -169,7 +169,7 @@ const UpdateUserPage = (props) => {
                         label="Phone number"
                         name="phoneNumber"
                         autoComplete="phoneNumber"
-                        value={userDetail.phoneNumber}
+                        value={detailUser.phoneNumber}
                         rows={6}
                         onChange={handleUserInfo}
                     />
@@ -180,7 +180,7 @@ const UpdateUserPage = (props) => {
                             name="typeOfUser"
                             onChange={handleUserInfo}
                             label="loại người dùng"
-                            value={userDetail.typeOfUser}
+                            value={detailUser.typeOfUser}
                         >
                             <MenuItem value="HV" key="typeOfUser">
                                 HV
