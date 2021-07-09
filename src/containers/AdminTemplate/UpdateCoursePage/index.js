@@ -10,7 +10,7 @@ const UpdateCoursePage = (props) => {
   useEffect(() => {
     console.log('id', props.match.params.id)
     axios({
-      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses/${props.match.params.id}.json`,
+      url: `${process.env.REACT_APP_API_URL}/courses/${props.match.params.id}.json`,
       method: 'GET',
     })
       .then((res) => {

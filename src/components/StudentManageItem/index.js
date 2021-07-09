@@ -27,7 +27,7 @@ const StudentManageItem = (props) => {
         let credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
         if (credentials && credentials.idToken && credentials.typeOfUser === "GV") {
             axios({
-                url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${student.id}.json?auth=${credentials.idToken}`,
+                url: `${process.env.REACT_APP_API_URL}/users/${student.id}.json?auth=${credentials.idToken}`,
                 method: "DELETE"
             })
                 .then(res => {

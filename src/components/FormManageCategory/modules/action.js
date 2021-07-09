@@ -21,7 +21,7 @@ export const actSubmitCategory = (submitCategory, updateMode, id) => {
 
             if (updateMode) {
                 const updatedCategory = await axios({
-                    url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories/${id}.json?auth=${idToken}`,
+                    url: `${process.env.REACT_APP_API_URL}/categories/${id}.json?auth=${idToken}`,
                     method: 'PUT',
                     data: {
                         ...submitCategory,

@@ -15,7 +15,7 @@ export const actEnroll = (key, val) => {
           .then((token) => {
             const { id_token } = token.data
             return axios({
-              url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/enrollment.json?auth=${id_token}&orderBy="${key}"&equalTo="${val}"&print=pretty`,
+              url: `${process.env.REACT_APP_API_URL}/enrollment.json?auth=${id_token}&orderBy="${key}"&equalTo="${val}"&print=pretty`,
               method: 'GET',
             })
           })

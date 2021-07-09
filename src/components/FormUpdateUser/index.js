@@ -78,7 +78,7 @@ const UpdateUserPage = (props) => {
 
     const updateUser = (idToken, { date, uid }) => {
         return axios({
-            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}.json?auth=${idToken}`,
+            url: `${process.env.REACT_APP_API_URL}/users/${userId}.json?auth=${idToken}`,
             method: 'PUT',
             data: {
                 ...detailUser,

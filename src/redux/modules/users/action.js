@@ -15,7 +15,7 @@ export const actUsers = (key, val) => {
           .then((token) => {
             const { id_token } = token.data
             return axios({
-              url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users.json?auth=${id_token}${key ? `&orderBy="${key}"&equalTo="${val}"&print=pretty` : ''}`,
+              url: `${process.env.REACT_APP_API_URL}/users.json?auth=${id_token}${key ? `&orderBy="${key}"&equalTo="${val}"&print=pretty` : ''}`,
               method: 'GET',
             })
           })

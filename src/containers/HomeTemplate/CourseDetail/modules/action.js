@@ -6,7 +6,7 @@ export const actFetchCourseDetail = (id) => {
         dispatch(actCourseDetailRequest())
         console.log('pending get detail')
         axios({
-            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses/${id}.json`,
+            url: `${process.env.REACT_APP_API_URL}/courses/${id}.json`,
             method: "GET",
         })
         .then((res) => {

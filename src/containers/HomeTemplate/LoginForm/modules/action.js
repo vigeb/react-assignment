@@ -8,7 +8,7 @@ export const actLogIn = (userLogIn, history, service) => {
         const { email, matKhau } = userLogIn
         let credentials
         axios({
-            url: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCfvChusc7Nsg3Ba2PeJdl0KJXjTGjihUY",
+            url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_WEB_API_KEY}`,
 
             method: "POST",
             data: {
@@ -21,7 +21,7 @@ export const actLogIn = (userLogIn, history, service) => {
             credentials = { ...res.data }
 
             return axios({
-                url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users/${res.data.localId}.json?auth=${res.data.idToken}`,
+                url: `${process.env.REACT_APP_API_URL}/users/${res.data.localId}.json?auth=${res.data.idToken}`,
                 method: "GET",
             })
             
