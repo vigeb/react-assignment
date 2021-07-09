@@ -23,26 +23,6 @@ const StudentManageItem = (props) => {
     const classes = useStyles()
     const { student } = props
 
-    const handleDeleteStudent = () => {
-        let credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
-        if (credentials && credentials.idToken && credentials.typeOfUser === "GV") {
-            axios({
-                url: `${process.env.REACT_APP_API_URL}/users/${student.id}.json?auth=${credentials.idToken}`,
-                method: "DELETE"
-            })
-                .then(res => {
-                    console.log(res)
-                    alert('xóa thành công')
-                })
-                .catch(err => {
-                    console.log(err)
-                    alert('xóa fail')
-                })
-
-        }
-
-    }
-    console.log(student)
     return (
         <div className={classes.root}>
             <Typography variant="h5" className={classes.title}>Name: {student.displayName}</Typography>
@@ -52,9 +32,7 @@ const StudentManageItem = (props) => {
             <Button component={Link} to={`/admin/update-user/${student.uid}`} variant="contained" color="primary" className={classes.button}>
                 Update
             </Button>
-            <Button onClick={handleDeleteStudent} variant="contained" color="secondary" className={classes.button}>
-                Delete
-            </Button>
+
             <FormHelperText>'..'</FormHelperText>
         </div>
     )

@@ -39,17 +39,12 @@ const UpdateUserPage = (props) => {
     const { userDetail, userId } = props
     const [detailUser, setDetailUser] = useState({
         ...userDetail || {
-            slug: "",
-            courseName: "",
-            description: "",
-            views: 0,
-            ratings: 0,
-            imageCover: "",
-            createdDate: '',
-            updatedDate: '',
-            category: '',
-            createdBy: '',
-            price: '',
+            account: "",
+            displayName: "",
+            email: "",
+            phoneNumber: "",
+            typeOfUser: "",
+
         }
     })
     console.log(userDetail)
@@ -174,6 +169,7 @@ const UpdateUserPage = (props) => {
                         rows={6}
                         onChange={handleUserInfo}
                     />
+
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel id="typeOfUser">Type of user</InputLabel> 
                         <Select
