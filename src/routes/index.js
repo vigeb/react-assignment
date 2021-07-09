@@ -16,6 +16,7 @@ import LoginForm from "../containers/HomeTemplate/LoginForm";
 import ProfilePage from "../containers/HomeTemplate/ProfilePage";
 import TestPage from "../containers/HomeTemplate/TestPage";
 import SignUpForm from '../containers/HomeTemplate/SignUpForm'
+import UpdateUserPage from "../containers/AdminTemplate/UpdateUserPage";
 const routesHome = [
   {
     exact: true,
@@ -111,6 +112,11 @@ const routesAdmin = [
     path: '/course/:id',
     component: CourseStudentPage,
   },
+  {
+    exact: true,
+    path: '/update-user/:uid',
+    component: UpdateUserPage,
+  }
 ]
 
 export { routesHome, routesAdmin }

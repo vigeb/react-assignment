@@ -6,12 +6,9 @@ import { actFetchCourseDetail } from './modules/action'
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-<<<<<<< HEAD:src/containers/HomeTemplate/CourseDetail/index.js
-=======
 import CourseListItem from '../../../components/CourseListItem'
->>>>>>> 6163e2eec4716c73be8f251a6694c6877e664728:src/containers/HomeTemplate/CourseDetailPage/index.js
 import Divider from '@material-ui/core/Divider';
-import CourseListItem from '../../../components/CourseListItem'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {

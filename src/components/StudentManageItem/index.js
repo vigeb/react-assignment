@@ -40,14 +40,16 @@ const StudentManageItem = (props) => {
                 })
 
         }
+
     }
+    console.log(student)
     return (
         <div className={classes.root}>
             <Typography variant="h5" className={classes.title}>Name: {student.displayName}</Typography>
             <Typography variant="h6" className={classes.title}>Phone: {student.phoneNumber}</Typography>
             <Typography variant="h6" className={classes.title}>Type: {student.typeOfUser}</Typography>
 
-            <Button component={Link} to={`/admin/update-course/${student.maKhoaHoc}`} variant="contained" color="primary" className={classes.button}>
+            <Button component={Link} to={`/admin/update-user/${student.uid}`} variant="contained" color="primary" className={classes.button}>
                 Update
             </Button>
             <Button onClick={handleDeleteStudent} variant="contained" color="secondary" className={classes.button}>
