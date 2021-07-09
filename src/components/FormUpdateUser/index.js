@@ -38,17 +38,12 @@ const UpdateUserPage = (props) => {
     const { userDetail, userId } = props
     const [detailUser, setDetailUser] = useState({
         ...userDetail || {
-            slug: "",
-            courseName: "",
-            description: "",
-            views: 0,
-            ratings: 0,
-            imageCover: "",
-            createdDate: '',
-            updatedDate: '',
-            category: '',
-            createdBy: '',
-            price: '',
+            account: "",
+            displayName: "",
+            email: "",
+            phoneNumber: "",
+            typeOfUser: "",
+
         }
     })
     console.log(userDetail)
@@ -186,7 +181,7 @@ const UpdateUserPage = (props) => {
                                 HV
                             </MenuItem>
                             <MenuItem value="GV" key="typeOfUser">
-                                HV
+                                GV
                             </MenuItem>
 
                         </Select>

@@ -52,9 +52,7 @@ const StudentManageItem = (props) => {
             <Button component={Link} to={`/admin/update-user/${student.uid}`} variant="contained" color="primary" className={classes.button}>
                 Update
             </Button>
-            <Button onClick={handleDeleteStudent} variant="contained" color="secondary" className={classes.button}>
-                Delete
-            </Button>
+
             <FormHelperText>'..'</FormHelperText>
         </div>
     )
