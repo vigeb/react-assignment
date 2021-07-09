@@ -14,11 +14,20 @@ import Skeleton from '@material-ui/lab/Skeleton';
 const useStyles = makeStyles((theme) => (
     {
         root: {
-            width: '100%'
+            width: '100%',
+            height: '100%',
+            paddingBottom: theme.spacing(5),
+            position: 'relative',
         },
         media: {
             height: 0,
             paddingTop: '56.25%',
+        },
+        cardActions: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
         },
         buttonPrice: {
             display: 'block',
@@ -29,7 +38,7 @@ const useStyles = makeStyles((theme) => (
             padding: theme.spacing(3),
         },
         courseNameItem: {
-            height: '6rem'
+            // height: '6rem'
         }
     }
 ));
@@ -105,7 +114,7 @@ export default function CourseListItem(props) {
                     {props.item.courseName}
                 </Typography>
             </CardContent>
-            <CardActions>
+            <CardActions className={classes.cardActions}>
                 {loading ?
                     <Skeleton variant="rect" className={classes.skeletonButton} text="loading..." />
                     :

@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    gridItem: {
+        minHeight: '100%',
+    },
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
