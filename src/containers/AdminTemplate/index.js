@@ -12,18 +12,19 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { AdminListItem } from '../../components/ListItemAdmin';
 import { Route, Redirect } from 'react-router-dom'
+import AccountHeader from '../../components/AccountHeader';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="https://material-ui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -54,6 +55,14 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    [theme.breakpoints.down('sm')]: {
+      // marginLeft: drawerWidth,
+      width: `0`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -62,12 +71,29 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    [theme.breakpoints.down('sm')]: {
+      // marginLeft: '100vw',
+      // width: `calc(100% - 100vw)`,
+      width: '100vw',
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
   },
   menuButton: {
     marginRight: 36,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   menuButtonHidden: {
     display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 36,
+      display: 'inline-block',
+    },
   },
   title: {
     flexGrow: 1,
@@ -80,6 +106,15 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    [theme.breakpoints.down('sm')]: {
+      // width: '100vw'
+      overflowX: 'hidden',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      width: theme.spacing(7),
+    },
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -88,8 +123,17 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
+    // [theme.breakpoints.up('sm')]: {
+    // },
+    [theme.breakpoints.down('sm')]: {
       width: theme.spacing(9),
+      position: 'relative',
+      whiteSpace: 'nowrap',
+      width: '100vw',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -115,72 +159,67 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminLayout = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(true)
+
   const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen(!open);
   };
 
+  const handleDrawerClose = () => {
+    setOpen(!open);
+  }
+
+  const localCredentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
+
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List><AdminListItem /></List>
-        <Divider />
-        {/* <List>{secondaryListItems}</List> */}
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          {props.children}
-          {/* <Grid container spacing={3}>
-            <Grid ite></Grid>
-          </Grid> */}
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
-    // <>
-      
-    //   {/* {props.children} */}
-    // </>
+    <>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Link to="/" className={classes.title}>
+              <Typography component="h1" variant="h6" color="inherit" noWrap>
+                Homepage
+              </Typography>
+            </Link>
+            <AccountHeader credentials={localCredentials} />
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List><AdminListItem /></List>
+          <Divider />
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            {props.children}
+
+          </Container>
+        </main>
+      </div>
+
+    </>
   )
 }
 
@@ -191,7 +230,7 @@ const AdminTemplate = ({ Component, ...props }) => {
       render={(propsComponent) => {
         const userCredentials = JSON.parse(localStorage.getItem('credentials'))
 
-        if (userCredentials && (userCredentials.maLoaiNguoiDung === 'GV')) {
+        if (userCredentials && (userCredentials.typeOfUser === 'GV') && (userCredentials.refreshToken)) {
           return (
             <AdminLayout>
               <Component {...propsComponent} />
@@ -204,5 +243,5 @@ const AdminTemplate = ({ Component, ...props }) => {
     />
   );
 }
- 
+
 export default AdminTemplate;

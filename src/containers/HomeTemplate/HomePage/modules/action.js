@@ -1,20 +1,18 @@
 import * as ActionType from "./constants";
 import axios from "axios";
 
-export const actFetchCourseList = (maNhom) => {
+export const actFetchCourseList = () => {
   return (dispatch) => {
     dispatch(actCourseListRequest());
     axios({
-      url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=` + maNhom,
+      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses.json`,
       method: "GET",
     })
       .then((result) => {
         dispatch(actCourseListSuccess(result.data));
-        // console.log(maNhom, result.data)
       })
       .catch((error) => {
         dispatch(actCourseListFailed(error));
-        // console.log(maNhom)
       });
   };
 };

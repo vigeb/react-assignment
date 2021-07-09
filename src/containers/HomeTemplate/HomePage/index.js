@@ -1,39 +1,40 @@
 import React, { useEffect, useState } from "react";
-// import CourseList from "../../../components/CourseList"
 import { actFetchCourseList } from "./modules/action";
 import { connect } from "react-redux";
 import CourseList from "../../../components/CourseList";
 import { Container } from "@material-ui/core";
+import Loading from "../../../components/Loading";
 
 const HomePage = (props) => {
-  const [state, setState] = useState("GP01")
-  const recieveMaNhom = (maNhom) => {
+  useEffect(() => {
+    props.fetchCourseList()
+  }, [])
 
-    setState(maNhom)
-
+  const renderCourseList = (courseList) => {
+    if (courseList) {
+      let courseArr = []
+      for (let key in courseList) {
+        courseArr.push({
+          ...courseList[key],
+          id: key,
+        })
+      }
+      return <CourseList data={courseArr} />
+    } else {
+      return <Container><Loading /></Container>
+    }
   }
 
-
-  useEffect(() => {
-
-    props.fetchCourseList(state)
-
-  }, [state])
-
-
-
-  return (<div>
-    <Container>
-
-      <CourseList data={props.data} onGetMaNhom={recieveMaNhom} />
-    </Container>
-
-  </div>);
+  return (
+    <div>
+      <Container>
+        {renderCourseList(props.data)}
+      </Container>
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.courseListReducer.data)
-
   return {
     loading: state.courseListReducer.loading,
     data: state.courseListReducer.data,
@@ -42,8 +43,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCourseList: (maNhom) => {
-      dispatch(actFetchCourseList(maNhom));
+    fetchCourseList: () => {
+      dispatch(actFetchCourseList());
     },
   };
 };

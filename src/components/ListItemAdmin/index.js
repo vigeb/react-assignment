@@ -7,10 +7,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import CategoryIcon from '@material-ui/icons/Category';
+import PeopleIcon from '@material-ui/icons/People';
+import StorefrontIcon from '@material-ui/icons/Storefront';
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
@@ -21,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey['100'],
   },
 }))
-
-// const ListItemLink = (props) => {
-//   return <ListItem component="a" {...props} />
-// }
 
 export const AdminListItem = () => {
   const classes = useStyles()
@@ -47,24 +43,30 @@ export const AdminListItem = () => {
           <ListItemText primary="Courses" />
         </ListItem>
       </NavLink>
-      <ListItem button>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customers" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reports" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Integrations" />
-      </ListItem>
+      <NavLink to="/admin/category-management" className={classes.navLink} activeClassName={classes.navLinkActive}>
+        <ListItem button>
+          <ListItemIcon>
+            <CategoryIcon />
+          </ListItemIcon>
+          <ListItemText primary="Categories" />
+        </ListItem>
+      </NavLink>
+      <NavLink to="/admin/students/all" className={classes.navLink} activeClassName={classes.navLinkActive}>
+        <ListItem button>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Users" />
+        </ListItem>
+      </NavLink>
+      <NavLink to="/admin/enrollment/pending" className={classes.navLink} activeClassName={classes.navLinkActive}>
+        <ListItem button>
+          <ListItemIcon>
+            <StorefrontIcon />
+          </ListItemIcon>
+          <ListItemText primary="Enrollment" />
+        </ListItem>
+      </NavLink>
     </div>
   )
 };

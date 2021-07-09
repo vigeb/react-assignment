@@ -44,33 +44,16 @@ const CourseManageItem = (props) => {
           setResponseText(response.data || 'xoa that bai')
         })
     }
-    // return (dispatch) => {
-    //     dispatch(actDeleteCourseRequest());
-    //     console.log('pending delete')
-    //     axios({
-    //         url: `https://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${}`,
-    //         method: "DELETE",
-    //         headers: {
-    //             Authorization: 'Bearer ' + accessToken
-    //         }
-    //     })
-    //         .then((res) => {
-    //             dispatch(actDeleteCourseSuccess(res.data));
-    //             console.log('delete data success', res.data)
-    //         })
-    //         .catch(({ response } = {}) => {
-
-    //             dispatch(actDeleteCourseFailed(response.data));
-
-    //         });
-    // };
   }
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" className={classes.title}>{course.tenKhoaHoc}</Typography>
-      <Button component={Link} to={`/admin/update-course/${course.maKhoaHoc}`} variant="contained" color="primary" className={classes.button}>
+      <Typography variant="h5" className={classes.title}>{course.courseName}</Typography>
+      <Button component={Link} to={`/admin/update-course/${course.id}`} variant="contained" color="primary" className={classes.button}>
         Update
+      </Button>
+      <Button component={Link} to={`/admin/course/${course.id}`} variant="contained" color="primary" className={classes.button}>
+        View Student List
       </Button>
       <Button onClick={handleDeleteCourse} variant="contained" color="secondary" className={classes.button}>
         Delete

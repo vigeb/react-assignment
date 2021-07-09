@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography'
-import InputLabel from '@material-ui/core/InputLabel';
+import { FormHelperText, InputLabel, Typography, Button, Select, FormControl, MenuItem, TextField } from "@material-ui/core";
 import slugify from 'slugify'
+import axios from "axios";
+import { exchangeRefreshToken } from '../../global/authModule'
+import { useHistory } from 'react-router-dom'
+import validation from './validation'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,48 +26,68 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
     marginBottom: '2rem',
   },
+  errorMsg: {
+    color: theme.palette.error.dark,
+  },
 }))
 
 const AddNewCoursePage = (props) => {
-  const { courseDetail, updateMode } = props
   const classes = useStyles()
-  let today = new Date();
-  let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-  const [course, setCourse] = useState({
-    ...props.course || {
-      "maKhoaHoc": "",
-      "biDanh": "",
-      "tenKhoaHoc": "",
-      "moTa": "",
-      "luotXem": 0,
-      "danhGia": 0,
-      "hinhAnh": "",
-      "maNhom": "",
-      "ngayTao": date,
-      "maDanhMucKhoaHoc": "",
-      "taiKhoanNguoiTao": JSON.parse(localStorage.getItem("credentials")).taiKhoan
+  const { updateMode, courseDetail, courseId } = props
+  const [course, setCourse] = useState({ ...courseDetail })
+
+  const [categList, setCategList] = useState([
+    {
+      id: '',
+      name: 'loading...',
     }
-  })
+  ])
+
+  const [loading, setLoading] = useState(false)
+
+  const [errors, setErrors] = useState({})
+
+  const history = useHistory()
+
+  useEffect(() => {
+    axios({
+      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/categories.json`,
+      method: 'GET',
+    })
+      .then((res) => {
+        let categoryList = []
+        for (let key in res.data) {
+          categoryList.push({
+            ...res.data[key],
+            id: key,
+          })
+        }
+        return setCategList(categoryList)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
+  }, [])
 
   const handleCourseName = (e) => {
     if (updateMode) {
       setCourse({
         ...course,
-        tenKhoaHoc: e.target.value.trim(),
+        courseName: e.target.value.trim(),
       })
     } else {
       const slug = slugify(e.target.value, {
         replacement: '-',
-        remove: undefined,
-        lower: false,
+        remove: /[*+~.()'"!:@?=/;]/g,
+        lower: true,
         strict: false,
         locale: 'vi'
       })
 
       setCourse({
         ...course,
-        tenKhoaHoc: e.target.value.trim(),
-        biDanh: slug,
+        courseName: e.target.value.trim(),
+        slug,
       })
     }
   }
@@ -82,23 +99,68 @@ const AddNewCoursePage = (props) => {
     })
   }
 
+  const addCourse = (idToken, { date, uid }) => {
+    return axios({
+      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses.json?auth=${idToken}`,
+      method: 'POST',
+      data: {
+        ...course,
+        createdDate: date,
+        uid,
+      },
+    })
+  }
+
+  const updateCourse = (idToken, { date, uid }) => {
+    return axios({
+      url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/courses/${courseId}.json?auth=${idToken}`,
+      method: 'PUT',
+      data: {
+        ...course,
+        updatedDate: date,
+        uid,
+      },
+    })
+  }
+
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    console.log('submited')
-    props.submitCourse(course, updateMode)
+    const errs = validation(course)
+    console.log('errs', errs)
+    setErrors(errs)
+    // props.submitCourse(course, updateMode, courseId)
+    if (Object.values(errs).length === 0) {
+      setLoading(true)
+      const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
+
+      if (!credentials.refreshToken) return
+
+      exchangeRefreshToken(credentials.refreshToken)
+        .then((tokenData) => {
+          const idToken = tokenData.data.id_token
+          const uid = tokenData.data.user_id
+
+          let today = new Date();
+          let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+
+          const extraCourseInfo = { date, uid, }
+          console.log('course', course)
+          if (updateMode) {
+            return updateCourse(idToken, extraCourseInfo)
+          } else {
+            return addCourse(idToken, extraCourseInfo)
+          }
+        })
+        .then((res) => {
+          console.log('success', res.data)
+          history.push('/admin/course-management')
+        })
+        .catch((err) => {
+          setLoading(false)
+          console.log('form add course err', err)
+        })
+    }
   }
-  const maDanhMucKhoaHocArr = [
-    // FrontEnd,
-    'BackEnd', 'FullStack', 'DiDong'
-  ]
-  const maNhomArr = [
-    'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08', 'GP09', 'GP10',
-  ];
-
-
-
-
-
 
   return (
     <div className={classes.root}>
@@ -106,131 +168,100 @@ const AddNewCoursePage = (props) => {
       <form onSubmit={handleOnSubmit}>
         <FormControl className={classes.formControl}>
           <TextField
+            error={Boolean(errors.courseName)}
+            helperText={errors.courseName}
             variant="outlined"
             margin="normal"
-            required
-            fullWidth
-            id="tenKhoaHoc"
+            id="courseName"
             label="Tên Khóa Học"
-            name="tenKhoaHoc"
-            autoComplete="tenKhoaHoc"
-            value={courseDetail.tenKhoaHoc}
+            name="courseName"
+            autoComplete="courseName"
+            value={course.courseName}
             autoFocus
             onBlur={handleCourseName}
             onChange={handleCourseInfo}
           />
+          {/* <FormHelperText className={classes.errorMsg}>{errors.courseName}</FormHelperText> */}
           <TextField
+            error={Boolean(errors.slug)}
+            helperText={errors.slug}
             variant="outlined"
             margin="normal"
-            required
-            fullWidth
-            id="biDanh"
-            label="Bí Danh (slug)"
-            name="biDanh"
-            value={courseDetail.biDanh}
-            autoComplete="biDanh"
-            autoFocus
+            id="slug"
+            label="Slug"
+            name="slug"
+            value={course.slug}
+            autoComplete="slug"
             onChange={handleCourseInfo}
           />
           <TextField
+            error={Boolean(errors.imageCover)}
+            helperText={errors.imageCover}
             variant="outlined"
             margin="normal"
-            required
-            fullWidth
-            id="maKhoaHoc"
-            label="Mã Khóa Học"
-            name="maKhoaHoc"
-            value={courseDetail.maKhoaHoc}
-            autoComplete="maKhoaHoc"
-            autoFocus
-            onChange={handleCourseInfo}
-          />
-
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="hinhAnh"
+            id="imageCover"
             label="Link hình ảnh"
-            name="hinhAnh"
-            autoComplete="hinhAnh"
-            autoFocus
-            value={courseDetail.hinhAnh}
-
+            name="imageCover"
+            autoComplete="imageCover"
+            value={course.imageCover}
             rows={6}
             onChange={handleCourseInfo}
           />
-          <FormControl variant="outlined" fullWidth className={classes.formControl}>
-            <InputLabel fullWidth id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> <Select
-              labelId="maDanhMucKhoaHoc"
-              id="maDanhMucKhoaHoc"
-              name="maDanhMucKhoaHoc"
-              onChange={handleCourseInfo}
-              label="Mã danh mục khóa học"
-              value={courseDetail.maDanhMucKhoaHoc}
-            >
-              <MenuItem value="FrontEnd">FrontEnd</MenuItem>
-              {maDanhMucKhoaHocArr.map((maDanhMucKhoaHoc) => (
-                <MenuItem value={maDanhMucKhoaHoc}>{maDanhMucKhoaHoc}</MenuItem>
-              ))}
-
-            </Select> </FormControl>
-
           <TextField
+            error={Boolean(errors.price)}
+            helperText={errors.price}
             variant="outlined"
             margin="normal"
-            required
-            fullWidth
-            id="moTa"
-            label="Mô Tả"
-            name="moTa"
-            autoComplete="moTa"
-            autoFocus
-            value={courseDetail.moTa}
-            multiline
+            id="price"
+            label="Price"
+            name="price"
+            autoComplete="price"
+            value={course.price}
             rows={6}
             onChange={handleCourseInfo}
           />
-          <FormControl variant="outlined" fullWidth className={classes.formControl}>
-            <InputLabel fullWidth id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
+          <FormControl variant="outlined" className={classes.formControl} error={errors.category}>
+            <InputLabel id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> 
             <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-
-              label="Mã nhóm"
+              labelId="category"
+              id="category"
+              name="category"
               onChange={handleCourseInfo}
-              name="maNhom"
-              defaultValue="GP01"
-              value={courseDetail.maNhom}
+              label="Danh mục khóa học"
+              value={course.category}
             >
-              <MenuItem key="GP01"
-                value="GP01"
-                onChange={handleCourseInfo}
-              >GP01</MenuItem>
-              {maNhomArr.map((maNhom) => (
-                <MenuItem key={maNhom}
-                  value={maNhom}
-                  onChange={handleCourseInfo}
-                >{maNhom}</MenuItem>
+              <MenuItem value="">Select</MenuItem>
+              {categList.map((item) => (
+                <MenuItem value={item.id} key={item.id}>
+                  {item.name}
+                </MenuItem>
               ))}
 
             </Select>
           </FormControl>
 
-          {updateMode ?
-            <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
-              UPDATE
-            </Button>
-            : <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit">
-              PUBLISH
-            </Button>
-          }
+          <TextField
+            error={Boolean(errors.description)}
+            helperText={errors.description}
+            variant="outlined"
+            margin="normal"
+            id="description"
+            label="Mô Tả"
+            name="description"
+            autoComplete="description"
+            value={course.description}
+            multiline
+            rows={6}
+            onChange={handleCourseInfo}
+          />
+
+          <Button className={classes.buttonSubmit} size="large" variant="contained" color="primary" type="submit" disabled={loading}>
+            {updateMode ? 'UPDATE' : 'PUBLISH'}
+          </Button>
         </FormControl>
       </form>
     </div>
   )
 }
-
 
 export default AddNewCoursePage;
