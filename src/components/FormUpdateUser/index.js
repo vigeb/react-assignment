@@ -104,12 +104,10 @@ const UpdateUserPage = (props) => {
 
             })
             .then((res) => {
-                console.log('success', res.data)
                 history.push('/admin/students/all')
             })
             .catch((err) => {
                 setLoading(false)
-                console.log('form update user err', err)
             })
     }
     console.log(props)
