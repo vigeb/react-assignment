@@ -7,7 +7,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
-import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
@@ -52,7 +51,7 @@ export const AdminListItem = () => {
           <ListItemText primary="Categories" />
         </ListItem>
       </NavLink>
-      <NavLink to="/admin/student-management" className={classes.navLink} activeClassName={classes.navLinkActive}>
+      <NavLink to="/admin/students/all" className={classes.navLink} activeClassName={classes.navLinkActive}>
         <ListItem button>
           <ListItemIcon>
             <PeopleIcon />

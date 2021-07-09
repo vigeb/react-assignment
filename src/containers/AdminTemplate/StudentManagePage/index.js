@@ -1,10 +1,10 @@
-import { FormControl, Grid, Typography } from "@material-ui/core"
+import { Grid, Typography, Button } from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import StudentManageItem from "../../../components/StudentManageItem";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { connect } from 'react-redux'
+import { actUsers } from "../../../redux/modules/users/action";
+import { NavLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -12,114 +12,74 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         textTransform: 'uppercase',
     },
+    navLink: {
+        marginRight: theme.spacing(2),
+    },
+    navLinkActive: {
+        '& button': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+        }
+    },
 }))
-const StudentManagePage = () => {
+const StudentManagePage = (props) => {
     const classes = useStyles()
 
-    const [listSortType, setListSortType] = useState("displayAll")
-    const handleChangeSort = (e) => {
-        setListSortType(e.target.value)
-    }
-    const handleChange = () => { }
-
-
-    const [userList, setUserList] = useState([
-
-        // {
-        //     "taiKhoan": "aasd",
-        //     "biDanh": null,
-        //     "hoTen": "asdsa"
-        // }
-    ])
-
-    const idToken = JSON.parse(localStorage.getItem("credentials")).idToken
-
     useEffect(() => {
-        axios({
-            url: `https://react-asignment-default-rtdb.asia-southeast1.firebasedatabase.app/users.json?auth=${idToken}`,
-            method: "GET",
-        }).then((res) => {
-            // console.log(res.data)
-            let allUserData = res.data
-            let allUser = []
-            for (let key in allUserData) {
-                allUser.unshift({
-                    ...allUserData[key],
-                    id: key,
-                })
-            }
-            setUserList(allUser)
-            console.log(userList, allUser)
+        const type = props.match.params.type
+        const key = type === 'all' ? '' : 'typeOfUser'
+        props.fetchUsersByType(key, type)
+    }, [props.match.params.type])
 
-        })
-            .catch((err) => { console.log(err) })
-    }, [])
-    console.log(userList)
-    const renderStudentList = () => {
-        // const studentList = props.data
+    const renderStudentList = (userList) => {
         if (userList && userList.length) {
-            return userList.map((item, index) => {
-                if (item.typeOfUser === "HV")
-                    return (
-                        <Grid item xs={12} key={item.maKhoaHoc}>
-
-                            <StudentManageItem student={item} key={index} />
-                        </Grid>
-                    )
-            })
+            return userList.map((item) => (
+                <Grid item xs={12} key={item.id}>
+                    <StudentManageItem student={item}/>
+                </Grid>
+            ))
         } else {
-            return <div>loading...</div>
+            return <div>{userList ? 'No data' : 'loading...'}</div>
         }
     }
     return (
         <>
             <Typography variant="h4" component="h2" className={classes.title}>Student Management</Typography>
-            <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="filled-age-native-simple">Hiện danh sách theo</InputLabel>
-                <NativeSelect
-
-                    // value={maNhom}
-                    onChange={handleChangeSort}
-                    defaultValue="Angular"
-                >
-                    <option
-                        //  aria-label="None"
-                        value="displayAll" onChange={handleChange}>Tất cả học viên</option>
-                    <option
-                        //  aria-label="None"
-                        value="sortByCourseId" onChange={handleChange}>Danh sách theo mã khóa học</option>
-
-                </NativeSelect>
-            </FormControl>
-            {listSortType === 'displayAll' ?
-                <>
-                    <FormControl variant="filled" className={classes.formControl}>
-                        <InputLabel htmlFor="filled-age-native-simple">Age</InputLabel>
-                        <NativeSelect
-
-                            // value={maNhom}
-                            onChange={handleChange}
-                            defaultValue="Angular"
-                        >
-                            <option
-                                //  aria-label="None"
-                                value="Angular" onChange={handleChange}>Angular</option>
-                            {/* {maNhomArr.map((maNhom) => (
-                    <option onChange={handleChange} value={maNhom}>{maNhom}</option>
-                ))} */}
-
-                        </NativeSelect>
-                    </FormControl>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <NavLink className={classes.navLink} activeClassName={classes.navLinkActive} to="/admin/students/all">
+                        <Button variant="contained">All</Button>
+                    </NavLink>
+                    <NavLink className={classes.navLink} activeClassName={classes.navLinkActive} to="/admin/students/GV">
+                        <Button variant="contained">GV</Button>
+                    </NavLink>
+                    <NavLink className={classes.navLink} activeClassName={classes.navLinkActive} to="/admin/students/HV">
+                        <Button variant="contained">HV</Button>
+                    </NavLink>
+                </Grid>
+                <Grid item xs={12}>
                     <Grid container spacing={2}>
-                        {renderStudentList()}
+                        {renderStudentList(props.data)}
                     </Grid>
-                </>
-                :
-                'sort by maKhoaHoc'
-
-            }
-
+                </Grid>
+            </Grid>
         </>
     )
 }
-export default StudentManagePage
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      fetchUsersByType: (key, val) => {
+        dispatch(actUsers(key, val))
+      }
+    }
+  }
+  
+  const mapStateToProps = (state) => {
+    return {
+      loading: state.usersReducer.loading,
+      data: state.usersReducer.data
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentManagePage)

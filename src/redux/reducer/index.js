@@ -4,9 +4,9 @@ import courseDetailReducer from '../../containers/HomeTemplate/CourseDetailPage/
 import signUpReducer from '../../containers/HomeTemplate/SignUpForm/modules/reducer'
 import logInReducer from '../../containers/HomeTemplate/LoginForm/modules/reducer'
 import courseDeleteReducer from '../../components/CourseManageItem/modules/reducer'
-// import authReducer from '../global/authModules/reducer'
 import getCategoryReducer from '../../containers/AdminTemplate/CategoryManagePage/modules/reducer'
 import enrollReducer from '../modules/enrollment/reducer'
+import usersReducer from '../modules/users/reducer'
 
 const rootReducer = combineReducers({
     courseListReducer,
@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
     courseDeleteReducer,
     getCategoryReducer,
     enrollReducer,
+    usersReducer,
 })
 
 export default rootReducer

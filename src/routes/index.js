@@ -98,7 +98,7 @@ const routesAdmin = [
   },
   {
     exact: true,
-    path: '/student-management',
+    path: '/students/:type',
     component: StudentManagePage,
   },
   {

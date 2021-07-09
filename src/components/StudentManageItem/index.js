@@ -1,5 +1,4 @@
-import { FormControl, Grid, Typography } from "@material-ui/core"
-import { useState } from 'react'
+import { Typography } from "@material-ui/core"
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -44,8 +43,9 @@ const StudentManageItem = (props) => {
     }
     return (
         <div className={classes.root}>
-            <Typography variant="h5" className={classes.title}>Tên: {student.displayName}</Typography>
-            <Typography variant="h6" className={classes.title}>Số điện thoại: {student.phoneNumber}</Typography>
+            <Typography variant="h5" className={classes.title}>Name: {student.displayName}</Typography>
+            <Typography variant="h6" className={classes.title}>Phone: {student.phoneNumber}</Typography>
+            <Typography variant="h6" className={classes.title}>Type: {student.typeOfUser}</Typography>
 
             <Button component={Link} to={`/admin/update-course/${student.maKhoaHoc}`} variant="contained" color="primary" className={classes.button}>
                 Update
