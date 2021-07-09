@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography'
-import InputLabel from '@material-ui/core/InputLabel';
+import { FormHelperText, InputLabel, Typography, Button, Select, FormControl, MenuItem, TextField } from "@material-ui/core";
 import slugify from 'slugify'
 import axios from "axios";
 import { exchangeRefreshToken } from '../../global/authModule'
 import { useHistory } from 'react-router-dom'
+import validation from './validation'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,26 +26,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
     marginBottom: '2rem',
   },
+  errorMsg: {
+    color: theme.palette.error.dark,
+  },
 }))
 
 const AddNewCoursePage = (props) => {
   const classes = useStyles()
   const { updateMode, courseDetail, courseId } = props
-  const [course, setCourse] = useState({
-    ...courseDetail || {
-      slug: "",
-      courseName: "",
-      description: "",
-      views: 0,
-      ratings: 0,
-      imageCover: "",
-      createdDate: '',
-      updatedDate: '',
-      category: '',
-      createdBy: '',
-      price: '',
-    }
-  })
+  const [course, setCourse] = useState({ ...courseDetail })
 
   const [categList, setCategList] = useState([
     {
@@ -60,6 +44,8 @@ const AddNewCoursePage = (props) => {
   ])
 
   const [loading, setLoading] = useState(false)
+
+  const [errors, setErrors] = useState({})
 
   const history = useHistory()
 
@@ -138,37 +124,42 @@ const AddNewCoursePage = (props) => {
   }
 
   const handleOnSubmit = (e) => {
-    setLoading(true)
     e.preventDefault()
+    const errs = validation(course)
+    console.log('errs', errs)
+    setErrors(errs)
     // props.submitCourse(course, updateMode, courseId)
-    const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
+    if (Object.values(errs).length === 0) {
+      setLoading(true)
+      const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
 
-    if (!credentials.refreshToken) return
+      if (!credentials.refreshToken) return
 
-    exchangeRefreshToken(credentials.refreshToken)
-      .then((tokenData) => {
-        const idToken = tokenData.data.id_token
-        const uid = tokenData.data.user_id
+      exchangeRefreshToken(credentials.refreshToken)
+        .then((tokenData) => {
+          const idToken = tokenData.data.id_token
+          const uid = tokenData.data.user_id
 
-        let today = new Date();
-        let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+          let today = new Date();
+          let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
 
-        const extraCourseInfo = { date, uid, }
-        console.log('course', course)
-        if (updateMode) {
-          return updateCourse(idToken, extraCourseInfo)
-        } else {
-          return addCourse(idToken, extraCourseInfo)
-        }
-      })
-      .then((res) => {
-        console.log('success', res.data)
-        history.push('/admin/course-management')
-      })
-      .catch((err) => {
-        setLoading(false)
-        console.log('form add course err', err)
-      })
+          const extraCourseInfo = { date, uid, }
+          console.log('course', course)
+          if (updateMode) {
+            return updateCourse(idToken, extraCourseInfo)
+          } else {
+            return addCourse(idToken, extraCourseInfo)
+          }
+        })
+        .then((res) => {
+          console.log('success', res.data)
+          history.push('/admin/course-management')
+        })
+        .catch((err) => {
+          setLoading(false)
+          console.log('form add course err', err)
+        })
+    }
   }
 
   return (
@@ -177,9 +168,10 @@ const AddNewCoursePage = (props) => {
       <form onSubmit={handleOnSubmit}>
         <FormControl className={classes.formControl}>
           <TextField
+            error={Boolean(errors.courseName)}
+            helperText={errors.courseName}
             variant="outlined"
             margin="normal"
-            required
             id="courseName"
             label="Tên Khóa Học"
             name="courseName"
@@ -189,10 +181,12 @@ const AddNewCoursePage = (props) => {
             onBlur={handleCourseName}
             onChange={handleCourseInfo}
           />
+          {/* <FormHelperText className={classes.errorMsg}>{errors.courseName}</FormHelperText> */}
           <TextField
+            error={Boolean(errors.slug)}
+            helperText={errors.slug}
             variant="outlined"
             margin="normal"
-            required
             id="slug"
             label="Slug"
             name="slug"
@@ -201,9 +195,10 @@ const AddNewCoursePage = (props) => {
             onChange={handleCourseInfo}
           />
           <TextField
+            error={Boolean(errors.imageCover)}
+            helperText={errors.imageCover}
             variant="outlined"
             margin="normal"
-            required
             id="imageCover"
             label="Link hình ảnh"
             name="imageCover"
@@ -213,9 +208,10 @@ const AddNewCoursePage = (props) => {
             onChange={handleCourseInfo}
           />
           <TextField
+            error={Boolean(errors.price)}
+            helperText={errors.price}
             variant="outlined"
             margin="normal"
-            required
             id="price"
             label="Price"
             name="price"
@@ -224,8 +220,9 @@ const AddNewCoursePage = (props) => {
             rows={6}
             onChange={handleCourseInfo}
           />
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> <Select
+          <FormControl variant="outlined" className={classes.formControl} error={errors.category}>
+            <InputLabel id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> 
+            <Select
               labelId="category"
               id="category"
               name="category"
@@ -244,9 +241,10 @@ const AddNewCoursePage = (props) => {
           </FormControl>
 
           <TextField
+            error={Boolean(errors.description)}
+            helperText={errors.description}
             variant="outlined"
             margin="normal"
-            required
             id="description"
             label="Mô Tả"
             name="description"
