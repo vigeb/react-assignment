@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         display: 'flex',
         flexWrap: 'wrap',
+        marginTop: theme.spacing(2),
     },
     buttonSubmit: {
         marginTop: '1.5rem',
@@ -174,19 +175,21 @@ const UpdateUserPage = (props) => {
                         onChange={handleUserInfo}
                     />
                     <FormControl variant="outlined" className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-outlined-label">Mã loại người dùng</InputLabel> <Select
-                            labelId="category"
+                        <InputLabel id="typeOfUser">Type of user</InputLabel> 
+                        <Select
+                            required
+                            labelId="typeOfUser"
                             id="typeOfUser"
                             name="typeOfUser"
                             onChange={handleUserInfo}
-                            label="loại người dùng"
+                            label="Type of user"
                             value={detailUser.typeOfUser}
                         >
                             <MenuItem value="HV" key="typeOfUser">
                                 HV
                             </MenuItem>
                             <MenuItem value="GV" key="typeOfUser">
-                                HV
+                                GV
                             </MenuItem>
 
                         </Select>
