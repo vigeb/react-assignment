@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     flexWrap: 'wrap',
+    marginTop: '1rem',
+    marginBottom: '0.5rem'
   },
   buttonSubmit: {
     marginTop: '1.5rem',
@@ -221,7 +223,7 @@ const AddNewCoursePage = (props) => {
             onChange={handleCourseInfo}
           />
           <FormControl variant="outlined" className={classes.formControl} error={errors.category}>
-            <InputLabel id="demo-simple-select-outlined-label">Mã danh mục khóa học</InputLabel> 
+            <InputLabel id="demo-simple-select-outlined-label">Danh mục khóa học</InputLabel>
             <Select
               labelId="category"
               id="category"

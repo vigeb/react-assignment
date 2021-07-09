@@ -26,7 +26,7 @@ const ProfileCourseItem = (props) => {
 
     return (
         <div className={classes.root}>
-            <Typography className={classes.title} component="h2" variant="h5">{`${course.courseName} - ${course.courseName}`}</Typography>
+            <Typography className={classes.title} component="h2" variant="h5">{`${course.courseName}`}</Typography>
             <Typography className={classes.title} component="h3" variant="h6">giá: {course.price} đồng</Typography>
 
             <Typography className={classes.title} component="h3" variant="h6">Status: {course.status}</Typography>
