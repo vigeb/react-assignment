@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'pre-wrap',
         marginTop: theme.spacing(3),
     },
+    cardShop: {
+        display: 'inline-block',
+    },
 }))
 
 function CourseDetailPage(props) {
@@ -44,7 +47,9 @@ function CourseDetailPage(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={3} md={4}>
-                        <CourseListItem item={props.data} inDetailPage={true} />
+                        <div className={classes.cardShop}>
+                            <CourseListItem item={props.data} inDetailPage={true} />
+                        </div>
                     </Grid>
                 </Grid>
             )

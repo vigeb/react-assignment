@@ -62,16 +62,7 @@ export default function CourseListItem(props) {
                     const { id_token, user_id } = token.data
                     const { id, courseName, price } = props.item
                     const enrollmentId = new Date().getTime() + ''
-                    // console.log('token', token.data)
-                    console.log('test', {
-                        uid: user_id,
-                        email,
-                        displayName,
-                        courseId: id,
-                        courseName,
-                        price,
-                        status: 'pending',
-                    })
+
                     return axios({
                         url: `${process.env.REACT_APP_API_URL}/enrollment/${enrollmentId}.json?auth=${id_token}`,
                         method: 'PUT',
@@ -88,6 +79,7 @@ export default function CourseListItem(props) {
                 })
                 .then((res) => {
                     setLoading(false)
+                    history.push(`/profile/${res.data.uid}/pending`)
                 })
                 .catch((err) => {
                     setLoading(false)

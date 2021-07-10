@@ -27,7 +27,7 @@ const ProfileCourseItem = (props) => {
             <Typography className={classes.title} component="h3" variant="h6">giá: {course.price} đồng</Typography>
 
             <Typography className={classes.title} component="h3" variant="h6">Status: {course.status}</Typography>
-            <Link to="/video"><Button variant="contained" style={{ backgroundColor: '#303f9f', color: 'white' }}>Learn now</Button ></Link>
+            {course.status === 'approved' ? <Link to="/video"><Button variant="contained" style={{ backgroundColor: '#303f9f', color: 'white' }}>Learn now</Button ></Link> : null}
         </div>
     )
 }
