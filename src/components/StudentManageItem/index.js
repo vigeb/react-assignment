@@ -32,8 +32,6 @@ const StudentManageItem = (props) => {
             <Button component={Link} to={`/admin/update-user/${student.uid}`} variant="contained" color="primary" className={classes.button}>
                 Update
             </Button>
-
-            <FormHelperText>'..'</FormHelperText>
         </div>
     )
 }

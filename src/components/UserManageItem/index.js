@@ -25,9 +25,6 @@ const UserManageItem = (props) => {
   const { enrollment } = props
   const [activeStatus, setActiveStatus] = useState(enrollment.status)
 
-  console.log(enrollment)
-  // console.log(setLoading)
-
   const handleChangeStatus = (status) => {
 
     const credentials = localStorage.getItem("credentials") && JSON.parse(localStorage.getItem("credentials"))
@@ -48,12 +45,9 @@ const UserManageItem = (props) => {
       })
 
       .then((res) => {
-        console.log('res', res)
         setActiveStatus(status)
       })
       .catch((err) => {
-
-        console.log('test err', err)
       })
   }
   return (

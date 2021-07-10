@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
     },
     spacingRight: {
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(1),
     },
     navLinkActive: {
         '& button': {
@@ -66,12 +66,12 @@ function ProfileList(props) {
                 </NavLink>
                 <NavLink to={`/profile/${uid}/approved`} activeClassName={classes.navLinkActive}>
                     <Button variant="contained" className={classes.spacingRight}>
-                        Your courses
+                        Learn
                     </Button>
                 </NavLink>
                 <NavLink to={`/profile/${uid}/cancelled`} activeClassName={classes.navLinkActive}>
                     <Button variant="contained" className={classes.spacingRight}>
-                        Cancelled orders
+                        Cancelled
                     </Button>
                 </NavLink>
             </Grid>

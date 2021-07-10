@@ -10,22 +10,29 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     videoBackground: {
-        background: 'black',
-        padding: '0',
-
+        background: theme.palette.common.black,
+        width: '100%',
     },
     video: {
         width: "100%",
+        height: 0,
+        paddingBottom: '56.25%',
+        position: 'relative',
+    },
+    youtubeVideo: {
+        width: '100%',
         height: '100%',
-
-        [theme.breakpoints.up('md')]: {
-            width: "640px",
-            height: '360px',
-        },
+        position: 'absolute',
+        top: 0,
+        left: 0,
+    },
+    inforSession: {
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
+        }
     },
     inforText: {
         color: "#3c3b37",
-
     },
 
 
@@ -38,10 +45,12 @@ const VideoCoursePage = () => {
 
             <Grid container spacing={0} align="center">
 
-                <Grid item xs={9}>
+                <Grid item xs={12} sm={9}>
 
                     <Grid item xs={12} className={classes.videoBackground}>
-                        <iframe className={classes.video} src="https://www.youtube.com/embed/GJ8jidDdWVg" title="YouTube video player" frameBorder={0} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                        <div className={classes.video}>
+                            <iframe className={classes.youtubeVideo} src="https://www.youtube.com/embed/GJ8jidDdWVg" title="YouTube video player" frameBorder={0} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                        </div>
                     </Grid>
 
                     <Container maxWidth="sm" className={classes.inforSession}>
@@ -99,7 +108,7 @@ const VideoCoursePage = () => {
 
 
                 </Grid>
-                <Grid item xs={3} style={{ display: 'block' }}>
+                <Grid item xs={12} sm={3} style={{ display: 'block' }}>
                     <Box borderLeft={1} borderColor="grey.300" style={{ height: '100%' }}>
                         <Grid item xs={12} >
 
